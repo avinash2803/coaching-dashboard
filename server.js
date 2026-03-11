@@ -4,8 +4,6 @@ import mongoose from "mongoose";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import session from "express-session";
-import bcrypt from "bcrypt";
 
 import excelUpload from "./routes/excelUpload.js";
 import studentsRoutes from "./routes/student.js";
@@ -24,17 +22,17 @@ app.use(cors());
 app.use(express.json());
 
 
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/Years", express.static(path.join(__dirname, "Years")));
 
-
+import session from "express-session";
 
 app.use(session({
   secret: "bvcp-secret",
   resave: false,
   saveUninitialized: false
 }));
-
 
 // ✅ ADD LOGIN ROUTE HERE
 app.post("/login", async (req, res) => {
@@ -84,8 +82,8 @@ app.set("views", path.join(__dirname, "views"));
 
 
 /* MongoDB */
-mongoose.connect("mongodb+srv://AVI_BPCP_db_user:%23%23%234876%40Avi@cluster0.9knyxgn.mongodb.net/studentDB");
-  .then(() => console.log("✅ MongoDB Connected"))
+mongoose.connect("mongodb+srv://AVI_BPCP_db_user:%23%23%234876%40Avi@cluster0.9knyxgn.mongodb.net/studentDB")
+  .then(() => console.log("MongoDB Atlas Connected"))
   .catch(err => console.error(err));
 
 /* Routes */
@@ -166,4 +164,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-
