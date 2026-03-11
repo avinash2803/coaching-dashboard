@@ -1,0 +1,70 @@
+<%- include("partials/header") %>
+
+<div class="container py-5" style="margin-top:110px; max-width:450px;">
+
+  <div class="card p-4 shadow">
+
+```
+<h4 class="text-center mb-4">Portal Login</h4>
+
+<form id="loginForm">
+
+  <div class="mb-3">
+    <label class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" required>
+  </div>
+
+  <button class="btn btn-primary w-100">Login</button>
+
+</form>
+
+<p id="msg" class="text-danger text-center mt-3"></p>
+```
+
+  </div>
+
+</div>
+
+<script>
+
+document.getElementById("loginForm").addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  const res = await fetch("/login",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({username,password})
+  });
+
+  const data = await res.json();
+
+  if(data.success){
+
+    if(data.role === "admin"){
+      window.location = "/student";
+    }
+
+    if(data.role === "student"){
+      window.location = "/student";
+    }
+
+  }else{
+    document.getElementById("msg").innerText = data.message;
+  }
+
+});
+
+</script>
+
+<%- include("partials/footer") %>

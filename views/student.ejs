@@ -1,0 +1,131 @@
+<%- include("partials/header") %>
+<link rel="stylesheet" href="/css/style.css">
+
+<div class="container py-4" style="margin-top:110px;">
+
+  <!-- Controls -->
+  <div class="card p-3 mb-3">
+    <div class="d-flex align-items-center gap-2 flex-nowrap overflow-auto top-controls controls">
+
+      <input id="searchBox" class="form-control me-2" placeholder="Search by name or roll..." style="min-width:220px;">
+
+      <select id="filterCategory" class="form-select me-2" style="width:140px;">
+        <option value="">All Categories</option>
+        <option>SC</option>
+        <option>ST</option>
+        <option>OBC</option>
+        <option>General</option>
+      </select>
+
+      <select id="filterGender" class="form-select me-2" style="width:130px;">
+        <option value="">All Genders</option>
+        <option>MALE</option>
+        <option>FEMALE</option>
+        <option>OTHER</option>
+      </select>
+
+      <select id="filterCourse" class="form-select me-2" style="width:140px;">
+        <option value="">All Courses</option>
+        <option>CGPSC</option>
+        <option>VYAPAM</option>
+      </select>
+
+      <select id="sortBy" class="form-select me-2" style="width:200px;">
+        <option value="">Sort By</option>
+        <option value="roll">Roll No (asc)</option>
+        <option value="name">Name (A→Z)</option>
+        <option value="attendance">Avg Attendance</option>
+        <option value="score">Avg Test %</option>
+      </select>
+
+    </div>
+  </div>
+
+  <!-- Excel Upload -->
+  <div class="card p-3 mb-3">
+  <div class="d-flex align-items-center gap-2 flex-nowrap overflow-auto">
+
+<div style="min-width:140px;">
+<select id="excelBatch" class="form-control">
+<option value="">Select Batch</option>
+<option value="CGPSC">CGPSC</option>
+<option value="VYAPAM">VYAPAM</option>
+</select>
+</div>
+
+<div style="min-width:160px;">
+<select id="excelTestType" class="form-control">
+<option value="">Test Type</option>
+<option value="classTests">Class Test</option>
+<option value="mockTests">Mock Exam</option>
+</select>
+</div>
+      <div style="min-width:180px;">
+<input id="excelTestName" class="form-control" placeholder="Test Name">
+      </div>
+
+      <div style="min-width:180px;">
+<input id="excelSubject" class="form-control" placeholder="Subject">
+      </div>
+
+      <div style="min-width:120px;">
+<input id="excelFullMarks" type="number" class="form-control" placeholder="Full Marks">
+      </div>
+
+      <div style="min-width:220px;">
+<input id="excelFile" type="file" accept=".xlsx" class="form-control">
+      </div>
+
+      <div style="min-width:160px;">
+<button id="uploadExcelBtn" class="btn btn-primary">
+Upload Excel
+</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboardArea" style="display:none;" class="mb-3">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>Average Attendance (%)</strong>
+            <div class="chip" id="avgAttendanceChip">—</div>
+          </div>
+          <canvas id="attendanceChart"></canvas>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>Average Test Score (%)</strong>
+            <div class="chip" id="avgScoreChip">—</div>
+          </div>
+          <canvas id="scoreChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Students List -->
+  <div class="mb-2 fw-semibold" id="studentCount"></div>
+<div id="studentsList"></div>
+
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/state.js"></script>
+<script src="/js/render.js"></script>
+<script src="/js/events.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const selectedYear = localStorage.getItem("bvcpYear") || "2025-26";
+  loadStudentsByYear(selectedYear);
+</script>
+
+<%- include("partials/footer") %>

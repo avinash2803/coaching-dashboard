@@ -1,0 +1,1 @@
+await fetch(`/api/students/${id}`, { method: "DELETE" });
