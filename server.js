@@ -101,8 +101,8 @@ return res.json({success:false,message:"Wrong password"});
 }
 
 req.session.user = {
-id:student._id,
-role:"student"
+studentId: student._id,
+role: "student"
 };
 
 res.json({success:true});
