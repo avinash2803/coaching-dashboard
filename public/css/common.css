@@ -60,9 +60,7 @@ body {
 }
 
 /* Show on hover (desktop) */
-.floating-menu:hover .menu-dropdown {
-  display: block;
-}
+
 
 /* =========================================
    TOP BAR (HEADER)
