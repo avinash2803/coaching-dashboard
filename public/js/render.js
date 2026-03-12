@@ -47,6 +47,8 @@ const sortBy = document.getElementById('sortBy') || { value: "" };
 const toggleDashboardBtn=document.getElementById('toggleDashboard');
 const dashboardArea=document.getElementById('dashboardArea');
 let attendanceChart=null, scoreChart=null;
+let currentPage = 1;
+const studentsPerPage = 20;
 
 function renderStudents() {
   const studentsList = document.getElementById("studentsList");
@@ -92,11 +94,18 @@ if(studentCount){
   studentCount.innerHTML = `Showing <b>${list.length}</b> students`;
 }
 
-  studentsList.innerHTML = '';
+studentsList.innerHTML = '';
 
-  list.forEach((s, idx) =>
-    studentsList.appendChild(studentCardDom(s, idx))
-  );
+const start = (currentPage - 1) * studentsPerPage;
+const end = start + studentsPerPage;
+
+const paginatedStudents = list.slice(start, end);
+
+paginatedStudents.forEach((s, idx) =>
+  studentsList.appendChild(studentCardDom(s, start + idx))
+);
+
+renderPagination(list.length);
 
 if (typeof Chart !== "undefined") {
   renderDashboard();
@@ -709,3 +718,66 @@ alert("Upload failed");
 }
 
 })
+
+function renderPagination(totalStudents){
+
+const totalPages = Math.ceil(totalStudents / studentsPerPage);
+
+const pagination = document.getElementById("pagination");
+
+if(!pagination) return;
+
+pagination.innerHTML = "";
+
+if(totalPages <= 1) return;
+
+let html = "";
+
+if(currentPage > 1){
+html += `<button class="btn btn-sm btn-outline-primary me-1" onclick="changePage(${currentPage-1})">Prev</button>`;
+}
+
+for(let i=1;i<=totalPages;i++){
+
+html += `
+<button 
+class="btn btn-sm ${i===currentPage ? "btn-primary" : "btn-outline-primary"} me-1"
+onclick="changePage(${i})">
+${i}
+</button>
+`;
+
+}
+
+if(currentPage < totalPages){
+html += `<button class="btn btn-sm btn-outline-primary ms-1" onclick="changePage(${currentPage+1})">Next</button>`;
+}
+
+pagination.innerHTML = html;
+
+}
+
+searchBox?.addEventListener("input", ()=>{
+currentPage = 1;
+renderStudents();
+});
+
+filterCategory?.addEventListener("change", ()=>{
+currentPage = 1;
+renderStudents();
+});
+
+filterGender?.addEventListener("change", ()=>{
+currentPage = 1;
+renderStudents();
+});
+
+filterCourse?.addEventListener("change", ()=>{
+currentPage = 1;
+renderStudents();
+});
+
+sortBy?.addEventListener("change", ()=>{
+currentPage = 1;
+renderStudents();
+});
