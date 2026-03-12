@@ -296,3 +296,38 @@ font-size:0.8rem;
 }
 
 }
+/* ===== CONTROL ROW FIX (FILTER + EXCEL) ===== */
+
+.top-controls,
+.excel-controls{
+display:flex;
+flex-wrap:nowrap;
+gap:10px;
+overflow-x:auto;
+overflow-y:hidden;
+scrollbar-width:thin;
+}
+
+.top-controls > *,
+.excel-controls > *{
+flex-shrink:0;
+}
+
+/* keep inputs fixed width */
+.top-controls input,
+.top-controls select,
+.excel-controls input,
+.excel-controls select{
+min-width:140px;
+width:160px;
+}
+
+/* search box slightly bigger */
+#searchBox{
+width:220px;
+}
+
+/* prevent page horizontal scroll */
+body{
+overflow-x:hidden;
+}
