@@ -34,6 +34,11 @@ app.use(session({
   saveUninitialized: false
 }));
 
+app.use((req,res,next)=>{
+  res.locals.user = req.session.user;
+  next();
+});
+
 // ✅ ADD LOGIN ROUTE HERE
 app.post("/login", async (req, res) => {
 
