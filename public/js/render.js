@@ -37,12 +37,13 @@ function attColorClass(pct){ if(pct<75) return 'att-red'; if(pct<90) return 'att
 function escapeHtml(s){ if(s===undefined||s===null) return ''; return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
 /* ---------- Render Students ---------- */
-const studentsList=document.getElementById('studentsList');
-const searchBox=document.getElementById('searchBox');
-const filterCategory=document.getElementById('filterCategory');
-const filterGender=document.getElementById('filterGender');
-const filterCourse=document.getElementById('filterCourse');
-const sortBy=document.getElementById('sortBy');
+const studentsList = document.getElementById('studentsList');
+
+const searchBox = document.getElementById('searchBox') || { value: "" };
+const filterCategory = document.getElementById('filterCategory') || { value: "" };
+const filterGender = document.getElementById('filterGender') || { value: "" };
+const filterCourse = document.getElementById('filterCourse') || { value: "" };
+const sortBy = document.getElementById('sortBy') || { value: "" };
 const toggleDashboardBtn=document.getElementById('toggleDashboard');
 const dashboardArea=document.getElementById('dashboardArea');
 let attendanceChart=null, scoreChart=null;
@@ -51,8 +52,8 @@ function renderStudents() {
   const studentsList = document.getElementById("studentsList");
 
   const q = (searchBox.value || '').toLowerCase();
-  const cat = filterCategory.value;
-  const gender = filterGender.value;
+ const cat = filterCategory?.value || "";
+const gender = filterGender?.value || "";
 
 let list = (window.students || []).filter(s => {
 
