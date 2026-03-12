@@ -1,42 +1,63 @@
 <%- include("partials/header") %>
 
-<h3>Portal Login</h3>
+<div class="container py-5" style="margin-top:120px; max-width:450px;">
 
-<div>
-<button onclick="showAdmin()">Admin Login</button>
-<button onclick="showStudent()">Student Login</button>
+<h3 class="text-center mb-4">Portal Login</h3>
+
+<div class="text-center mb-3">
+<button class="btn btn-dark btn-sm me-2" onclick="showAdmin()">Admin Login</button>
+<button class="btn btn-secondary btn-sm" onclick="showStudent()">Student Login</button>
 </div>
 
 <!-- ADMIN LOGIN -->
+<div id="adminLogin" class="card p-4 shadow">
 
-<div id="adminLogin">
+<div class="mb-3">
+<label>Username</label>
+<input type="text" id="adminUser" class="form-control" placeholder="Username">
+</div>
 
-<input type="text" id="adminUser" placeholder="Username">
-<input type="password" id="adminPass" placeholder="Password">
+<div class="mb-3">
+<label>Password</label>
+<input type="password" id="adminPass" class="form-control" placeholder="Password">
+</div>
 
-<button onclick="adminLogin()">Login</button>
+<button class="btn btn-primary w-100" onclick="adminLogin()">Login</button>
 
 </div>
 
 <!-- STUDENT LOGIN -->
+<div id="studentLogin" class="card p-4 shadow" style="display:none">
 
-<div id="studentLogin" style="display:none">
-
-<select id="year">
+<div class="mb-3">
+<label>Year</label>
+<select id="year" class="form-control">
 <option value="2025-26">2025-26</option>
 <option value="2026-27">2026-27</option>
 </select>
+</div>
 
-<select id="course">
+<div class="mb-3">
+<label>Course</label>
+<select id="course" class="form-control">
 <option value="CGPSC">CGPSC</option>
 <option value="VYAPAM">VYAPAM</option>
 </select>
+</div>
 
-<input type="text" id="roll" placeholder="Roll Number">
+<div class="mb-3">
+<label>Roll Number</label>
+<input type="text" id="roll" class="form-control" placeholder="Roll Number">
+</div>
 
-<input type="password" id="dob" placeholder="DOB">
+<div class="mb-3">
+<label>Date of Birth</label>
+<input type="password" id="dob" class="form-control" placeholder="DOB">
+</div>
 
-<button onclick="studentLogin()">Login</button>
+<button class="btn btn-primary w-100" onclick="studentLogin()">Login</button>
+
+</div>
 
 </div>
 
@@ -50,6 +71,58 @@ document.getElementById("studentLogin").style.display="none";
 function showStudent(){
 document.getElementById("adminLogin").style.display="none";
 document.getElementById("studentLogin").style.display="block";
+}
+
+async function adminLogin(){
+
+const username = document.getElementById("adminUser").value;
+const password = document.getElementById("adminPass").value;
+
+const res = await fetch("/login",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({username,password})
+});
+
+const data = await res.json();
+
+if(data.success){
+window.location="/student";
+}else{
+alert(data.message);
+}
+
+}
+
+async function studentLogin(){
+
+const roll = document.getElementById("roll").value;
+const dob = document.getElementById("dob").value;
+
+const res = await fetch("/login",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+username:roll,
+password:dob
+})
+});
+
+const data = await res.json();
+
+if(data.success){
+
+localStorage.setItem("bvcpYear",document.getElementById("year").value);
+window.location="/student";
+
+}else{
+alert(data.message);
+}
+
 }
 
 </script>
