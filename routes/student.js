@@ -13,7 +13,7 @@ router.post("/import", async (req, res) => {
     }
 
     // Optional: clear old records before import
-    await Student.deleteMany({});
+    await Student.deleteMany({ year: students[0].year });
 
     // Insert all students
     await Student.insertMany(students);
@@ -80,8 +80,23 @@ router.put("/:id", async (req, res) => {
 
 /* DELETE */
 router.delete("/:id", async (req, res) => {
-  await Student.findByIdAndDelete(req.params.id);
-  res.json({ success: true });
+
+  if(!req.session.user || req.session.user.role !== "admin"){
+    return res.status(403).json({error:"Admin access required"});
+  }
+
+  try {
+
+    await Student.findByIdAndDelete(req.params.id);
+
+    res.json({ success: true });
+
+  } catch(err){
+
+    res.status(500).json({error:"Delete failed"});
+
+  }
+
 });
 /* UPDATE PHOTO */
 /* UPDATE PHOTO */
