@@ -32,33 +32,37 @@ router.post("/", async (req, res) => {
 /* READ BY YEAR */
 router.get("/year/:year", async (req, res) => {
 
-try {
+  try {
 
-const year = req.params.year;
+    const year = req.params.year;
 
-// if student login → return only their profile
-if(req.session.user && req.session.user.role === "student"){
+    // student login → return only their profile
+    if(req.session.user && req.session.user.role === "student"){
 
-const student = await Student.findById(req.session.user.studentId);
+      const student = await Student.findById(req.session.user.studentId);
 
-if(!student){
-  return res.json([]);
-}
+      if(!student){
+        return res.json([]);
+      }
 
-return res.json([student]);
+      if(student.year !== year){
+        return res.json([]);
+      }
 
-}
+      return res.json([student]);
 
-// admin login → return all students
-const students = await Student.find({ year: year }).sort({ roll: 1 });
+    }
 
-res.json(students);
+    // admin login → return all students for that year
+    const students = await Student.find({ year }).sort({ roll: 1 });
 
-} catch (error) {
+    res.json(students);
 
-res.status(500).json({ error: error.message });
+  } catch (error) {
 
-}
+    res.status(500).json({ error: error.message });
+
+  }
 
 });
 /* READ ALL + SEARCH */
