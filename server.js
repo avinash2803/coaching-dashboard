@@ -74,6 +74,36 @@ res.redirect("/");
 });
 });
 
+
+// ✅ STUDENT LOGIN (Step 3)
+
+app.post("/student-login", async (req,res)=>{
+
+const {year,course,roll,dob} = req.body;
+
+const student = await Student.findOne({
+year:year,
+course:course,
+roll:roll
+});
+
+if(!student){
+return res.json({success:false,message:"Student not found"});
+}
+
+if(student.dob !== dob){
+return res.json({success:false,message:"Wrong password"});
+}
+
+req.session.user = {
+id:student._id,
+role:"student"
+};
+
+res.json({success:true});
+
+});
+
 /* View Engine Setup */
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

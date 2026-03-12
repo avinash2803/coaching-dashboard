@@ -1,69 +1,56 @@
 <%- include("partials/header") %>
 
-<div class="container py-5" style="margin-top:110px; max-width:450px;">
+<h3>Portal Login</h3>
 
-  <div class="card p-4 shadow">
+<div>
+<button onclick="showAdmin()">Admin Login</button>
+<button onclick="showStudent()">Student Login</button>
+</div>
 
-```
-<h4 class="text-center mb-4">Portal Login</h4>
+<!-- ADMIN LOGIN -->
 
-<form id="loginForm">
+<div id="adminLogin">
 
-  <div class="mb-3">
-    <label class="form-label">Username</label>
-    <input type="text" class="form-control" id="username" required>
-  </div>
+<input type="text" id="adminUser" placeholder="Username">
+<input type="password" id="adminPass" placeholder="Password">
 
-  <div class="mb-3">
-    <label class="form-label">Password</label>
-    <input type="password" class="form-control" id="password" required>
-  </div>
+<button onclick="adminLogin()">Login</button>
 
-  <button class="btn btn-primary w-100">Login</button>
+</div>
 
-</form>
+<!-- STUDENT LOGIN -->
 
-<p id="msg" class="text-danger text-center mt-3"></p>
-```
+<div id="studentLogin" style="display:none">
 
-  </div>
+<select id="year">
+<option value="2025-26">2025-26</option>
+<option value="2026-27">2026-27</option>
+</select>
+
+<select id="course">
+<option value="CGPSC">CGPSC</option>
+<option value="VYAPAM">VYAPAM</option>
+</select>
+
+<input type="text" id="roll" placeholder="Roll Number">
+
+<input type="password" id="dob" placeholder="DOB">
+
+<button onclick="studentLogin()">Login</button>
 
 </div>
 
 <script>
 
-document.getElementById("loginForm").addEventListener("submit", async function(e){
+function showAdmin(){
+document.getElementById("adminLogin").style.display="block";
+document.getElementById("studentLogin").style.display="none";
+}
 
-  e.preventDefault();
-
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  const res = await fetch("/login",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify({username,password})
-  });
-
-  const data = await res.json();
-
-  if(data.success){
-
-    if(data.role === "admin"){
-      window.location = "/student";
-    }
-
-    if(data.role === "student"){
-      window.location = "/student";
-    }
-
-  }else{
-    document.getElementById("msg").innerText = data.message;
-  }
-
-});
+function showStudent(){
+document.getElementById("adminLogin").style.display="none";
+document.getElementById("studentLogin").style.display="block";
+}
 
 </script>
 
