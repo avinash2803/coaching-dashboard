@@ -4,8 +4,10 @@
 <div class="container py-4" style="margin-top:110px;">
 
 
-  <!-- Controls -->
-  <div class="card p-3 mb-3">
+ <% if(user && user.role === "admin"){ %>
+
+<!-- Controls -->
+<div class="card p-3 mb-3">
     <div class="d-flex align-items-center gap-2 flex-nowrap overflow-auto top-controls controls">
 
       <input id="searchBox" class="form-control me-2" placeholder="Search by name or roll..." style="min-width:220px;">
@@ -41,9 +43,14 @@
 
     </div>
   </div>
+</div>
 
-  <!-- Excel Upload -->
-  <div class="card p-3 mb-3">
+<% } %>
+
+<% if(user && user.role === "admin"){ %>
+
+<!-- Excel Upload -->
+<div class="card p-3 mb-3">
   <div class="d-flex align-items-center gap-2 flex-nowrap overflow-auto">
 
 <div style="min-width:140px;">
@@ -85,6 +92,9 @@ Upload Excel
 
     </div>
   </div>
+</div>
+
+<% } %>
 
   <!-- Dashboard -->
   <div id="dashboardArea" style="display:none;" class="mb-3">

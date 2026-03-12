@@ -33,6 +33,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+app.use((req,res,next)=>{
+  res.locals.user = req.session.user;
+  next();
+});
 
 app.use((req,res,next)=>{
   res.locals.user = req.session.user;
