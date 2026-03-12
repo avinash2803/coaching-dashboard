@@ -102,15 +102,16 @@ async function studentLogin(){
 const roll = document.getElementById("roll").value;
 const dob = document.getElementById("dob").value;
 
-const res = await fetch("/login",{
+const res = await fetch("/student-login",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
 },
-credentials:"same-origin",
 body:JSON.stringify({
-username:roll,
-password:dob
+year:document.getElementById("year").value,
+course:document.getElementById("course").value,
+roll:roll,
+dob:dob
 })
 });
 
