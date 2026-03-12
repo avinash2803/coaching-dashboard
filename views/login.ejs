@@ -101,7 +101,7 @@ async function studentLogin(){
 
 const year = document.getElementById("year").value;
 const course = document.getElementById("course").value;
-const roll = document.getElementById("roll").value;
+const roll = Number(document.getElementById("roll").value);
 const dob = document.getElementById("dob").value;
 
 const res = await fetch("/student-login",{
