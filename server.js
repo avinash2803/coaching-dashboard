@@ -33,10 +33,6 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
-app.use((req,res,next)=>{
-  res.locals.user = req.session.user;
-  next();
-});
 
 app.use((req,res,next)=>{
   res.locals.user = req.session.user;
@@ -91,11 +87,10 @@ app.post("/student-login", async (req,res)=>{
 const {year,course,roll,dob} = req.body;
 
 const student = await Student.findOne({
-year:year,
-course:course,
-roll:roll
+year,
+course,
+roll: Number(roll)
 });
-
 if(!student){
 return res.json({success:false,message:"Student not found"});
 }

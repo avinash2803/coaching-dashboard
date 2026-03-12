@@ -41,6 +41,10 @@ if(req.session.user && req.session.user.role === "student"){
 
 const student = await Student.findById(req.session.user.studentId);
 
+if(!student){
+  return res.json([]);
+}
+
 return res.json([student]);
 
 }
