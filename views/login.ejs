@@ -99,6 +99,8 @@ alert(data.message);
 
 async function studentLogin(){
 
+const year = document.getElementById("year").value;
+const course = document.getElementById("course").value;
 const roll = document.getElementById("roll").value;
 const dob = document.getElementById("dob").value;
 
@@ -107,19 +109,15 @@ method:"POST",
 headers:{
 "Content-Type":"application/json"
 },
-body:JSON.stringify({
-year:document.getElementById("year").value,
-course:document.getElementById("course").value,
-roll:roll,
-dob:dob
-})
+credentials:"same-origin",
+body:JSON.stringify({year,course,roll,dob})
 });
 
 const data = await res.json();
 
 if(data.success){
 
-localStorage.setItem("bvcpYear",document.getElementById("year").value);
+localStorage.setItem("bvcpYear",year);   // IMPORTANT
 window.location="/student";
 
 }else{

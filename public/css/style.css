@@ -20,7 +20,20 @@
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
+.excel-controls input,
+.excel-controls select {
+  min-width: 140px;
+  max-width: 180px;
+}
 
+.excel-controls input[type="file"] {
+  min-width: 200px;
+  max-width: 220px;
+}
+
+.excel-controls button {
+  white-space: nowrap;
+}
 .student-card .card-header {
   background: #ffffff;
   border-bottom: none;
