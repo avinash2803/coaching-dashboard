@@ -781,3 +781,15 @@ sortBy?.addEventListener("change", ()=>{
 currentPage = 1;
 renderStudents();
 });
+function changePage(page){
+
+currentPage = page;
+
+renderStudents();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
