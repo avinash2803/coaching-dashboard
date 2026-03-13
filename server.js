@@ -46,13 +46,6 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/Years", express.static(path.join(__dirname, "Years")));
 
-import session from "express-session";
-
-app.use(session({
-  secret: "bvcp-secret",
-  resave: false,
-  saveUninitialized: false
-}));
 
 app.use((req,res,next)=>{
   res.locals.user = req.session.user;
