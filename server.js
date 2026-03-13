@@ -204,6 +204,12 @@ app.get("/success", (req, res) => {
 app.get("/login", (req,res)=>{
 res.render("login");
 });
+
+/* Health check */
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 /* Start Server */
 const PORT = process.env.PORT || 3000;
 
