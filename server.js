@@ -21,6 +21,17 @@ import Student from "./models/student.js";
 import User from "./models/user.js";
 
 const app = express();
+import session from "express-session";
+import MongoStore from "connect-mongo";
+
+app.use(session({
+  secret: "secret-key",
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI
+  })
+}));
 
 /* Fix __dirname */
 const __filename = fileURLToPath(import.meta.url);
@@ -123,11 +134,6 @@ app.set("views", path.join(__dirname, "views"));
 
 
 
-
-/* MongoDB */
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
  /* MongoDB */
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
