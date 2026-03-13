@@ -1,3 +1,12 @@
+/*
+Student Performance Portal
+Developed by: Avinash
+Copyright © 2026
+All Rights Reserved
+*/
+import dotenv from "dotenv";
+dotenv.config();
+
 import authRoutes from "./routes/auth.js";
 import express from "express";
 import mongoose from "mongoose";
@@ -116,9 +125,13 @@ app.set("views", path.join(__dirname, "views"));
 
 
 /* MongoDB */
-mongoose.connect("mongodb+srv://AVI_BPCP_db_user:%23%23%234876%40Avi@cluster0.9knyxgn.mongodb.net/studentDB")
-  .then(() => console.log("MongoDB Atlas Connected"))
-  .catch(err => console.error(err));
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.log(err));
+ /* MongoDB */
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
 
 /* Routes */
 app.use("/api/upload", uploadRoutes);   // ✅ MUST be BEFORE app.listen
