@@ -185,7 +185,7 @@
   margin: auto;
   padding: 0 40px;
   display: grid;
-grid-template-columns: 1.6fr 1.2fr 2.0fr 1.4fr;
+grid-template-columns: 1.7fr 1.1fr 2.0fr 1.4fr;
   gap: 60px;
 }
 
