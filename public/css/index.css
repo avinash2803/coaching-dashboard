@@ -196,11 +196,20 @@ grid-template-columns: 1.6fr 1.2fr 2.0fr 1.4fr;
   color: #2b1a12;
 }
 
-.info-box p,
+.info-box p{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  margin:5px 0;
+  line-height:1.5;
+}
+
+
 .info-box li {
   font-size: 15px;
   line-height: 1.7;
   color: #5a4a42;
+  margin-bottom: 8px;
 }
 
 .info-box ul {
@@ -208,9 +217,6 @@ grid-template-columns: 1.6fr 1.2fr 2.0fr 1.4fr;
   padding-left: 0;
 }
 
-.info-box li {
-  margin-bottom: 8px;
-}
 
 
 
@@ -221,7 +227,7 @@ grid-template-columns: 1.6fr 1.2fr 2.0fr 1.4fr;
 }
 
 .info-box a:hover {
-  text-decoration: underline;
+  color:#0a7c66;
 }
 
 
@@ -378,7 +384,7 @@ text-align:left;
     grid-template-columns: 1fr;
   }
 }
-animation for sections on scroll
+/* animation for sections on scroll */
 .section{
 opacity:0;
 transform:translateY(40px);

@@ -203,32 +203,55 @@
   </div>
 </section>
 <script>
+
 const counters = document.querySelectorAll(".counter");
+let started = false;
 
-function startCounter() {
-  counters.forEach(counter => {
-    const target = +counter.getAttribute("data-target");
-    const countElement = counter.querySelector(".count");
-    let current = 0;
+function runCounter(){
 
-    const update = () => {
-      const increment = target / 100;
+if(started) return;
 
-      if (current < target) {
-        current += increment;
-        countElement.innerText = Math.ceil(current);
-        setTimeout(update, 20);
-      } else {
-        countElement.innerText = target + "+";
-      }
-    };
+const section = document.querySelector(".stats");
+const sectionTop = section.getBoundingClientRect().top;
 
-    update();
-  });
+if(sectionTop < window.innerHeight - 100){
+
+started = true;
+
+counters.forEach(counter => {
+
+const target = +counter.getAttribute("data-target");
+const count = counter.querySelector(".count");
+
+let current = 0;
+
+function update(){
+
+const increment = target / 100;
+
+if(current < target){
+current += increment;
+count.innerText = Math.ceil(current);
+setTimeout(update,20);
+}
+else{
+count.innerText = target + "+";
 }
 
-window.addEventListener("load", startCounter);
+}
+
+update();
+
+});
+
+}
+
+}
+
+window.addEventListener("scroll", runCounter);
+
 </script>
+
 
 
 <script>
