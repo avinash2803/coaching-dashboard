@@ -1,0 +1,2 @@
+MONGO_URI=mongodb+srv://AVI_BPCP_db_user:%23%23%234876%40Avi@cluster0.9knyxgn.mongodb.net/studentDB
+PORT=3000
