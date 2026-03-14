@@ -202,6 +202,57 @@
 
   </div>
 </section>
+<script>
+const counters = document.querySelectorAll(".counter");
+
+function startCounter() {
+  counters.forEach(counter => {
+    const target = +counter.getAttribute("data-target");
+    const countElement = counter.querySelector(".count");
+    let current = 0;
+
+    const update = () => {
+      const increment = target / 100;
+
+      if (current < target) {
+        current += increment;
+        countElement.innerText = Math.ceil(current);
+        setTimeout(update, 20);
+      } else {
+        countElement.innerText = target + "+";
+      }
+    };
+
+    update();
+  });
+}
+
+window.addEventListener("load", startCounter);
+</script>
+
+
+<script>
+
+const sections = document.querySelectorAll(".section");
+
+function revealSections(){
+
+sections.forEach(section => {
+
+const sectionTop = section.getBoundingClientRect().top;
+
+if(sectionTop < window.innerHeight - 100){
+section.classList.add("show");
+}
+
+});
+
+}
+
+window.addEventListener("scroll", revealSections);
+
+</script>
+
 <%- include("partials/footer") %>
 
 
