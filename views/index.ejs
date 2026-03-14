@@ -136,12 +136,9 @@
 <div class="info-box">
   <h3>Bhoramdev Vidyapeeth</h3>
 
-  <p>
-  Bhoramdev Vidyapeeth is a CSR initiative of BALCO,
-  implemented in collaboration with Vidya Bhawan Society
-  and Delhi IAS Academy to support students preparing for
-  competitive examinations.
-  </p>
+<p>
+Bhoramdev Vidyapeeth is a platform that provides free educational support to underprivileged students from marginalized communities and empowers them with opportunities to prepare for government competitive examinations.
+</p>
 </div>
 
     <!-- Column 2 -->
@@ -256,23 +253,68 @@ runCounter();
 
 const sections = document.querySelectorAll(".section");
 
-function revealSections(){
+const sectionObserver = new IntersectionObserver((entries) => {
 
-sections.forEach(section => {
+entries.forEach(entry => {
 
-const sectionTop = section.getBoundingClientRect().top;
-
-if(sectionTop < window.innerHeight - 100){
-section.classList.add("show");
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}else{
+entry.target.classList.remove("show");
 }
 
 });
 
+},{
+threshold:0.25
+});
+
+sections.forEach(section=>{
+sectionObserver.observe(section);
+});
+
+</script>
+
+<script>
+
+const cardContainers = document.querySelectorAll(".program-cards, .stats");
+
+const cardObserver = new IntersectionObserver((entries)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+const cards = entry.target.querySelectorAll(".program-card, .stat-card");
+
+cards.forEach((card,index)=>{
+
+setTimeout(()=>{
+card.classList.add("show");
+}, index * 250);
+
+});
+
+}else{
+
+const cards = entry.target.querySelectorAll(".program-card, .stat-card");
+
+cards.forEach(card=>{
+card.classList.remove("show");
+});
+
 }
 
-window.addEventListener("scroll", revealSections);
-revealSections();
+});
+
+},{threshold:0.3});
+
+cardContainers.forEach(container=>{
+cardObserver.observe(container);
+});
+
 </script>
+
 
 <%- include("partials/footer") %>
 
