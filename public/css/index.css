@@ -181,17 +181,17 @@
 }
 
 .info-grid {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: auto;
-  padding: 0 60px;
+  padding: 0 50px;
   display: grid;
-grid-template-columns: 1.3fr 1fr 1.7fr 1.2fr;
+grid-template-columns: 1.4fr 1.2fr 1.8fr 1.4fr;
   gap: 60px;
 }
 
 .info-box h3 {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 16px;
   color: #2b1a12;
 }
@@ -203,11 +203,21 @@ grid-template-columns: 1.3fr 1fr 1.7fr 1.2fr;
   color: #5a4a42;
 }
 
+.info-box ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.info-box li {
+  margin-bottom: 8px;
+}
+
+
 
 .info-box a {
   text-decoration: none;
   color: #3b1f16;
-  font-weight: 500;
+  font-weight: 450;
 }
 
 .info-box a:hover {
