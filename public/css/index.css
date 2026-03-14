@@ -249,11 +249,19 @@ grid-template-columns: 1.6fr 1.2fr 2.0fr 1.4fr;
   padding: 30px;
   border-radius: 16px;
   box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  text-align:center;
 }
 
-.highlight-card h3 {
-  color: #3b1f16;
-  margin-bottom: 10px;
+.highlight-card h3{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+font-size:36px;
+color:#0a7c66;
+}
+.highlight-icon{
+font-size:24px;
 }
 
 .highlight-card p {
@@ -368,4 +376,15 @@ grid-template-columns: 1.6fr 1.2fr 2.0fr 1.4fr;
   .program-cards {
     grid-template-columns: 1fr;
   }
+}
+animation for sections on scroll
+.section{
+opacity:0;
+transform:translateY(40px);
+transition:all 0.8s ease;
+}
+
+.section.show{
+opacity:1;
+transform:translateY(0);
 }
