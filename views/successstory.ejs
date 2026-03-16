@@ -15,14 +15,14 @@
 %>
 
 <div class="story-card"
-onclick="showStory(
-'<%= photoUrl %>',
-'<%= story.name %>',
-'<%= story.title %>',
-'<%= story.subtitle %>',
-'<%= story.achievement %>',
-`<%- story.story %>`
-)">
+data-photo="<%= photoUrl %>"
+data-name="<%= story.name %>"
+data-title="<%= story.title %>"
+data-subtitle="<%= story.subtitle %>"
+data-achievement="<%= story.achievement %>"
+data-story="<%- story.story %>"
+onclick="openStory(this)"
+>
 
 <img src="<%= photoUrl %>" alt="<%= story.name %>">
 
@@ -68,7 +68,14 @@ onclick="showStory(
 
 <script>
 
-function showStory(photo,name,title,subtitle,achievement,story){
+function openStory(card){
+
+const photo = card.dataset.photo;
+const name = card.dataset.name;
+const title = card.dataset.title;
+const subtitle = card.dataset.subtitle;
+const achievement = card.dataset.achievement;
+const story = card.dataset.story;
 
 const layout = document.getElementById("storyDetail");
 
@@ -80,15 +87,10 @@ layout.style.transform="translateY(0)";
 },100);
 
 document.getElementById("detailPhoto").src = photo;
-
 document.getElementById("detailTitle").innerText = title;
-
 document.getElementById("detailAchievement").innerText = achievement;
-
 document.getElementById("detailSubtitle").innerText = subtitle;
-
 document.getElementById("detailStory").innerHTML = story;
-
 document.getElementById("detailName").innerText = "– " + name;
 
 window.scrollTo({
