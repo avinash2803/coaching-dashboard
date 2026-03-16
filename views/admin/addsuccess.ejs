@@ -4,7 +4,7 @@
 
 <h2>Add Success Story</h2>
 
-<form action="/admin/add-success" method="POST">
+<form action="/admin/add-success" method="POST" enctype="multipart/form-data">
 
 <div class="mb-3">
 <label>Student Name</label>
@@ -12,21 +12,38 @@
 </div>
 
 <div class="mb-3">
-<label>Achievement</label>
-<input type="text" name="achievement" class="form-control" required>
+<label>Main Title</label>
+<input type="text" name="title" class="form-control" placeholder="A Story of Firsts">
 </div>
 
 <div class="mb-3">
-<label>Photo URL</label>
-<input type="text" name="photo" class="form-control">
+<label>Highlight Text</label>
+<input type="text" name="subtitle" class="form-control" placeholder="FEARLESS DREAMS">
 </div>
 
 <div class="mb-3">
-<label>Story</label>
-<textarea name="story" class="form-control" rows="5"></textarea>
+<label>Short Line</label>
+<input type="text" name="achievement" class="form-control" placeholder="From Manjholi to the Nation’s Frontlines">
 </div>
 
-<button class="btn btn-success">Save Story</button>
+<div class="mb-3">
+<label>Village</label>
+<input type="text" name="village" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Upload Photo</label>
+<input type="file" name="photo" class="form-control" accept="image/*">
+</div>
+
+<div class="mb-3">
+<label>Full Story</label>
+<textarea name="story" class="form-control" rows="6"></textarea>
+</div>
+
+<button type="submit" class="btn btn-success">
+Save Story
+</button>
 
 </form>
 

@@ -3,7 +3,12 @@ import mongoose from "mongoose";
 const successSchema = new mongoose.Schema({
   name: String,
   slug: String,
-  photo: String,
+
+  photoId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "uploads.files"
+  },
+
   title: String,
   subtitle: String,
   achievement: String,

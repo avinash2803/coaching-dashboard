@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import { GridFSBucket } from "mongodb";
 import sharp from "sharp";
 import Student from "../models/student.js";
-
+import Success from "../models/success.js";
 const router = express.Router();
 
 /* ---------- GridFS ---------- */
@@ -32,23 +32,35 @@ router.post("/", upload.single("photo"), async (req, res) => {
   }
 
   const studentId = req.body.studentId;
-
+const successId = req.body.successId;
   try {
 
-    const student = await Student.findById(studentId);
+    const student = await Student.findById(studentId);let doc = null;
+let type = "";
 
-    if (!student) {
-      return res.status(404).json({ error: "Student not found" });
-    }
+if (studentId) {
+  doc = await Student.findById(studentId);
+  type = "student";
+}
+
+if (successId) {
+  doc = await Success.findById(successId);
+  type = "success";
+}
+
+if (!doc) {
+  return res.status(404).json({ error: "Record not found" });
+}
 
     /* ---------- Delete old photo ---------- */
-    if (student.photoId) {
-      try {
-        await gfs.delete(new mongoose.Types.ObjectId(student.photoId));
-      } catch (err) {
-        console.log("Old photo already deleted");
-      }
-    }
+   if (doc.photoId) {
+  try {
+    await gfs.delete(new mongoose.Types.ObjectId(doc.photoId));
+  }
+  catch (err) {
+    console.log("Old photo already deleted");
+  }
+}
 
     /* ---------- Compress Image ---------- */
     const compressedImage = await sharp(req.file.buffer)
@@ -57,23 +69,23 @@ router.post("/", upload.single("photo"), async (req, res) => {
       .toBuffer();
 
     /* ---------- Upload compressed image ---------- */
-    const uploadStream = gfs.openUploadStream(`${student.name}.jpg`, {
-      contentType: "image/jpeg"
-    });
+    const uploadStream = gfs.openUploadStream(`${doc.name}.jpg`, {
+  contentType: "image/jpeg"
+});
 
     uploadStream.end(compressedImage);
 
     uploadStream.on("finish", async () => {
 
-      student.photoId = uploadStream.id;
-      await student.save();
+  doc.photoId = uploadStream.id;
+  await doc.save();
 
-      res.json({
-        fileId: uploadStream.id.toString(),
-        filename: uploadStream.filename
-      });
+  res.json({
+    fileId: uploadStream.id.toString(),
+    filename: uploadStream.filename
+  });
 
-    });
+});
 
   } catch (err) {
 

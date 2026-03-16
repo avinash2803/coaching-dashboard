@@ -42,7 +42,7 @@ const __dirname = path.dirname(__filename);
 /* Middleware */
 app.use(cors());
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -139,6 +139,7 @@ app.use("/api/upload", uploadRoutes);   // ✅ MUST be BEFORE app.listen
 app.use("/api/students", studentsRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/excel", excelUpload);
+app.use("/", successRoutes);
 app.put("/api/students/:id/tests", async (req, res) => {
 
   try {
@@ -200,8 +201,12 @@ app.get("/feedback", (req, res) => {
 app.get("/testimonials", (req, res) => {
   res.render("testimonials");
 });
-app.get("/success", (req, res) => {
-  res.render("success");
+app.get("/success", async (req, res) => {
+
+  const stories = await Success.find();
+
+  res.render("successstory", { stories });
+
 });
 app.get("/login", (req,res)=>{
 res.render("login");

@@ -1,8 +1,13 @@
 import express from "express";
 import Success from "../models/success.js";
 import adminAuth from "../middleware/adminAuth.js";
+import multer from "multer";
+
 
 const router = express.Router();
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
 
 /* Manage success stories */
 router.get("/admin/manage-success", adminAuth, async (req,res)=>{
@@ -19,19 +24,32 @@ res.render("admin/addsuccess");
 });
 
 /* Save story */
-router.post("/admin/add-success", adminAuth, async (req,res)=>{
+router.post(
+  "/admin/add-success",
+  adminAuth,
+  upload.single("photo"),
+  async (req, res) => {
 
-const { name, achievement, photo, story } = req.body;
+    const { name, title, subtitle, achievement, village, story } = req.body;
 
-await Success.create({
-name,
-achievement,
-photo,
-story
-});
+    let photoId = null;
 
-res.redirect("/admin/manage-success");
+    if (req.file) {
+      photoId = req.file.id; // GridFS file id
+    }
 
-});
+    await Success.create({
+      name,
+      title,
+      subtitle,
+      achievement,
+      village,
+      story,
+      photoId
+    });
+
+    res.redirect("/admin/manage-success");
+  }
+);
 
 export default router;
