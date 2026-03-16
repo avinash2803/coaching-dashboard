@@ -23,11 +23,14 @@ background:white;
 border-radius:14px;
 overflow:hidden;
 cursor:pointer;
-box-shadow:0 6px 20px rgba(0,0,0,0.08);
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
 transition:all .35s ease;
-transform:translateY(0);
 opacity:0;
+transform:translateY(20px);
+display:flex;
+flex-direction:column;
 }
+
 
 /* HOVER EFFECT */
 
@@ -130,7 +133,8 @@ font-size:19px;
 line-height:1.8;
 position:relative;
 max-width:420px;
-margin-left:20px;
+margin-left:auto;
+margin-right:auto;
 }
 
 .quote-box strong{

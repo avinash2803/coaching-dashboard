@@ -11,7 +11,7 @@
 <div class="story-grid">
 
 <% stories.forEach(story => { 
-   const photoUrl = story.photoId ? "/upload/" + story.photoId : "/images/default-user.png";
+   const photoUrl = story.photoId ? "/api/upload/" + story.photoId : "/images/default-user.png";
 %>
 
 <div class="story-card"
@@ -20,6 +20,7 @@ onclick="showStory(
 '<%= story.name %>',
 '<%= story.title %>',
 '<%= story.subtitle %>',
+'<%= story.achievement %>',
 `<%- story.story %>`
 )">
 
@@ -42,7 +43,9 @@ onclick="showStory(
 
 <h2 id="detailTitle"></h2>
 
-<p id="detailSubtitle"></p>
+<h3 id="detailSubtitle"></h3>
+
+<p id="detailAchievement"></p>
 
 </div>
 
@@ -65,7 +68,8 @@ onclick="showStory(
 
 <script>
 
-function showStory(photo,name,title,subtitle,story){
+function showStory(photo,name,title,subtitle,achievement,story){
+document.getElementById("detailAchievement").innerText = achievement;
 
 const layout = document.getElementById("storyDetail");
 
@@ -120,27 +124,6 @@ revealCards();
 
 });
 
-function revealCards(){
-
-const trigger = window.innerHeight * 0.85;
-
-cards.forEach(card => {
-
-const cardTop = card.getBoundingClientRect().top;
-
-if(cardTop < trigger){
-
-card.style.opacity = "1";
-card.style.transform = "translateY(0)";
-
-}
-
-});
-
-}
-
-window.addEventListener("scroll", revealCards);
-revealCards();
 </script>
 
 <%- include("partials/footer") %>
