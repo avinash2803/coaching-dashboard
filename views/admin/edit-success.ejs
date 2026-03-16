@@ -4,7 +4,7 @@
 
 <h2>Edit Success Story</h2>
 
-<form action="/admin/update-success/<%= story._id %>" method="POST">
+<form action="/admin/update-success/<%= story._id %>" method="POST" enctype="multipart/form-data">
 
 <div class="mb-3">
 <label>Student Name</label>
@@ -29,6 +29,11 @@
 <div class="mb-3">
 <label>Village</label>
 <input type="text" name="village" value="<%= story.village %>" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Upload New Photo (optional)</label>
+<input type="file" name="photo" class="form-control">
 </div>
 
 <div class="mb-3">

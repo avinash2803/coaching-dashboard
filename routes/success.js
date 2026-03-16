@@ -124,29 +124,62 @@ router.get("/admin/edit-success/:id", adminAuth, async (req, res) => {
    UPDATE STORY
 ================================ */
 
-router.post("/admin/update-success/:id", adminAuth, async (req,res)=>{
+router.post("/admin/update-success/:id", adminAuth, upload.single("photo"), async (req,res)=>{
 
-  try{
+try{
 
-    const { name, title, subtitle, achievement, village, story } = req.body;
+  const { name, title, subtitle, achievement, village, story } = req.body;
 
-    await Success.findByIdAndUpdate(req.params.id,{
-      name,
-      title,
-      subtitle,
-      achievement,
-      village,
-      story
+  const success = await Success.findById(req.params.id);
+
+  success.name = name;
+  success.title = title;
+  success.subtitle = subtitle;
+  success.achievement = achievement;
+  success.village = village;
+  success.story = story;
+
+  if(req.file){
+
+    // delete old GridFS image
+    if(success.photoId){
+      try{
+        await gfs.delete(new mongoose.Types.ObjectId(success.photoId));
+      }catch(err){
+        console.log("Old image already deleted");
+      }
+    }
+
+    // upload new photo
+    const uploadStream = gfs.openUploadStream(`${name}.jpg`,{
+      contentType:"image/jpeg"
     });
 
-    res.redirect("/admin/manage-success");
+    uploadStream.end(req.file.buffer);
 
-  }catch(err){
+    uploadStream.on("finish", async ()=>{
 
-    console.error(err);
+      success.photoId = uploadStream.id;
+      await success.save();
+
+      res.redirect("/admin/manage-success");
+
+    });
+
+  }
+  else{
+
+    await success.save();
     res.redirect("/admin/manage-success");
 
   }
+
+}catch(err){
+
+  console.error(err);
+  res.redirect("/admin/manage-success");
+
+}
 
 });
 
