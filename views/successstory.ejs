@@ -43,9 +43,9 @@ onclick="showStory(
 
 <h2 id="detailTitle"></h2>
 
-<h3 id="detailSubtitle"></h3>
+<h3 id="detailAchievement"></h3>
 
-<p id="detailAchievement"></p>
+<p id="detailSubtitle"></p>
 
 </div>
 
@@ -69,7 +69,6 @@ onclick="showStory(
 <script>
 
 function showStory(photo,name,title,subtitle,achievement,story){
-document.getElementById("detailAchievement").innerText = achievement;
 
 const layout = document.getElementById("storyDetail");
 
@@ -83,6 +82,8 @@ layout.style.transform="translateY(0)";
 document.getElementById("detailPhoto").src = photo;
 
 document.getElementById("detailTitle").innerText = title;
+
+document.getElementById("detailAchievement").innerText = achievement;
 
 document.getElementById("detailSubtitle").innerText = subtitle;
 
