@@ -41,7 +41,8 @@ box-shadow:0 12px 30px rgba(0,0,0,0.15);
 .story-card img{
 width:100%;
 height:220px;
-object-fit:cover;
+object-fit:contain;
+background:#f3f3f3;
 transition:transform .5s ease;
 }
 
@@ -67,7 +68,7 @@ margin-bottom:12px;
 .story-layout{
 display:flex;
 gap:50px;
-align-items:center;
+align-items:flex-start;
 background:#0d4a7d;
 color:white;
 padding:60px;
@@ -128,6 +129,8 @@ border-radius:12px;
 font-size:19px;
 line-height:1.8;
 position:relative;
+max-width:420px;
+margin-left:20px;
 }
 
 .quote-box strong{
