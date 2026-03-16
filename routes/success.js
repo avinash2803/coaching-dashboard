@@ -96,6 +96,31 @@ router.post(
 });
 
 /* ===============================
+   EDIT SUCCESS STORY PAGE
+================================ */
+
+router.get("/admin/edit-success/:id", adminAuth, async (req, res) => {
+
+  try {
+
+    const story = await Success.findById(req.params.id);
+
+    if (!story) {
+      return res.redirect("/admin/manage-success");
+    }
+
+    res.render("admin/edit-success", { story });
+
+  } catch (err) {
+
+    console.error(err);
+    res.redirect("/admin/manage-success");
+
+  }
+
+});
+
+/* ===============================
    UPDATE STORY
 ================================ */
 
