@@ -40,7 +40,9 @@
 
 <a href="/admin/edit-success/<%= story._id %>" class="btn btn-sm btn-primary">Edit</a>
 
-<a href="/admin/delete-success/<%= story._id %>" class="btn btn-sm btn-danger">Delete</a>
+<form action="/admin/delete-success/<%= story._id %>" method="POST">
+  <button type="submit">Delete</button>
+</form>
 
 </td>
 

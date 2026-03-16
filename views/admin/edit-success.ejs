@@ -1,0 +1,45 @@
+<%- include("../partials/header") %>
+
+<div class="container mt-4">
+
+<h2>Edit Success Story</h2>
+
+<form action="/admin/update-success/<%= story._id %>" method="POST">
+
+<div class="mb-3">
+<label>Student Name</label>
+<input type="text" name="name" value="<%= story.name %>" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Main Title</label>
+<input type="text" name="title" value="<%= story.title %>" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Highlight Text</label>
+<input type="text" name="subtitle" value="<%= story.subtitle %>" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Short Line</label>
+<input type="text" name="achievement" value="<%= story.achievement %>" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Village</label>
+<input type="text" name="village" value="<%= story.village %>" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Story</label>
+<textarea name="story" class="form-control" rows="6"><%= story.story %></textarea>
+</div>
+
+<button class="btn btn-success">Update Story</button>
+
+</form>
+
+</div>
+
+<%- include("../partials/footer") %>

@@ -135,7 +135,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.log(err));
 
 /* Routes */
-app.use("/api/upload", uploadRoutes);   // ✅ MUST be BEFORE app.listen
+app.use("/api/upload", uploadRoutes);  // ✅ MUST be BEFORE app.listen
 app.use("/api/students", studentsRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/excel", excelUpload);

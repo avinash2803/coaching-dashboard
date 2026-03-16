@@ -11,7 +11,7 @@
 <div class="story-grid">
 
 <% stories.forEach(story => { 
-   const photoUrl = story.photoId ? "/api/upload/" + story.photoId : "/images/default-user.png";
+   const photoUrl = story.photoId ? "/upload/" + story.photoId : "/images/default-user.png";
 %>
 
 <div class="story-card"
@@ -94,7 +94,31 @@ behavior:"smooth"
 }
 /* CARD SCROLL ANIMATION */
 
+window.addEventListener("DOMContentLoaded", () => {
+
 const cards = document.querySelectorAll(".story-card");
+
+function revealCards(){
+
+const trigger = window.innerHeight * 0.85;
+
+cards.forEach(card => {
+
+const cardTop = card.getBoundingClientRect().top;
+
+if(cardTop < trigger){
+card.style.opacity = "1";
+card.style.transform = "translateY(0)";
+}
+
+});
+
+}
+
+window.addEventListener("scroll", revealCards);
+revealCards();
+
+});
 
 function revealCards(){
 
