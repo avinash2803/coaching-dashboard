@@ -1,0 +1,80 @@
+<%- include("partials/header") %>
+
+<link rel="stylesheet" href="/css/success.css">
+<h1>Success Stories</h1>
+
+<div class="story-grid">
+
+<% stories.forEach(story => { %>
+
+<div class="story-card"
+onclick="showStory(
+'<%= story.photo %>',
+'<%= story.name %>',
+'<%= story.title %>',
+'<%= story.subtitle %>',
+`<%= story.story %>`
+)">
+
+<img src="<%= story.photo %>">
+
+<h3><%= story.name %></h3>
+
+<p><%= story.achievement %></p>
+
+</div>
+
+<% }) %>
+
+</div>
+<div id="storyDetail" class="story-layout" style="display:none">
+
+<div class="story-left">
+
+<img id="detailPhoto">
+
+<h2 id="detailTitle"></h2>
+
+<p id="detailSubtitle"></p>
+
+</div>
+
+<div class="story-right">
+
+<div class="quote-box">
+
+<p id="detailStory"></p>
+
+<strong id="detailName"></strong>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function showStory(photo,name,title,subtitle,story){
+
+document.getElementById("storyDetail").style.display="flex";
+
+document.getElementById("detailPhoto").src = photo;
+
+document.getElementById("detailTitle").innerText = title;
+
+document.getElementById("detailSubtitle").innerText = subtitle;
+
+document.getElementById("detailStory").innerText = story;
+
+document.getElementById("detailName").innerText = name;
+
+window.scrollTo({
+top:document.getElementById("storyDetail").offsetTop-100,
+behavior:"smooth"
+});
+
+}
+
+</script>
+<%- include("partials/footer") %>

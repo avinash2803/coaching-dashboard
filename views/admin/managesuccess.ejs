@@ -1,0 +1,59 @@
+<%- include("../partials/header") %>
+
+<div class="container mt-4">
+
+<h2>Success Stories</h2>
+
+<a href="/admin/add-success" class="btn btn-success mb-3">Add Story</a>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+<th>Name</th>
+<th>Achievement</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<% if(stories.length === 0){ %>
+
+<tr>
+<td colspan="3">No success stories yet</td>
+</tr>
+
+<% } else { %>
+
+<% stories.forEach(story => { %>
+
+<tr>
+
+<td><%= story.name %></td>
+
+<td><%= story.achievement %></td>
+
+<td>
+
+<a href="/admin/edit-success/<%= story._id %>" class="btn btn-sm btn-primary">Edit</a>
+
+<a href="/admin/delete-success/<%= story._id %>" class="btn btn-sm btn-danger">Delete</a>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+<% } %>
+
+</tbody>
+
+</table>
+
+</div>
+
+<%- include("../partials/footer") %>

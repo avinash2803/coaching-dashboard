@@ -1,0 +1,35 @@
+<%- include("../partials/header") %>
+
+<div class="container mt-4">
+
+<h2>Add Success Story</h2>
+
+<form action="/admin/add-success" method="POST">
+
+<div class="mb-3">
+<label>Student Name</label>
+<input type="text" name="name" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label>Achievement</label>
+<input type="text" name="achievement" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label>Photo URL</label>
+<input type="text" name="photo" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Story</label>
+<textarea name="story" class="form-control" rows="5"></textarea>
+</div>
+
+<button class="btn btn-success">Save Story</button>
+
+</form>
+
+</div>
+
+<%- include("../partials/footer") %>

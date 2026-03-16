@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import authRoutes from "./routes/auth.js";
+import adminAuth from "./middleware/adminAuth.js";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -19,7 +20,8 @@ import studentsRoutes from "./routes/student.js";
 import uploadRoutes from "./routes/upload.js"; // ✅ IMPORTANT
 import Student from "./models/student.js";
 import User from "./models/user.js";
-
+import Success from "./models/success.js";
+import successRoutes from "./routes/success.js";
 const app = express();
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -208,6 +210,23 @@ res.render("login");
 /* Health check */
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
+});
+
+
+app.get("/admin/dashboard", adminAuth, (req,res)=>{
+res.render("admin/dashboard");
+});
+
+
+app.get("/admin/manage-success", adminAuth, async (req,res)=>{
+
+const stories = await Success.find();
+
+res.render("admin/managesuccess",{stories});
+
+});
+app.get("/admin/add-success", adminAuth, (req,res)=>{
+res.render("admin/addsuccess");
 });
 
 /* Start Server */

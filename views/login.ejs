@@ -90,7 +90,7 @@ body:JSON.stringify({username,password})
 const data = await res.json();
 
 if(data.success){
-window.location="/student";
+window.location="/admin/dashboard";
 }else{
 alert(data.message);
 }
