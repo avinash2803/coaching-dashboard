@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="/css/success.css">
 
-<div class="container mt-5">
+<div class="container mt-5 pt-5">
 
 <h1 class="text-center mb-4">Success Stories</h1>
 
@@ -27,7 +27,12 @@ onclick="openStory(this)"
 <img src="<%= photoUrl %>" alt="<%= story.name %>">
 
 <h3><%= story.name %></h3>
-<p><%= story.achievement %></p>
+
+<p class="tagline"><%= story.subtitle %></p>
+
+<div class="badge">
+  <%= story.achievement %>
+</div>
 
 </div>
 
@@ -90,7 +95,7 @@ document.getElementById("detailPhoto").src = photo;
 document.getElementById("detailTitle").innerText = title;
 document.getElementById("detailAchievement").innerText = achievement;
 document.getElementById("detailSubtitle").innerText = subtitle;
-document.getElementById("detailStory").innerHTML = story;
+document.getElementById("detailStory").innerHTML = `"${story}"`;
 document.getElementById("detailName").innerText = "– " + name;
 
 const grid = document.querySelector(".story-grid");

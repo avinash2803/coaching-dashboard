@@ -1,4 +1,7 @@
 /* TITLE */
+body{
+padding-top:80px;
+}
 
 h1{
 text-align:center;
@@ -43,10 +46,11 @@ box-shadow:0 12px 30px rgba(0,0,0,0.15);
 
 .story-card img{
 width:100%;
-height:220px;
-object-fit:contain;
+height:200px;
+object-fit:cover;
 background:#f3f3f3;
 transition:transform .5s ease;
+border-bottom:1px solid #eee;
 }
 
 .story-card:hover img{
@@ -139,7 +143,24 @@ margin-left:auto;
 margin-right:auto;
 box-shadow:0 10px 30px rgba(0,0,0,0.15);
 }
+/* ADD QUOTE SYMBOL DESIGN */
+.quote-box::before{
+content: "“";
+font-size: 80px;
+position: absolute;
+top: -20px;
+left: 10px;
+color: rgba(255,255,255,0.15);
+}
 
+.quote-box::after{
+content: "”";
+font-size: 80px;
+position: absolute;
+bottom: -40px;
+right: 10px;
+color: rgba(255,255,255,0.15);
+}
 .quote-box strong{
 display:block;
 margin-top:20px;
@@ -188,4 +209,30 @@ height:200px;
 
 .story-layout{
 grid-column: 1 / -1;
+}
+
+/* TAGLINE */
+.tagline{
+font-size:13px;
+color:#777;
+text-align:center;
+margin-bottom:8px;
+padding:0 10px;
+}
+
+/* BADGE */
+.badge{
+background:#7ed957;
+color:#0d3b66;
+font-size:13px;
+font-weight:600;
+padding:6px 14px;
+border-radius:20px;
+display:inline-block;
+margin:0 auto 15px;
+}
+
+/* CENTER BADGE */
+.story-card{
+align-items:center;
 }
