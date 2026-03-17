@@ -57,6 +57,10 @@ padding:10px;
 .story-card:hover img{
 transform:scale(1.1);
 }
+.story-card{
+max-width:300px;
+margin:auto;
+}
 
 /* CARD TEXT */
 
