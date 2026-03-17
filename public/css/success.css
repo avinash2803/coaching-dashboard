@@ -82,7 +82,7 @@ margin-bottom:12px;
 .story-layout{
 display:flex;
 gap:25px;
-align-items:flex-start;
+align-items:center;
 background:#0d4a7d;
 color:white;
 padding:30px;
@@ -134,6 +134,8 @@ color:#c9e6ff;
 
 .story-right{
 flex:2;
+display:flex;
+align-items:center;
 }
 
 .quote-box{
@@ -143,9 +145,7 @@ border-radius:14px;
 font-size:19px;
 line-height:1.9;
 position:relative;
-max-width:440px;
-margin-left:auto;
-margin-right:auto;
+width:100%;
 box-shadow:0 10px 30px rgba(0,0,0,0.15);
 }
 /* ADD QUOTE SYMBOL DESIGN */
