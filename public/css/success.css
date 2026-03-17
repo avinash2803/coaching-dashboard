@@ -185,3 +185,7 @@ height:200px;
 }
 
 }
+
+.story-layout{
+grid-column: 1 / -1;
+}
