@@ -81,11 +81,11 @@ margin-bottom:12px;
 
 .story-layout{
 display:flex;
-gap:50px;
+gap:25px;
 align-items:flex-start;
 background:#0d4a7d;
 color:white;
-padding:50px;
+padding:30px;
 border-radius:14px;
 margin-top:40px;
 opacity:0;
@@ -101,8 +101,8 @@ text-align:center;
 }
 
 .story-left img{
-width:260px;
-height:260px;
+width:220px;
+height:220px;
 object-fit:cover;
 border-radius:50%;
 border:10px solid #7ed957;
@@ -118,7 +118,7 @@ margin-bottom:10px;
 }
 
 .story-left h3{
-font-size:42px;
+font-size:32px;
 font-weight:800;
 color:#7ed957;
 margin-bottom:10px;
