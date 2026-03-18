@@ -7,6 +7,14 @@ import Student from "../models/student.js";
 import Success from "../models/success.js";
 const router = express.Router();
 
+let gfs;
+
+mongoose.connection.once("open", () => {
+  gfs = new GridFSBucket(mongoose.connection.db, {
+    bucketName: "photos"
+  });
+});
+
 /* ---------- GridFS ---------- */
 function getBucket() {
   return new GridFSBucket(mongoose.connection.db, {
@@ -38,10 +46,9 @@ const upload = multer({
 /* ---------- Upload Photo ---------- */
 router.post("/", upload.single("photo"), async (req, res) => {
 
-  if (!gfs) {
-    return res.status(500).json({ error: "File system not ready" });
-  }
-
+if (!gfs) {
+  return res.status(500).json({ error: "File system not ready" });
+}
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
@@ -69,8 +76,7 @@ if (!doc) {
     /* ---------- Delete old photo ---------- */
    if (doc.photoId) {
   try {
-    const bucket = getBucket();
-await bucket.delete(new mongoose.Types.ObjectId(doc.photoId));
+    await gfs.delete(new mongoose.Types.ObjectId(doc.photoId));
   }
   catch (err) {
     console.log("Old photo already deleted");
@@ -84,7 +90,7 @@ await bucket.delete(new mongoose.Types.ObjectId(doc.photoId));
       .toBuffer();
 
     /* ---------- Upload compressed image ---------- */
-    const uploadStream = gfs.openUploadStream(`${doc.name}.jpg`, {
+   const uploadStream = gfs.openUploadStream(`${doc.name}.jpg`, {
   contentType: "image/jpeg"
 });
 
@@ -113,12 +119,10 @@ await bucket.delete(new mongoose.Types.ObjectId(doc.photoId));
 
 /* ---------- Get Photo ---------- */
 router.get("/:id", async (req, res) => {
-
+if (!gfs) {
+  return res.status(500).json({ error: "File system not ready" });
+}
   try {
-
-    if (!gfs) {
-      return res.status(500).json({ error: "File system not ready" });
-    }
 
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
   return res.status(400).json({ error: "Invalid file id format" });
@@ -126,8 +130,7 @@ router.get("/:id", async (req, res) => {
 
 const fileId = new mongoose.Types.ObjectId(req.params.id);
 
-    const bucket = getBucket();
-const downloadStream = bucket.openDownloadStream(fileId);
+    const downloadStream = gfs.openDownloadStream(fileId);
 
     downloadStream.on("error", () => {
       res.status(404).json({ error: "File not found" });
