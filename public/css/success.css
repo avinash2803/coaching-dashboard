@@ -46,13 +46,14 @@ box-shadow:0 12px 30px rgba(0,0,0,0.15);
 
 .story-card img{
 width:100%;
-height:180px;
-object-fit:contain;
-background:#f3f3f3;
+height:200px;
+object-fit:cover;     /* 🔥 MAIN FIX */
+object-position:center;
 transition:transform .5s ease;
 border-bottom:1px solid #eee;
-padding:10px;
+border-radius:14px 14px 0 0;
 }
+
 
 .story-card:hover img{
 transform:scale(1.1);
@@ -60,6 +61,7 @@ transform:scale(1.1);
 .story-card{
 max-width:300px;
 margin:auto;
+overflow:hidden;
 }
 
 /* CARD TEXT */
