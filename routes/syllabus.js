@@ -21,4 +21,4 @@ router.get("/syllabus", (req, res) => {
   res.render("syllabus", { data: syllabusData });
 });
 
-module.exports = router;
+export default router;
