@@ -4,10 +4,13 @@
 
 /* ---------- Body ---------- */
 body {
-  margin: 0;
+  margin: 100;
   font-family: "Segoe UI", Arial, sans-serif;
   background: #fbf5ef;
   color: #222;
+}
+body {
+  padding-top: 80px;  /* header height ke equal */
 }
 
 /* =========================================
@@ -222,7 +225,7 @@ body {
    ========================================= */
 
 .top-bar.scrolled {
-  padding: 5px 48px 5px 120px;  /* 👈 left 120px SAME rakho */
+  padding: 5px 48px 5px 100px;  /* 👈 left 120px SAME rakho */
   background: rgba(251, 245, 239, 0.98);
 }
 
