@@ -1,13 +1,13 @@
-const express = require("express");
-const router = express.Router();
-const XLSX = require("xlsx");
-const multer = require("multer");
+import express from "express";
+import XLSX from "xlsx";
+import multer from "multer";
 
+const router = express.Router();
 const upload = multer({ dest: "uploads/" });
 
 let syllabusData = [];
 
-// ✅ Excel upload
+// Upload Excel
 router.post("/upload-syllabus", upload.single("file"), (req, res) => {
   const workbook = XLSX.readFile(req.file.path);
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -16,7 +16,7 @@ router.post("/upload-syllabus", upload.single("file"), (req, res) => {
   res.redirect("/syllabus");
 });
 
-// ✅ Show page
+// Show page
 router.get("/syllabus", (req, res) => {
   res.render("syllabus", { data: syllabusData });
 });
