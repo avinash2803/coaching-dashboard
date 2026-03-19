@@ -6,7 +6,7 @@
 body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
-  background: #fbf5ef;   /* Same background as home */
+  background: #fbf5ef;
   color: #222;
 }
 
@@ -50,6 +50,7 @@ body {
   font-size: 14px;
   font-weight: 500;
 }
+
 .menu-dropdown a.logout {
   color: #c0392b;
   font-weight: 600;
@@ -58,9 +59,6 @@ body {
 .menu-dropdown a:hover {
   background: rgba(178, 74, 47, 0.12);
 }
-
-/* Show on hover (desktop) */
-
 
 /* =========================================
    TOP BAR (HEADER)
@@ -81,12 +79,12 @@ body {
   background: rgba(251, 245, 239, 0.90);
   backdrop-filter: blur(6px);
   box-sizing: border-box;
-
   transition: all 0.3s ease;
 }
 
 .top-bar img {
   height: 65px;
+  transition: all 0.3s ease;
 }
 
 .top-bar .center {
@@ -98,10 +96,10 @@ body {
 }
 
 .top-bar .left,
-.top-bar .right{
-  display:flex;
-  align-items:center;
-  gap:10px;
+.top-bar .right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .program-name {
@@ -118,19 +116,17 @@ body {
 }
 
 /* =========================================
-   GLOBAL PAGE SPACING
-   (Because header is fixed)
+   PAGE SPACING (for fixed header)
    ========================================= */
 
 .page-content {
-  margin-top: 90px; /* desktop */
+  margin-top: 80px;
 }
 
-@media (max-width: 768px) {
-  .page-content {
-    margin-top: 140px; /* adjust for bigger mobile header */
-  }
-}
+/* =========================================
+   BUTTON
+   ========================================= */
+
 .btn-primary {
   background: #d9e4c8;
   color: #000;
@@ -144,70 +140,90 @@ body {
 .btn-primary:hover {
   background: #c8d9b0;
 }
+
 /* =========================================
    FOOTER
    ========================================= */
 
 .footer-bottom {
   text-align: center;
-  padding: 15px 10px 20px 10px;
+  padding: 15px 10px 20px;
   background: #f1ece6;
   font-size: 14px;
   font-style: italic;
 }
 
-.footer-text{
-  line-height:1.6;
+.footer-text {
+  line-height: 1.6;
 }
 
-@media (min-width:768px){
-  .footer-text{
-    white-space:nowrap;
+@media (min-width: 768px) {
+  .footer-text {
+    white-space: nowrap;
   }
 }
 
-@media (max-width:767px){
-  .divider{
-    display:none;
+@media (max-width: 767px) {
+  .divider {
+    display: none;
   }
 }
+
+/* =========================================
+   MOBILE RESPONSIVE (FINAL CLEAN)
+   ========================================= */
+
 @media (max-width: 768px) {
 
   .top-bar {
-    height: auto;              /* allow expansion */
-    flex-direction: column;    /* stack items */
-    padding: 10px 15px;
-    gap: 8px;
+    height: 60px;
+    min-height: 60px;
+    padding: 0 10px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .top-bar img {
+    height: 30px;
   }
 
   .top-bar .left,
   .top-bar .center,
   .top-bar .right {
     justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .top-bar img {
-    height: 40px;              /* smaller logos */
+    flex-wrap: nowrap;
   }
 
   .program-name {
-    font-size: 16px;           /* smaller title */
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
     text-align: center;
   }
 
   .year-select {
-    font-size: 12px;
+    font-size: 11px;
+    padding: 2px 6px;
   }
 
-}
-@media (max-width: 768px) {
   .floating-menu {
     top: 10px;
     left: 10px;
     transform: scale(0.9);
   }
+
+  .page-content {
+    margin-top: 60px;
+  }
 }
+
+/* =========================================
+   SCROLL EFFECT
+   ========================================= */
+
 .top-bar.scrolled {
   padding: 5px 15px;
   background: rgba(251, 245, 239, 0.98);
@@ -217,10 +233,9 @@ body {
   height: 45px;
 }
 .top-bar {
-  min-height: 72px;
-  transition: all 0.3s ease;
+  z-index: 10000;
 }
 
-.top-bar img {
-  transition: all 0.3s ease;
+.floating-menu {
+  z-index: 9000;
 }
