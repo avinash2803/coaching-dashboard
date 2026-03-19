@@ -72,6 +72,7 @@ body {
   left: 0;
   width: 100%;
   height: 72px;
+  min-height: 72px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,6 +81,8 @@ body {
   background: rgba(251, 245, 239, 0.90);
   backdrop-filter: blur(6px);
   box-sizing: border-box;
+
+  transition: all 0.3s ease;
 }
 
 .top-bar img {
@@ -120,7 +123,13 @@ body {
    ========================================= */
 
 .page-content {
-  margin-top: 120px; /* Prevent overlap under fixed header */
+  margin-top: 90px; /* desktop */
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    margin-top: 140px; /* adjust for bigger mobile header */
+  }
 }
 .btn-primary {
   background: #d9e4c8;
@@ -161,4 +170,57 @@ body {
   .divider{
     display:none;
   }
+}
+@media (max-width: 768px) {
+
+  .top-bar {
+    height: auto;              /* allow expansion */
+    flex-direction: column;    /* stack items */
+    padding: 10px 15px;
+    gap: 8px;
+  }
+
+  .top-bar .left,
+  .top-bar .center,
+  .top-bar .right {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .top-bar img {
+    height: 40px;              /* smaller logos */
+  }
+
+  .program-name {
+    font-size: 16px;           /* smaller title */
+    text-align: center;
+  }
+
+  .year-select {
+    font-size: 12px;
+  }
+
+}
+@media (max-width: 768px) {
+  .floating-menu {
+    top: 10px;
+    left: 10px;
+    transform: scale(0.9);
+  }
+}
+.top-bar.scrolled {
+  padding: 5px 15px;
+  background: rgba(251, 245, 239, 0.98);
+}
+
+.top-bar.scrolled img {
+  height: 45px;
+}
+.top-bar {
+  min-height: 72px;
+  transition: all 0.3s ease;
+}
+
+.top-bar img {
+  transition: all 0.3s ease;
 }

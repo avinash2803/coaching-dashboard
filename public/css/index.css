@@ -6,8 +6,8 @@
 
 /* ===== HERO SECTION ===== */
 .hero {
-  margin-top: 90px; 
-  height: 80vh;
+  margin-top: 0;
+  min-height: 80vh;
   background: linear-gradient(
       rgba(0,0,0,0.55),
       rgba(0,0,0,0.55)
@@ -18,7 +18,8 @@
   color: #fff;
   display: flex;
   align-items: center;
-  padding: 60px;
+
+  padding: 120px 60px 60px 60px; /* TOP RIGHT BOTTOM LEFT */
 }
 
 .hero-content {
@@ -414,3 +415,31 @@ opacity:1;
 transform:translateY(0);
 }
 
+@media (max-width: 768px) {
+  .hero {
+    padding: 160px 20px 40px 20px;
+    height: auto;   /* VERY IMPORTANT */
+  }
+
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero-logos {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .hero-logos img {
+    height: 30px;
+  }
+}
+@media (max-width: 768px) {
+  .hero {
+    align-items: flex-start;   /* better readability */
+  }
+}
