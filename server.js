@@ -16,6 +16,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import XLSX from "xlsx";
 import multer from "multer";
+import session from "express-session";        // ✅ ADD THIS
+import MongoStore from "connect-mongo";       // ✅ ADD THIS
 
 import excelUpload from "./routes/excelUpload.js";
 import studentsRoutes from "./routes/student.js";
@@ -27,7 +29,6 @@ import successRoutes from "./routes/success.js";
 import syllabusRoutes from "./routes/syllabus.js";
 const app = express();
 const upload = multer({ dest: "uploads/" });
-
 
 
 
