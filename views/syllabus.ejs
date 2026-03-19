@@ -1,0 +1,39 @@
+<div class="page-content">
+  <h1>Syllabus Status</h1>
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/syllabus.css">
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Faculty</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Planned</th>
+        <th>Executed</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if (!data || data.length === 0) { %>
+        <tr>
+          <td colspan="7">No data found</td>
+        </tr>
+      <% } %>
+
+      <% data.forEach(row => { %>
+        <tr>
+          <td><%= row["Subject"] %></td>
+          <td><%= row["Faculty"] %></td>
+          <td><%= row["Start Date"] %></td>
+          <td><%= row["End Date"] %></td>
+          <td><%= row["No. of classes Planned"] %></td>
+          <td><%= row["No. of Classes Executed"] %></td>
+          <td><%= row["Status"] %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

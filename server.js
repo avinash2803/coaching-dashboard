@@ -14,6 +14,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import XLSX from "xlsx";
+import multer from "multer";
 
 import excelUpload from "./routes/excelUpload.js";
 import studentsRoutes from "./routes/student.js";
@@ -22,9 +24,12 @@ import Student from "./models/student.js";
 import User from "./models/user.js";
 import Success from "./models/success.js";
 import successRoutes from "./routes/success.js";
+import syllabusRoutes from "./routes/syllabus.js";
 const app = express();
-import session from "express-session";
-import MongoStore from "connect-mongo";
+const upload = multer({ dest: "uploads/" });
+
+
+
 
 app.use(session({
   secret: "secret-key",
@@ -140,8 +145,8 @@ app.use("/api/students", studentsRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/excel", excelUpload);
 app.use("/", successRoutes);
+app.use("/", syllabusRoutes);
 app.put("/api/students/:id/tests", async (req, res) => {
-
   try {
 
     const studentId = req.params.id;
@@ -186,9 +191,6 @@ app.get("/staff", (req, res) => {
   res.render("staff");
 });
 
-app.get("/syllabus", (req, res) => {
-  res.render("syllabus");
-});
 
 app.get("/achievements", (req, res) => {
   res.render("achievements");
@@ -234,6 +236,9 @@ app.get("/admin/add-success", adminAuth, (req,res)=>{
 res.render("admin/addsuccess");
 });
 
+app.get("/admin/syllabus", adminAuth, (req, res) => {
+  res.render("admin/syllabus");
+});
 /* Start Server */
 const PORT = process.env.PORT || 3000;
 

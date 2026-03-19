@@ -1,0 +1,29 @@
+<div class="page-content">
+  <h2>Syllabus Management</h2>
+
+  <form action="/admin/upload-syllabus" method="POST" enctype="multipart/form-data">
+
+    <label>Year:</label>
+    <select name="year" required>
+      <option value="2025-26">2025-26</option>
+      <option value="2026-27">2026-27</option>
+    </select>
+
+    <br><br>
+
+    <label>Course:</label>
+    <select name="course" required>
+      <option value="CGPSC">CGPSC</option>
+      <option value="VYAPAM">VYAPAM</option>
+    </select>
+
+    <br><br>
+
+    <input type="file" name="file" accept=".xlsx" required>
+
+    <br><br>
+
+    <button type="submit">Upload / Update</button>
+
+  </form>
+</div>
