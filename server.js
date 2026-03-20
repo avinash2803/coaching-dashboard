@@ -237,9 +237,6 @@ app.get("/admin/add-success", adminAuth, (req,res)=>{
 res.render("admin/addsuccess");
 });
 
-app.get("/admin/syllabus", adminAuth, (req, res) => {
-  res.render("admin/syllabus");
-});
 app.get("/admin/upload-syllabus", adminAuth, (req, res) => {
   res.render("admin/upload-syllabus");
 });
