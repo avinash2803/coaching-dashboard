@@ -246,3 +246,12 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
+app.get("/check-syllabus", async (req, res) => {
+  const data = await mongoose.connection
+    .collection("syllabus")
+    .find()
+    .toArray();
+
+  res.json(data);
+});
