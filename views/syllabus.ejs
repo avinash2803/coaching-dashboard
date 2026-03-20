@@ -39,17 +39,23 @@
         </tr>
       <% } %>
 
-      <% data.forEach(row => { %>
-        <tr>
-          <td><%= row["Subject"] %></td>
-          <td><%= row["Faculty"] %></td>
-          <td><%= row["Start Date"] %></td>
-          <td><%= row["End Date"] %></td>
-          <td><%= row["No. of classes Planned"] %></td>
-          <td><%= row["No. of Classes Executed"] %></td>
-          <td><%= row["Status"] %></td>
-        </tr>
-      <% }) %>
+      <% if (data && data.length > 0) { %>
+  <% data.forEach(row => { %>
+    <tr>
+      <td><%= row["Subject"] %></td>
+      <td><%= row["Faculty"] %></td>
+      <td><%= row["Start Date"] %></td>
+      <td><%= row["End Date"] %></td>
+      <td><%= row["No. of classes Planned"] %></td>
+      <td><%= row["No. of Classes Executed"] %></td>
+      <td><%= row["Status"] %></td>
+    </tr>
+  <% }) %>
+<% } else { %>
+  <tr>
+    <td colspan="7">No data found</td>
+  </tr>
+<% } %>
     </tbody>
   </table>
 </div>

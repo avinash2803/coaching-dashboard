@@ -36,8 +36,8 @@ router.get("/", async (req, res) => {
   console.log("DATA FROM DB:", data); // ✅ debug
 
   res.render("syllabus", {
-  data,
-  pscProgress: 90,
+  data: data || [],
+  CGpscProgress: 90,
   vyapamProgress: 80
 });
 });
