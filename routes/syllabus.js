@@ -13,7 +13,7 @@ router.post("/upload-syllabus", upload.single("file"), (req, res) => {
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   syllabusData = XLSX.utils.sheet_to_json(sheet);
 
-  res.redirect("/syllabus");
+  res.redirect("/admin/syllabus");
 });
 
 // Show page
