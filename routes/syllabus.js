@@ -35,7 +35,10 @@ router.get("/syllabus", async (req, res) => {
 
   console.log("DATA FROM DB:", data); // ✅ debug
 
-  res.render("syllabus", { data });
+  res.render("syllabus", {
+  data,
+  pscProgress: 90,
+  vyapamProgress: 80
 });
 
 export default router;
