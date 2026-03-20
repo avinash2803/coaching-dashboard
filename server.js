@@ -146,7 +146,7 @@ app.use("/api/students", studentsRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/excel", excelUpload);
 app.use("/", successRoutes);
-app.use("/admin", syllabusRoutes);
+app.use("/admin/syllabus", adminAuth, syllabusRoutes);
 app.put("/api/students/:id/tests", async (req, res) => {
   try {
 

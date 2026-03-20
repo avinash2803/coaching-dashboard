@@ -26,7 +26,7 @@ await mongoose.connection.collection("syllabus").insertMany(data);
 
 
 // Show page (MongoDB se data fetch)
-router.get("/syllabus", async (req, res) => {
+router.get("/", async (req, res) => {
 
   const data = await mongoose.connection
     .collection("syllabus")
@@ -39,6 +39,7 @@ router.get("/syllabus", async (req, res) => {
   data,
   pscProgress: 90,
   vyapamProgress: 80
+});
 });
 
 export default router;
