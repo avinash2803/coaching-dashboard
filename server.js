@@ -240,6 +240,9 @@ res.render("admin/addsuccess");
 app.get("/admin/syllabus", adminAuth, (req, res) => {
   res.render("admin/syllabus");
 });
+app.get("/admin/upload-syllabus", adminAuth, (req, res) => {
+  res.render("admin/upload-syllabus");
+});
 /* Start Server */
 const PORT = process.env.PORT || 3000;
 
