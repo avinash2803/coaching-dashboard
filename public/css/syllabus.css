@@ -3,7 +3,7 @@
 .syllabus-table {
   width: 90%;
   border-collapse: collapse;
-  margin-top: 20px auto;
+  margin: 20px auto;
 }
 
 .syllabus-table th,
