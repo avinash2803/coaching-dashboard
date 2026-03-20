@@ -22,6 +22,66 @@
   background: #f9f9f9;
 }
 
+.syllabus-table tr:hover {
+  background: #f1f1f1;
+}
+
+/* 🔥 STATUS */
 .status {
   font-weight: bold;
+}
+
+.completed {
+  color: green;
+}
+
+.ongoing {
+  color: orange;
+}
+
+/* 🔥 TITLE */
+.title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.divider {
+  width: 150px;
+  height: 3px;
+  background: #007bff;
+  margin: 10px auto 20px;
+  border-radius: 5px;
+}
+
+/* 🔥 TABS */
+.tabs {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 25px;
+  background: #e0e0e0;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.tab-btn:hover {
+  background: #007bff;
+  color: white;
+}
+
+.tab-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+/* 🔥 TABLE HIDE */
+.table-box {
+  display: none;
 }

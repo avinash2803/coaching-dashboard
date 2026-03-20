@@ -1,10 +1,27 @@
 <%- include("partials/header") %>
 <div class="page-content">
-  <h1>Syllabus Status</h1>
+  <h1 class="title">Syllabus Status</h1>
+<div class="divider"></div>
 <link rel="stylesheet" href="/css/common.css">
 <link rel="stylesheet" href="/css/syllabus.css">
+<div class="page-content">
 
-  <table border="1">
+  <h1 class="title">Syllabus Status</h1>
+  <div class="divider"></div>
+
+  <!-- ✅ YAHAN ADD KARNA HAI -->
+  <div class="tabs">
+    <button class="tab-btn" onclick="showTab('psc')">
+      CGPSC - <span><%= pscProgress || 90 %>%</span>
+    </button>
+
+    <button class="tab-btn" onclick="showTab('vyapam')">
+      VYAPAM - <span><%= vyapamProgress || 80 %>%</span>
+    </button>
+  </div>
+  
+  <div id="pscTable" class="table-box"></div>
+  <table class="syllabus-table">
     <thead>
       <tr>
         <th>Subject</th>
@@ -38,4 +55,23 @@
     </tbody>
   </table>
 </div>
+
+<!-- table ke baad -->
+<script>
+  function showTab(tab) {
+    document.getElementById("pscTable").style.display = "block";
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.classList.remove("active");
+    });
+
+    if (tab === "psc") {
+      document.querySelectorAll(".tab-btn")[0].classList.add("active");
+    } else {
+      document.querySelectorAll(".tab-btn")[1].classList.add("active");
+    }
+  }
+</script>
+
+<%- include("partials/footer") %>
 <%- include("partials/footer") %>
