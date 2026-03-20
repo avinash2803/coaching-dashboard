@@ -11,12 +11,13 @@ router.post("/upload-syllabus", upload.single("file"), async (req, res) => {
 
   const workbook = XLSX.readFile(req.file.path);
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const data = XLSX.utils.sheet_to_json(sheet);
+  const data = XLSX.utils.sheet_to_json(sheet, { range: 1 });
 
   console.log("DATA TO SAVE:", data); // ✅ debug
 
   // 🔥 MongoDB me save
-  await mongoose.connection.collection("syllabus").insertMany(data);
+  await mongoose.connection.collection("syllabus").deleteMany({});
+await mongoose.connection.collection("syllabus").insertMany(data);
 
   console.log("DATA SAVED IN DB");
 
