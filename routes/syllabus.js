@@ -12,6 +12,9 @@ router.post("/upload-syllabus", upload.single("file"), (req, res) => {
   const workbook = XLSX.readFile(req.file.path);
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   syllabusData = XLSX.utils.sheet_to_json(sheet);
+
+  console.log("UPLOADED DATA:", syllabusData); // 🔥 add this
+
   res.redirect("/admin/syllabus");
 });
 
