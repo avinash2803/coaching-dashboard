@@ -1,14 +1,14 @@
 /* 🔥 SYLLABUS TABLE */
 
 .syllabus-table {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 20px auto;
 }
 
 .syllabus-table th,
 .syllabus-table td {
-  padding: 10px;
+  padding: 8px 10px;
   border: 1px solid #ddd;
   text-align: center;
 }

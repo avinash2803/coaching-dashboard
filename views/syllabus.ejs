@@ -1,7 +1,4 @@
 <%- include("partials/header") %>
-<div class="page-content">
-  <h1 class="title">Syllabus Status</h1>
-<div class="divider"></div>
 <link rel="stylesheet" href="/css/common.css">
 <link rel="stylesheet" href="/css/syllabus.css">
 <div class="page-content">
@@ -12,7 +9,7 @@
   <!-- ✅ YAHAN ADD KARNA HAI -->
   <div class="tabs">
     <button class="tab-btn" onclick="showTab('psc')">
-      CGPSC - <span><%= pscProgress || 90 %>%</span>
+      CGPSC - <span><%= CGpscProgress || 90 %>%</span>
     </button>
 
     <button class="tab-btn" onclick="showTab('vyapam')">
@@ -20,7 +17,7 @@
     </button>
   </div>
   
-  <div id="pscTable" class="table-box"></div>
+  <div id="CGpscTable" class="table-box"></div>
   <table class="syllabus-table">
     <thead>
       <tr>
@@ -73,5 +70,4 @@
   }
 </script>
 
-<%- include("partials/footer") %>
 <%- include("partials/footer") %>
