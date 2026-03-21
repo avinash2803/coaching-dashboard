@@ -2,8 +2,16 @@
 <link rel="stylesheet" href="/css/syllabus.css">
 
 <div class="page-content">
+<div class="title-row">
   <h1 class="title">Syllabus Status</h1>
-  <div class="divider"></div>
+
+
+  <select onchange="changeYear(this.value)" class="year-dropdown">
+    <option value="2025-26">2025-26</option>
+    <option value="2026-27">2026-27</option>
+  </select>
+</div>
+<div class="divider"></div>
 
   <!-- ✅ YAHAN ADD KARNA HAI -->
   <div class="tabs">
@@ -44,7 +52,7 @@
         <td><%= row.endDate %></td>
         <td><%= row.planned %></td>
         <td><%= row.executed %></td>
-        <td><%= row.status %></td>
+        <td class="<%= row.status.toLowerCase() %>"><%= row.status %></td>
       </tr>
     <% }) %>
   <% } else { %>
@@ -117,6 +125,9 @@ function showTab(tab) {
   } else {
     document.querySelectorAll(".tab-btn")[1].classList.add("active");
   }
+}
+function changeYear(year){
+  window.location.href = "/admin/syllabus?year=" + year;
 }
 </script>
 
