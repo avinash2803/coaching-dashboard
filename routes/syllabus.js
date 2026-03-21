@@ -13,7 +13,7 @@ router.get("/upload-syllabus", (req, res) => {
 
 // ✅ Upload Excel
 router.post("/upload-syllabus", upload.single("file"), async (req, res) => {
-
+const { course, year } = req.body;
   const workbook = XLSX.readFile(req.file.path);
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
@@ -27,7 +27,9 @@ router.post("/upload-syllabus", upload.single("file"), async (req, res) => {
     endDate: row["End Date"] || "",
     planned: Number(row["Planned"]) || 0,
     executed: Number(row["Executed"]) || 0,
-    status: row["Status"] || ""
+    status: row["Status"] || "",
+    course: course,
+  year: year        
   }));
 
   await mongoose.connection.collection("syllabus").deleteMany({});
@@ -39,16 +41,22 @@ router.post("/upload-syllabus", upload.single("file"), async (req, res) => {
 // ✅ Show syllabus page
 router.get("/syllabus", async (req, res) => {
 
-  const data = await mongoose.connection
-    .collection("syllabus")
-    .find()
-    .toArray();
+  const CGpscData = await mongoose.connection
+  .collection("syllabus")
+  .find({ course: "CGPSC" })
+  .toArray();
+
+const vyapamData = await mongoose.connection
+  .collection("syllabus")
+  .find({ course: "VYAPAM" })
+  .toArray();
 
   res.render("syllabus", {
-    data: data || [],
-    CGpscProgress: 90,
-    vyapamProgress: 80
-  });
+  CGpscData,
+  vyapamData,
+  CGpscProgress: 90,
+  vyapamProgress: 80
+});
 });
 
 export default router;
