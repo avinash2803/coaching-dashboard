@@ -1,5 +1,4 @@
 <%- include("partials/header") %>
-<link rel="stylesheet" href="/css/common.css">
 <link rel="stylesheet" href="/css/syllabus.css">
 
 <div class="page-content">
@@ -22,6 +21,7 @@
   <table class="syllabus-table">
     <thead>
       <tr>
+        <th>S.N</th>
         <th>Subject</th>
         <th>Faculty</th>
         <th>Start Date</th>
@@ -32,31 +32,27 @@
       </tr>
     </thead>
 
+  
     <tbody>
-      <% if (!data || data.length === 0) { %>
-        <tr>
-          <td colspan="7">No data found</td>
-        </tr>
-      <% } %>
-
-      <% if (data && data.length > 0) { %>
-  <% data.forEach(row => { %>
+  <% if (data && data.length > 0) { %>
+    <% data.forEach(row => { %>
+      <tr>
+        <th>S.N</th>
+        <td><%= row.subject %></td>
+        <td><%= row.faculty %></td>
+        <td><%= row.startDate %></td>
+        <td><%= row.endDate %></td>
+        <td><%= row.planned %></td>
+        <td><%= row.executed %></td>
+        <td><%= row.status %></td>
+      </tr>
+    <% }) %>
+  <% } else { %>
     <tr>
-      <td><%= row["Subject"] %></td>
-      <td><%= row["Faculty"] %></td>
-      <td><%= row["Start Date"] %></td>
-      <td><%= row["End Date"] %></td>
-      <td><%= row["No. of classes Planned"] %></td>
-      <td><%= row["No. of Classes Executed"] %></td>
-      <td><%= row["Status"] %></td>
+      <td colspan="7">No data found</td>
     </tr>
-  <% }) %>
-<% } else { %>
-  <tr>
-    <td colspan="7">No data found</td>
-  </tr>
-<% } %>
-    </tbody>
+  <% } %>
+</tbody>
   </table>
 </div>
 
@@ -82,5 +78,6 @@ function showTab(tab) {
   }
 }
 </script>
+
 
 <%- include("partials/footer") %>
