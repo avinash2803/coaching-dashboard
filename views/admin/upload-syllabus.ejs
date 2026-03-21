@@ -1,31 +1,39 @@
 <%- include("../partials/header") %>
+
+<link rel="stylesheet" href="/css/common.css">
+
 <div class="page-content">
-  <h2>Syllabus Management</h2>
+  <h2 class="title">Syllabus Management</h2>
+  <div class="divider"></div>
 
   <form action="/admin/upload-syllabus" method="POST" enctype="multipart/form-data">
 
-    <label>Year:</label>
-    <select name="year" required>
-      <option value="2025-26">2025-26</option>
-      <option value="2026-27">2026-27</option>
-    </select>
+    <div class="form-group">
+      <label>Year:</label>
+      <select name="year" required>
+        <option value="">Select Year</option>
+        <option value="2025-26">2025-26</option>
+        <option value="2026-27">2026-27</option>
+      </select>
+    </div>
 
-    <br><br>
+    <div class="form-group">
+      <label>Course:</label>
+      <select name="course" required>
+        <option value="">Select Course</option>
+        <option value="CGPSC">CGPSC</option>
+        <option value="VYAPAM">VYAPAM</option>
+      </select>
+    </div>
 
-    <label>Course:</label>
-    <select name="course" required>
-      <option value="CGPSC">CGPSC</option>
-      <option value="VYAPAM">VYAPAM</option>
-    </select>
+    <div class="form-group">
+      <label>Upload Excel File:</label>
+      <input type="file" name="file" accept=".xlsx,.xls" required>
+    </div>
 
-    <br><br>
-
-    <input type="file" name="file" accept=".xlsx" required>
-
-    <br><br>
-
-    <button type="submit">Upload / Update</button>
+    <button type="submit" class="btn-primary">Upload / Update</button>
 
   </form>
 </div>
+
 <%- include("../partials/footer") %>

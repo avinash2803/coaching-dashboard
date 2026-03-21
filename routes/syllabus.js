@@ -6,6 +6,11 @@ import mongoose from "mongoose"; // ✅ add this
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
 
+// 🔥 GET: upload page open
+router.get("/upload-syllabus", (req, res) => {
+  res.render("upload-syllabus");
+});
+
 // Upload Excel + Save to MongoDB
 router.post("/upload-syllabus", upload.single("file"), async (req, res) => {
 
