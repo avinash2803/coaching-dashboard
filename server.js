@@ -237,8 +237,8 @@ app.get("/admin/add-success", adminAuth, (req,res)=>{
 res.render("admin/addsuccess");
 });
 
-app.get("/admin/upload-syllabus", adminAuth, (req, res) => {
-  res.render("admin/upload-syllabus");
+app.get("/admin/upload-syllabus", (req, res) => {
+  res.render("upload-syllabus");
 });
 /* Start Server */
 const PORT = process.env.PORT || 3000;
