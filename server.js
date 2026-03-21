@@ -146,7 +146,7 @@ app.use("/api/students", studentsRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/excel", excelUpload);
 app.use("/", successRoutes);
-app.use("/admin", adminAuth, syllabusRoutes);
+app.use("/admin", syllabusRoutes);
 app.put("/api/students/:id/tests", async (req, res) => {
   try {
 
@@ -237,9 +237,6 @@ app.get("/admin/add-success", adminAuth, (req,res)=>{
 res.render("admin/addsuccess");
 });
 
-app.get("/admin/upload-syllabus", (req, res) => {
-  res.render("upload-syllabus");
-});
 /* Start Server */
 const PORT = process.env.PORT || 3000;
 
