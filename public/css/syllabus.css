@@ -47,11 +47,11 @@
 }
 
 .divider {
-  width: 150px;
-  height: 3px;
-  background: #007bff;
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(to right, #007bff, #00c6ff);
   margin: 10px auto 20px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 /* 🔥 TABS */
