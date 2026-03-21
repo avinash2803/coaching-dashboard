@@ -85,3 +85,16 @@
 .table-box {
   display: none;
 }
+.title-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.year-dropdown {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: 1px solid #ccc;
+}
