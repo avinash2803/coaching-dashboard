@@ -27,6 +27,7 @@ import User from "./models/user.js";
 import Success from "./models/success.js";
 import successRoutes from "./routes/success.js";
 import syllabusRoutes from "./routes/syllabus.js";
+import achievementRoutes from "./routes/achievementRoutes.js";
 const app = express();
 const upload = multer({ dest: "uploads/" });
 
@@ -147,7 +148,9 @@ app.use("/auth", authRoutes);
 app.use("/api/excel", excelUpload);
 app.use("/", successRoutes);
 app.use("/admin", syllabusRoutes);
+app.use("/achievement", achievementRoutes);
 app.put("/api/students/:id/tests", async (req, res) => {
+  
   try {
 
     const studentId = req.params.id;
