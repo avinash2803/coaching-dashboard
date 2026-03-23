@@ -65,3 +65,41 @@
   </button>
 
 </form>
+
+<script>
+  const yearFilter = document.getElementById("yearFilter");
+  const courseFilter = document.getElementById("courseFilter");
+  const studentDropdown = document.getElementById("studentDropdown");
+
+  const originalOptions = Array.from(studentDropdown.options);
+
+  function filterStudents() {
+    const selectedYear = yearFilter.value;
+    const selectedCourse = courseFilter.value;
+
+    // Reset dropdown
+    studentDropdown.innerHTML = "";
+
+    // Default option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "-- Select Student --";
+    studentDropdown.appendChild(defaultOption);
+
+    originalOptions.forEach(option => {
+      if (!option.value) return;
+
+      const text = option.textContent;
+
+      const matchYear = selectedYear ? text.includes(selectedYear) : true;
+      const matchCourse = selectedCourse ? text.includes(selectedCourse) : true;
+
+      if (matchYear && matchCourse) {
+        studentDropdown.appendChild(option);
+      }
+    });
+  }
+
+  yearFilter.addEventListener("change", filterStudents);
+  courseFilter.addEventListener("change", filterStudents);
+</script>
