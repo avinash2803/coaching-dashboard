@@ -7,30 +7,54 @@ const router = express.Router();
 
 // 👉 SHOW ADD FORM
 router.get("/add", async (req, res) => {
-  const students = await Student.find();
-  res.render("admin/add-achievement", { students });
+  try {
+    const students = await Student.find();
+
+    console.log("Students count:", students.length);
+
+    res.render("admin/add-achievement", { students });
+
+  } catch (err) {
+    console.error("ERROR IN /achievement/add:", err);
+    res.send("Error loading Add Achievement page");
+  }
 });
 
 
 // 👉 SAVE ACHIEVEMENT
 router.post("/add", async (req, res) => {
-  const { studentId, examQualified } = req.body;
+  try {
+    const { studentId, examQualified } = req.body;
 
-  await Achievement.create({
-    studentId,
-    examQualified
-  });
+    await Achievement.create({
+      studentId,
+      examQualified
+    });
 
-  res.redirect("/achievement/manage");
+    res.redirect("/achievement/manage");
+
+  } catch (err) {
+    console.error("ERROR IN /achievement/add POST:", err);
+    res.send("Error saving achievement");
+  }
 });
 
 
 // 👉 SHOW ALL ACHIEVEMENTS
 router.get("/manage", async (req, res) => {
-  const achievements = await Achievement.find()
-    .populate("studentId");
+  try {
+    const achievements = await Achievement.find()
+      .populate("studentId");
 
-  res.render("admin/manage-achievement", { achievements });
+    console.log("Achievements count:", achievements.length);
+
+    res.render("admin/manage-achievement", { achievements });
+
+  } catch (err) {
+    console.error("ERROR IN /achievement/manage:", err);
+    res.send("Error loading Manage Achievement page");
+  }
 });
+
 
 export default router;

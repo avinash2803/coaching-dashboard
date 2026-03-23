@@ -1,0 +1,19 @@
+<h2>Manage Achievements</h2>
+
+<% if (achievements && achievements.length > 0) { %>
+
+  <% achievements.forEach(item => { %>
+    <div style="margin-bottom:10px; border:1px solid #ccc; padding:10px;">
+      
+      <p><strong>Name:</strong> <%= item.studentId?.name %></p>
+      <p><strong>Batch:</strong> <%= item.studentId?.batch %></p>
+      <p><strong>Exam:</strong> <%= item.examQualified %></p>
+
+    </div>
+  <% }) %>
+
+<% } else { %>
+
+  <p>No achievements found</p>
+
+<% } %>
