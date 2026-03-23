@@ -20,8 +20,8 @@
       ">
 
         <!-- 🖼️ IMAGE -->
-       <img 
-  src="/photo/<%= item.studentId && item.studentId.photoId ? item.studentId.photoId.toString() : '' %>" 
+  <img 
+  src="/api/upload/<%= item.studentId?.photoId %>" 
   alt="student"
   style="
     width:120px;
