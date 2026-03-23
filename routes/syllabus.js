@@ -54,7 +54,7 @@ executed: Number(row["Executed"] || row["Executed Classes"] || row["No. of Class
   { upsert: true }
 );
 
-  res.redirect("/admin/syllabus");
+  res.redirect(`/admin/syllabus?year=${year}`);
 });
 
 // ✅ Show syllabus page
@@ -81,6 +81,7 @@ const cgProgress = cg?.progress || 0;
 const vyapamProgress = vy?.progress || 0;
 
 res.render("syllabus", {
+  year, // ✅ ADD THIS
   CGpscData,
   vyapamData,
   CGpscProgress: cgProgress,
