@@ -96,17 +96,26 @@ router.get("/clean-duplicates", async (req, res) => {
   try {
     const achievements = await Achievement.find();
 
-    const seen = new Set();
+    const map = new Map();
     let deleted = 0;
 
     for (let a of achievements) {
-      const id = a.studentId.toString();
+      const studentId = a.studentId.toString();
 
-      if (seen.has(id)) {
-        await Achievement.deleteOne({ _id: a._id });
+      if (map.has(studentId)) {
+        // 👉 keep latest (delete older)
+        const existing = map.get(studentId);
+
+        if (a._id > existing._id) {
+          await Achievement.deleteOne({ _id: existing._id });
+          map.set(studentId, a);
+        } else {
+          await Achievement.deleteOne({ _id: a._id });
+        }
+
         deleted++;
       } else {
-        seen.add(id);
+        map.set(studentId, a);
       }
     }
 
