@@ -2,6 +2,13 @@
 <link rel="stylesheet" href="/css/index.css">
 <section class="hero">
 <div class="hero-slide active" style="background-image: url('/logos/hero2.jpg?v=3');"></div>
+  <!-- Image 2 -->
+  <div class="hero-slide" style="background-image: url('/logos/hero3.jpg');"></div>
+
+  <!-- Image 3 (optional) -->
+  <div class="hero-slide" style="background-image: url('/logos/hero4.jpg');"></div>
+
+
     <div class="hero-content">
       <h1>BCCP – Education Support Program</h1>
       <p>
@@ -319,3 +326,14 @@ cardObserver.observe(container);
 <%- include("partials/footer") %>
 
 
+<!-- 🔥 YAHAN SCRIPT LAGAO -->
+<script>
+const slides = document.querySelectorAll(".hero-slide");
+let index = 0;
+
+setInterval(() => {
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 3000);
+</script>
