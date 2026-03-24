@@ -1,14 +1,9 @@
 <%- include("../partials/header") %>
 
-<div style="display:flex; gap:20px;">
+<div class="achievement-container">
 
-  <!-- 🟦 LEFT SIDE (25%) -->
-  <div style="
-    width:25%;
-    background:#f5f6fa;
-    padding:15px;
-    border-radius:12px;
-  ">
+  <!-- 🟦 LEFT SIDE -->
+  <div class="overview-panel">
 
     <h3>Overview</h3>
 
@@ -33,56 +28,46 @@
     <div>CTET: <%= ctetCount || 0 %></div>
 
   </div>
+  <!-- 🟩 RIGHT SIDE -->
+  <div class="achievement-content">
 
+    <div class="achievement-grid">
 
-  <!-- 🟩 RIGHT SIDE (75%) -->
-  <div style="width:75%;">
-
-    <div style="
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:20px;
-    ">
 
       <% if (achievements && achievements.length > 0) { %>
 
         <% achievements.forEach(item => { %>
 
-          <div style="
-            border:1px solid #ddd;
-            border-radius:12px;
-            padding:15px;
-            text-align:center;
-            box-shadow:0 2px 8px rgba(0,0,0,0.1);
-            background:#fff;
-          ">
+<div class="certificate" id="certificate-<%= item._id %>">
 
-            <!-- IMAGE -->
-            <img 
-              src="/api/upload/<%= item.studentId?.photoId %>" 
-              style="
-                width:120px;
-                height:120px;
-                border-radius:50%;
-                object-fit:cover;
-                margin-bottom:10px;
-              "
-            >
+  <h3 class="title">Congratulations</h3>
 
-            <!-- NAME -->
-            <h3><%= item.studentId?.name %></h3>
+  <!-- IMAGE -->
+  <div class="photo-wrapper">
+    <img src="/api/upload/<%= item.studentId?.photoId %>" />
+  </div>
 
-            <!-- EXAM -->
-            <span style="
-              padding:5px 10px;
-              background:orange;
-              color:white;
-              border-radius:20px;
-            ">
-              <%= item.examQualified %>
-            </span>
+  <!-- QUOTE -->
+  <p class="quote">
+    From Classroom Walls <br> to Success Halls
+  </p>
 
-          </div>
+  <!-- NAME -->
+  <h2 class="name"><%= item.studentId?.name %></h2>
+
+  <!-- EXAM -->
+  <div class="exam">
+    <%= item.examQualified %>
+  </div>
+
+  <!-- BATCH -->
+  <p class="batch">CG VYAPAM BATCH</p>
+
+</div>
+
+<button onclick="downloadCertificate('<%= item._id %>')">
+  Download
+</button>
 
         <% }) %>
 

@@ -1,0 +1,155 @@
+/* ===== MAIN LAYOUT ===== */
+
+.achievement-container {
+  display: flex;
+  gap: 20px;
+}
+
+.overview-panel {
+  width: 25%;
+  background: #f5f6fa;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.achievement-content {
+  width: 75%;
+}
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+
+/* ===== CARD WRAPPER (IMPORTANT) ===== */
+
+.achievement-grid > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+/* ===== CERTIFICATE CARD ===== */
+
+.certificate {
+  flex-grow: 1;
+  padding: 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #fff8e1, #ffe082);
+  border: 3px solid #d4af37;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.certificate:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+
+/* ===== TEXT ===== */
+
+.title {
+  font-family: cursive;
+  color: goldenrod;
+  margin-bottom: 8px;
+}
+
+.quote {
+  font-size: 13px;
+  color: #555;
+  margin: 10px 0;
+  min-height: 35px; /* 🔥 fixed height */
+}
+
+.name {
+  color: #d32f2f;
+  font-weight: bold;
+  margin-top: 8px;
+  min-height: 40px; /* 🔥 same height for all names */
+}
+
+
+/* ===== IMAGE ===== */
+
+.photo-wrapper {
+  margin: 10px 0;
+}
+
+.photo-wrapper img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 4px solid gold;
+  object-fit: cover;
+}
+
+
+/* ===== BADGE ===== */
+
+.exam {
+  background: #d32f2f;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.batch {
+  margin-top: 6px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+/* ===== BUTTON ===== */
+
+.download-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: #0a7c66;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.download-btn:hover {
+  background: #086c58;
+}
+
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 900px) {
+  .achievement-container {
+    flex-direction: column;
+  }
+
+  .overview-panel {
+    width: 100%;
+  }
+
+  .achievement-content {
+    width: 100%;
+  }
+
+  .achievement-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .achievement-grid {
+    grid-template-columns: 1fr;
+  }
+}
