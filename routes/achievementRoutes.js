@@ -92,5 +92,30 @@ router.get("/manage", async (req, res) => {
   }
 });
 
+router.get("/clean-duplicates", async (req, res) => {
+  try {
+    const achievements = await Achievement.find();
+
+    const seen = new Set();
+    let deleted = 0;
+
+    for (let a of achievements) {
+      const id = a.studentId.toString();
+
+      if (seen.has(id)) {
+        await Achievement.deleteOne({ _id: a._id });
+        deleted++;
+      } else {
+        seen.add(id);
+      }
+    }
+
+    res.send(`Deleted ${deleted} duplicate records`);
+
+  } catch (err) {
+    console.error(err);
+    res.send("Error cleaning duplicates");
+  }
+});
 
 export default router;
