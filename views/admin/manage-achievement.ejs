@@ -1,63 +1,100 @@
-<h2>Manage Achievements</h2>
+<%- include("partials/header") %>
 
-<div style="
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:20px;
-">
+<div style="display:flex; gap:20px;">
 
-  <% if (achievements && achievements.length > 0) { %>
+  <!-- 🟦 LEFT SIDE (25%) -->
+  <div style="
+    width:25%;
+    background:#f5f6fa;
+    padding:15px;
+    border-radius:12px;
+  ">
 
-    <% achievements.forEach(item => { %>
+    <h3>Overview</h3>
 
-      <div style="
-        border:1px solid #ddd;
-        border-radius:12px;
-        padding:15px;
-        text-align:center;
-        box-shadow:0 2px 8px rgba(0,0,0,0.1);
-        background:#fff;
-      ">
+    <div style="margin-bottom:10px;">
+      <strong>Total Students:</strong> <%= totalStudents || 0 %>
+    </div>
 
-        <!-- 🖼️ IMAGE -->
-  <img 
-  src="/api/upload/<%= item.studentId?.photoId %>" 
-  alt="student"
-  style="
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    object-fit:cover;
-    margin-bottom:10px;
-  "
->
-        >
+    <div style="margin-bottom:10px;">
+      <strong>Boys:</strong> <%= boys || 0 %>
+    </div>
 
-        <!-- 🧑 NAME -->
-        <h3 style="margin:5px 0;">
-          <%= item.studentId?.name %>
-        </h3>
+    <div style="margin-bottom:10px;">
+      <strong>Girls:</strong> <%= girls || 0 %>
+    </div>
 
-        <!-- 🎯 EXAM -->
-        <span style="
-          display:inline-block;
-          padding:5px 10px;
-          background:orange;
-          color:white;
-          border-radius:20px;
-          font-size:14px;
-        ">
-          <%= item.examQualified %>
-        </span>
+    <hr>
 
-      </div>
+    <h4>Selections</h4>
 
-    <% }) %>
+    <div>SSC GD: <%= sscCount || 0 %></div>
+    <div>CG Police: <%= cgPoliceCount || 0 %></div>
+    <div>CTET: <%= ctetCount || 0 %></div>
 
-  <% } else { %>
+  </div>
 
-    <p>No achievements found</p>
 
-  <% } %>
+  <!-- 🟩 RIGHT SIDE (75%) -->
+  <div style="width:75%;">
+
+    <div style="
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:20px;
+    ">
+
+      <% if (achievements && achievements.length > 0) { %>
+
+        <% achievements.forEach(item => { %>
+
+          <div style="
+            border:1px solid #ddd;
+            border-radius:12px;
+            padding:15px;
+            text-align:center;
+            box-shadow:0 2px 8px rgba(0,0,0,0.1);
+            background:#fff;
+          ">
+
+            <!-- IMAGE -->
+            <img 
+              src="/api/upload/<%= item.studentId?.photoId %>" 
+              style="
+                width:120px;
+                height:120px;
+                border-radius:50%;
+                object-fit:cover;
+                margin-bottom:10px;
+              "
+            >
+
+            <!-- NAME -->
+            <h3><%= item.studentId?.name %></h3>
+
+            <!-- EXAM -->
+            <span style="
+              padding:5px 10px;
+              background:orange;
+              color:white;
+              border-radius:20px;
+            ">
+              <%= item.examQualified %>
+            </span>
+
+          </div>
+
+        <% }) %>
+
+      <% } else { %>
+
+        <p>No achievements found</p>
+
+      <% } %>
+
+    </div>
+
+  </div>
 
 </div>
+<%- include("partials/footer") %>
