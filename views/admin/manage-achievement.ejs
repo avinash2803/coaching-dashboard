@@ -7,67 +7,58 @@
 
     <h3>Overview</h3>
 
-    <div style="margin-bottom:10px;">
-      <strong>Total Students:</strong> <%= totalStudents || 0 %>
-    </div>
-
-    <div style="margin-bottom:10px;">
-      <strong>Boys:</strong> <%= boys || 0 %>
-    </div>
-
-    <div style="margin-bottom:10px;">
-      <strong>Girls:</strong> <%= girls || 0 %>
-    </div>
+    <div><strong>Total Students:</strong> <%= totalStudents || 0 %></div>
+    <div><strong>Boys:</strong> <%= boys || 0 %></div>
+    <div><strong>Girls:</strong> <%= girls || 0 %></div>
 
     <hr>
 
     <h4>Selections</h4>
-
     <div>SSC GD: <%= sscCount || 0 %></div>
     <div>CG Police: <%= cgPoliceCount || 0 %></div>
     <div>CTET: <%= ctetCount || 0 %></div>
 
   </div>
+
   <!-- 🟩 RIGHT SIDE -->
   <div class="achievement-content">
 
     <div class="achievement-grid">
 
-
       <% if (achievements && achievements.length > 0) { %>
 
         <% achievements.forEach(item => { %>
 
-<div class="certificate" id="certificate-<%= item._id %>">
+          <!-- ✅ WRAPPER (VERY IMPORTANT) -->
+          <div class="achievement-card-wrapper">
 
-  <h3 class="title">Congratulations</h3>
+            <div class="certificate" id="certificate-<%= item._id %>">
 
-  <!-- IMAGE -->
-  <div class="photo-wrapper">
-    <img src="/api/upload/<%= item.studentId?.photoId %>" />
-  </div>
+              <h3 class="title">Congratulations</h3>
 
-  <!-- QUOTE -->
-  <p class="quote">
-    From Classroom Walls <br> to Success Halls
-  </p>
+              <div class="photo-wrapper">
+                <img src="/api/upload/<%= item.studentId?.photoId %>" />
+              </div>
 
-  <!-- NAME -->
-  <h2 class="name"><%= item.studentId?.name %></h2>
+              <p class="quote">
+                From Classroom Walls <br> to Success Halls
+              </p>
 
-  <!-- EXAM -->
-  <div class="exam">
-    <%= item.examQualified %>
-  </div>
+              <h2 class="name"><%= item.studentId?.name %></h2>
 
-  <!-- BATCH -->
-  <p class="batch">CG VYAPAM BATCH</p>
+              <div class="exam">
+                <%= item.examQualified %>
+              </div>
 
-</div>
+              <p class="batch">CG VYAPAM BATCH</p>
 
-<button onclick="downloadCertificate('<%= item._id %>')">
-  Download
-</button>
+            </div>
+
+            <button class="download-btn" onclick="downloadCertificate('<%= item._id %>')">
+              Download
+            </button>
+
+          </div>
 
         <% }) %>
 
@@ -82,4 +73,5 @@
   </div>
 
 </div>
+
 <%- include("../partials/footer") %>

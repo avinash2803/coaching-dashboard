@@ -22,6 +22,12 @@
   gap: 20px;
 }
 
+.achievement-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 
 /* ===== CARD WRAPPER (IMPORTANT) ===== */
 
