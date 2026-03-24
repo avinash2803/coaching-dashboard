@@ -19,10 +19,10 @@
 
 .achievement-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 15px;   /* 🔥 row + column gap */
+  width: 100%;
 }
-
 .achievement-card-wrapper {
   display: flex;
   flex-direction: column;
@@ -60,7 +60,7 @@
 }
 
 .certificate {
-  width: 100%;
+  min-width: 0;   /* 🔥 VERY IMPORTANT */
 }
 /* ===== TEXT ===== */
 
