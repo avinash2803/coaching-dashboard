@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import Achievement from "../models/achievement.js";
 import Student from "../models/student.js";
 
@@ -26,10 +27,21 @@ router.post("/add", async (req, res) => {
   try {
     const { studentId, examQualified } = req.body;
 
-    await Achievement.create({
-      studentId,
-      examQualified
-    });
+const existing = await Achievement.findOne({
+  studentId: new mongoose.Types.ObjectId(studentId)
+});
+
+if (existing) {
+  // 👉 Update instead of duplicate
+  existing.examQualified = examQualified;
+  await existing.save();
+} else {
+  // 👉 Create new
+  await Achievement.create({
+  studentId: new mongoose.Types.ObjectId(studentId),
+  examQualified
+});
+}
 
     res.redirect("/achievement/manage");
 
