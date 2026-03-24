@@ -85,15 +85,31 @@
 /* ===== IMAGE ===== */
 
 .photo-wrapper {
-  margin: 5px 0;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 10px auto;
 }
 
-.photo-wrapper img {
-  width: 130px;
-  height: 130px;
+.photo-wrapper .laurel {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  top: 0;
+  left: 0;
+}
+.laurel {
+  filter: drop-shadow(0 2px 6px rgba(212,175,55,0.5));
+}
+.photo-wrapper .profile {
+  position: absolute;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  border: 5px solid #f1c40f;  /* golden ring */
+  top: 25px;
+  left: 25px;
   object-fit: cover;
+  border: 3px solid white;
 }
 
 
@@ -114,21 +130,7 @@
   color: #333;
 }
 
-.photo-wrapper {
-  position: relative;
-  display: inline-block;
-}
 
-.photo-wrapper::before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  width: 150px;
-  height: 150px;
-  border: 2px dashed gold;  /* simple laurel feel */
-  border-radius: 50%;
-}
 
 /* ===== BUTTON ===== */
 

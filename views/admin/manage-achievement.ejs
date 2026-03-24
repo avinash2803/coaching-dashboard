@@ -37,8 +37,14 @@
               <h3 class="title">Congratulations</h3>
 
               <div class="photo-wrapper">
-                <img src="/api/upload/<%= item.studentId?.photoId %>" />
-              </div>
+
+  <!-- 🌿 Laurel Ring -->
+  <img src="/images/laurel.png" class="laurel" />
+
+  <!-- 👤 Student Photo -->
+  <img src="/api/upload/<%= item.studentId?.photoId %>" class="profile" />
+
+</div>
               <div class="ribbon"></div>
 
               <p class="quote">
