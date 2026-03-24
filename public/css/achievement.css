@@ -62,11 +62,31 @@
 /* ===== TEXT ===== */
 
 .title {
-  font-family: cursive;
-  color: goldenrod;
-  font-size: 16px;
+  font-family: 'Segoe Script', cursive;
+  font-size: 15px;
+  color: #d4af37;
   margin-bottom: 2px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 1px 0 #fff,
+    0 2px 2px rgba(0,0,0,0.2),
+    0 0 6px rgba(212,175,55,0.6);
+
+  position: relative;
 }
+
+.title::after {
+  content: "";
+  width: 35%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, gold, transparent);
+  display: block;
+  margin: 3px auto 0;
+}
+
+
 
 .quote {
   font-size: 13px;
@@ -88,20 +108,32 @@
 
 .photo-wrapper {
   position: relative;
-  width: 130px;
-  height: 130px;
+  width: 135px;
+  height: 135px;
   margin: 2px auto;
+}
+
+/* 🔥 golden ring (optional but nice) */
+.photo-wrapper::before {
+  content: "";
+  position: absolute;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  border: 2px solid #d4af37;
+  opacity: 0.6;
 }
 
 .photo-wrapper .profile {
   position: absolute;
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   top: 10px;
   left: 10px;
   object-fit: cover;
   border: 3px solid white;
+  z-index: 2;
 }
 
 
@@ -122,27 +154,6 @@
   font-weight: bold;
   color: #333;
 }
-
-
-
-/* ===== BUTTON ===== */
-
-.download-btn {
-  margin-top: 5px;
-  width: 100%;
-  padding: 8px;
-  border: none;
-  background: #0a7c66;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.download-btn:hover {
-  background: #086c58;
-}
-
 
 /* ===== RESPONSIVE ===== */
 
