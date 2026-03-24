@@ -222,7 +222,9 @@ res.render("login");
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
-
+app.get("/ping", (req, res) => {
+  res.status(200).end();
+});
 
 app.get("/admin/dashboard", adminAuth, (req,res)=>{
 res.render("admin/dashboard");
