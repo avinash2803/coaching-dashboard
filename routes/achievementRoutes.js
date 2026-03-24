@@ -72,7 +72,7 @@ router.get("/manage", async (req, res) => {
     // 🎯 Exam counts (safe check)
     const sscCount = achievements.filter(a => a.examQualified && a.examQualified.includes("SSC")).length;
 
-    const cgPoliceCount = achievements.filter(a => a.examQualified && a.examQualified.includes("CG")).length;
+    const cgPoliceCount = achievements.filter(a => a.examQualified && a.examQualified.includes("Police")).length;
 
     const ctetCount = achievements.filter(a => a.examQualified && a.examQualified.includes("CTET")).length;
 
@@ -92,39 +92,5 @@ router.get("/manage", async (req, res) => {
   }
 });
 
-router.get("/clean-duplicates", async (req, res) => {
-  try {
-    const achievements = await Achievement.find();
-
-    const map = new Map();
-    let deleted = 0;
-
-    for (let a of achievements) {
-      const studentId = a.studentId.toString();
-
-      if (map.has(studentId)) {
-        // 👉 keep latest (delete older)
-        const existing = map.get(studentId);
-
-        if (a._id > existing._id) {
-          await Achievement.deleteOne({ _id: existing._id });
-          map.set(studentId, a);
-        } else {
-          await Achievement.deleteOne({ _id: a._id });
-        }
-
-        deleted++;
-      } else {
-        map.set(studentId, a);
-      }
-    }
-
-    res.send(`Deleted ${deleted} duplicate records`);
-
-  } catch (err) {
-    console.error(err);
-    res.send("Error cleaning duplicates");
-  }
-});
 
 export default router;
