@@ -3,7 +3,6 @@
 .achievement-container {
   display: flex;
   gap: 15px;
-  max-width: 220px;
   align-items: flex-start;   /* 🔥 ADD THIS */
 }
 
@@ -22,7 +21,7 @@
 
 .achievement-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;
   width: 100%;
   justify-content: start;   /* 🔥 VERY IMPORTANT */
