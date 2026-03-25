@@ -20,7 +20,7 @@
 
 .achievement-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(3, 1fr) !important;
   gap: 15px;
   width: 100%;
   justify-content: start;   /* 🔥 VERY IMPORTANT */
@@ -28,6 +28,7 @@
 
 .achievement-card-wrapper {
   width: 100%;
+  min-width: 0;
 }
 
 /* ===== CERTIFICATE CARD ===== */
@@ -46,7 +47,9 @@
   gap: 2px; /* 🔥 spacing kam */
   width: 100%; 
 }
-
+.certificate {
+  min-width: 0;
+}
 .certificate:hover {
   transform: translateY(-6px) scale(1.02);
 }
