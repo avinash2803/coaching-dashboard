@@ -129,7 +129,7 @@
 
 /* ===== RESPONSIVE ===== */
 
-@media (max-width: 900px) {
+@media (max-width: 600px) {
   .achievement-container {
     flex-direction: column;
   }
@@ -150,5 +150,6 @@
 @media (max-width: 500px) {
   .achievement-grid {
     grid-template-columns: 1fr;
+  outline: 2px solid red;
   }
 }
