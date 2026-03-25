@@ -33,14 +33,9 @@
 }
 
 
-/* ===== CARD WRAPPER (IMPORTANT) ===== */
-
-.achievement-grid > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.achievement-card-wrapper {
+  width: 100%;
 }
-
 
 /* ===== CERTIFICATE CARD ===== */
 
