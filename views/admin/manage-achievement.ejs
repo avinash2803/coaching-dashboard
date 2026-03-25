@@ -30,29 +30,31 @@
         <% achievements.forEach(item => { %>
 
           <!-- ✅ WRAPPER (VERY IMPORTANT) -->
-          <div class="achievement-card-wrapper">
+ <div class="achievement-card-wrapper">
 
-            <div class="certificate" id="certificate-<%= item._id %>">
+  <div class="certificate" id="certificate-<%= item._id %>">
 
-              <h3 class="title">Congratulations</h3>
+    <h3 class="title">Congratulations</h3>
 
-              <div class="photo-wrapper">
-  <img src="/api/upload/<%= item.studentId?.photoId %>" class="profile" />
-</div>
+    <div class="photo-wrapper">
+      <img src="/api/upload/<%= item.studentId?.photoId %>" class="profile" />
+    </div>
 
-              <p class="quote">
-                From Classroom Walls <br> to Success Halls
-              </p>
+    <p class="quote">
+      From Classroom Walls <br> to Success Halls
+    </p>
 
-              <h2 class="name"><%= item.studentId?.name %></h2>
+    <h2 class="name"><%= item.studentId?.name %></h2>
 
-              <div class="exam">
-                <%= item.examQualified %>
-              </div>
+    <div class="exam">
+      <%= item.examQualified %>
+    </div>
 
-              <p class="batch">CG VYAPAM BATCH</p>
+    <p class="batch">CG VYAPAM BATCH</p>
 
-          </div>
+  </div>  <!-- ✅ certificate close -->
+
+</div>    <!-- ✅ wrapper close -->
 
         <% }) %>
 
