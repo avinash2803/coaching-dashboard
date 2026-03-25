@@ -20,7 +20,7 @@
 
 .achievement-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;   /* 🔥 row + column gap */
   width: 100%;
 }
@@ -59,9 +59,10 @@
 .certificate:hover {
   transform: translateY(-6px) scale(1.02);
 }
-
 .certificate {
-  min-width: 0;   /* 🔥 VERY IMPORTANT */
+  width: 100%;
+  max-width: 220px;   /* 🔥 card ko limit kar diya */
+  margin: 0 auto;     /* center align */
 }
 /* ===== TEXT ===== */
 
