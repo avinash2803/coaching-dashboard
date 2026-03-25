@@ -26,12 +26,6 @@
   width: 100%;
   justify-content: start;   /* 🔥 VERY IMPORTANT */
 }
-.achievement-card-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 
 .achievement-card-wrapper {
   width: 100%;
@@ -109,10 +103,12 @@
 .exam {
   background: #d32f2f;
   color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
+  padding: 5px 8px;
+  border-radius: 15px;
   display: inline-block;
-  margin-top: 4px;
+  margin: 2px auto;
+  width: auto;
+  max-width: fit-content;
 }
 
 .batch {
