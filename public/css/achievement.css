@@ -56,14 +56,13 @@
   flex-direction: column;
   justify-content: center;
   gap: 2px; /* 🔥 spacing kam */
+  width: 100%; 
 }
 
 .certificate:hover {
   transform: translateY(-6px) scale(1.02);
 }
-.certificate {
-  width: 100%;
-}
+
 /* ===== TEXT ===== */
 
 .title {
