@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import Achievement from "../models/achievement.js";
 import Student from "../models/student.js";
+import DashboardStats from "../models/dashboardStats.js";
 
 const router = express.Router();
 
@@ -58,28 +59,23 @@ router.get("/manage", async (req, res) => {
     const achievements = await Achievement.find()
       .populate("studentId");
 
-    const students = await Student.find();
+    // ✅ Year lo (default bhi set)
+    const year = req.query.year || "2025-26";
 
-    console.log("Achievements count:", achievements.length);
+    // ✅ Dashboard stats fetch karo
+    const stats = await DashboardStats.findOne({ year });
 
-    // 📊 SAFE COUNTS (NO CRASH)
-    const totalStudents = students.length;
-
-    const boys = students.filter(s => s.gender === "Male" || s.gender === "male").length;
-
-    const girls = students.filter(s => s.gender === "Female" || s.gender === "female").length;
-
-    // 🎯 Exam counts (safe check)
-    const sscCount = achievements.filter(a => a.examQualified && a.examQualified.includes("SSC")).length;
-
-    const cgPoliceCount = achievements.filter(a => a.examQualified && a.examQualified.includes("Police")).length;
-
-    const ctetCount = achievements.filter(a => a.examQualified && a.examQualified.includes("CTET")).length;
-
+    // ✅ Render page
     res.render("admin/manage-achievement", {
       achievements,
-      totalStudents,
-      boys,
+      stats
+    });
+
+  } catch (err) {
+    console.error("ERROR IN /achievement/manage:", err);
+    res.send("Error loading Manage Achievement page");
+  }
+});
       girls,
       sscCount,
       cgPoliceCount,

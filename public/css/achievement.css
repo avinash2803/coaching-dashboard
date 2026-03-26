@@ -1,3 +1,55 @@
+/* ===== PREMIUM PANEL ===== */
+
+.premium-panel {
+  background: #f8fafc;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+.overview-panel.premium-panel {
+  background: #f8fafc; /* override */
+}
+/* Sections */
+.section {
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: #2c3e50;
+}
+
+.big-number {
+  font-size: 26px;
+  font-weight: bold;
+  color: #1d4ed8;
+}
+
+.label {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.split {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 8px;
+}
+
+.numbers {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
 /* ===== MAIN LAYOUT ===== */
 
 .achievement-container {
@@ -20,7 +72,7 @@
 
 .achievement-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr) !important;
+  grid-template-columns: repeat(3, 1fr);
   gap: 15px;
   width: 100%;
   justify-content: start;   /* 🔥 VERY IMPORTANT */
@@ -143,6 +195,5 @@
 @media (max-width: 500px) {
   .achievement-grid {
     grid-template-columns: 1fr;
-  outline: 2px solid red;
   }
 }

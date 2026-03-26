@@ -3,22 +3,72 @@
 <div class="achievement-container">
 
   <!-- 🟦 LEFT SIDE -->
-  <div class="overview-panel">
+  <div class="overview-panel premium-panel">
 
-    <h3>Overview</h3>
+  <!-- 👨‍🎓 STUDENTS -->
+  <div class="section">
+    <div class="section-title">👨‍🎓 Students</div>
 
-    <div><strong>Total Students:</strong> <%= totalStudents || 0 %></div>
-    <div><strong>Boys:</strong> <%= boys || 0 %></div>
-    <div><strong>Girls:</strong> <%= girls || 0 %></div>
+    <div class="big-number">
+      <%= stats?.students?.total || 0 %>
+    </div>
+    <div class="label">Total Students</div>
 
-    <hr>
-
-    <h4>Selections</h4>
-    <div>SSC GD: <%= sscCount || 0 %></div>
-    <div>CG Police: <%= cgPoliceCount || 0 %></div>
-    <div>CTET: <%= ctetCount || 0 %></div>
-
+    <div class="split">
+      <span>👦 <b><%= stats?.students?.boys || 0 %></b></span>
+      <span>👧 <b><%= stats?.students?.girls || 0 %></b></span>
+    </div>
   </div>
+
+  <hr>
+
+  <!-- 🎯 QUALIFIED -->
+  <div class="section">
+    <div class="section-title">🎯 Qualified</div>
+
+    <div class="item">
+      <div>🎓 CGPSC Pre</div>
+      <div class="numbers">
+        <span>👦 <%= stats?.qualified?.cgpsc?.boys || 0 %></span>
+        <span>👧 <%= stats?.qualified?.cgpsc?.girls || 0 %></span>
+      </div>
+    </div>
+
+    <div class="item">
+      <div>📘 CG TET</div>
+      <div class="numbers">
+        <span>👦 <%= stats?.qualified?.ctet?.boys || 0 %></span>
+        <span>👧 <%= stats?.qualified?.ctet?.girls || 0 %></span>
+      </div>
+    </div>
+
+    <div class="item">
+      <div>🧪 Lab Attendant</div>
+      <div class="numbers">
+        <span>👦 <%= stats?.qualified?.lab?.boys || 0 %></span>
+        <span>👧 <%= stats?.qualified?.lab?.girls || 0 %></span>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 💼 EMPLOYMENT -->
+  <div class="section">
+    <div class="section-title">💼 Employment</div>
+
+    <div class="big-number">
+      <%= stats?.employment?.total || 0 %>
+    </div>
+    <div class="label">Total Employed</div>
+
+    <div class="split">
+      <span>👦 <b><%= stats?.employment?.boys || 0 %></b></span>
+      <span>👧 <b><%= stats?.employment?.girls || 0 %></b></span>
+    </div>
+  </div>
+
+</div>
 
   <!-- 🟩 RIGHT SIDE -->
   <div class="achievement-content">

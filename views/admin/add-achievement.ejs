@@ -103,3 +103,109 @@
   yearFilter.addEventListener("change", filterStudents);
   courseFilter.addEventListener("change", filterStudents);
 </script>
+
+<hr>
+<h3>Dashboard Stats</h3>
+
+<input type="number" id="totalStudents" placeholder="Total Students">
+<input type="number" id="boysCount" placeholder="Boys">
+<input type="number" id="girlsCount" placeholder="Girls">
+
+<input type="number" id="cgpscBoys" placeholder="CGPSC Boys">
+<input type="number" id="cgpscGirls" placeholder="CGPSC Girls">
+
+<input type="number" id="ctetBoys" placeholder="CTET Boys">
+<input type="number" id="ctetGirls" placeholder="CTET Girls">
+
+<input type="number" id="labBoys" placeholder="Lab Boys">
+<input type="number" id="labGirls" placeholder="Lab Girls">
+
+<input type="number" id="empTotal" placeholder="Total Employed">
+<input type="number" id="empBoys" placeholder="Emp Boys">
+<input type="number" id="empGirls" placeholder="Emp Girls">
+
+<button id="saveDashboardStats">Save Dashboard</button>
+
+<script>
+
+// 🔹 SAVE BUTTON
+document.getElementById("saveDashboardStats").addEventListener("click", async () => {
+
+  const year = document.getElementById("yearFilter").value;
+
+  if (!year) {
+    alert("Please select year first");
+    return;
+  }
+
+  const data = {
+    year,
+    students: {
+      total: +document.getElementById("totalStudents").value || 0,
+      boys: +document.getElementById("boysCount").value || 0,
+      girls: +document.getElementById("girlsCount").value || 0
+    },
+    qualified: {
+      cgpsc: {
+        boys: +document.getElementById("cgpscBoys").value || 0,
+        girls: +document.getElementById("cgpscGirls").value || 0
+      },
+      ctet: {
+        boys: +document.getElementById("ctetBoys").value || 0,
+        girls: +document.getElementById("ctetGirls").value || 0
+      },
+      lab: {
+        boys: +document.getElementById("labBoys").value || 0,
+        girls: +document.getElementById("labGirls").value || 0
+      }
+    },
+    employment: {
+      total: +document.getElementById("empTotal").value || 0,
+      boys: +document.getElementById("empBoys").value || 0,
+      girls: +document.getElementById("empGirls").value || 0
+    }
+  };
+
+  await fetch("/admin/save-dashboard-stats", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  alert("Dashboard Saved!");
+});
+
+
+// 🔹 AUTO LOAD DATA WHEN YEAR CHANGES
+async function loadDashboardStats() {
+  const year = document.getElementById("yearFilter").value;
+
+  if (!year) return;
+
+  const res = await fetch(`/admin/dashboard-stats?year=${year}`);
+  const data = await res.json();
+
+  if (!data || !data.students) return;
+
+  document.getElementById("totalStudents").value = data.students.total || "";
+  document.getElementById("boysCount").value = data.students.boys || "";
+  document.getElementById("girlsCount").value = data.students.girls || "";
+
+  document.getElementById("cgpscBoys").value = data.qualified?.cgpsc?.boys || "";
+  document.getElementById("cgpscGirls").value = data.qualified?.cgpsc?.girls || "";
+
+  document.getElementById("ctetBoys").value = data.qualified?.ctet?.boys || "";
+  document.getElementById("ctetGirls").value = data.qualified?.ctet?.girls || "";
+
+  document.getElementById("labBoys").value = data.qualified?.lab?.boys || "";
+  document.getElementById("labGirls").value = data.qualified?.lab?.girls || "";
+
+  document.getElementById("empTotal").value = data.employment?.total || "";
+  document.getElementById("empBoys").value = data.employment?.boys || "";
+  document.getElementById("empGirls").value = data.employment?.girls || "";
+}
+
+// 🔹 TRIGGER ON YEAR CHANGE
+document.getElementById("yearFilter").addEventListener("change", loadDashboardStats);
+
+</script>
