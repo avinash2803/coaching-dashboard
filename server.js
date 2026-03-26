@@ -28,7 +28,7 @@ import Success from "./models/success.js";
 import successRoutes from "./routes/success.js";
 import syllabusRoutes from "./routes/syllabus.js";
 import achievementRoutes from "./routes/achievementRoutes.js";
-import dashboardRoutes from "./routes/dashboardStats.js";
+import dashboardRoutes from "./routes/dashboardstats.js";
 const app = express();
 const upload = multer({ dest: "uploads/" });
 
