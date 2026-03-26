@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import Achievement from "../models/achievement.js";
 import Student from "../models/student.js";
-import DashboardStats from "../models/dashboardStats.js";
+import Dashboardstats from "../models/dashboardstats.js";
 
 const router = express.Router();
 
@@ -63,7 +63,7 @@ router.get("/manage", async (req, res) => {
     const year = req.query.year || "2025-26";
 
     // ✅ Dashboard stats fetch karo
-    const stats = await DashboardStats.findOne({ year });
+    const stats = await Dashboardstats.findOne({ year });
 
     // ✅ Render page
     res.render("admin/manage-achievement", {

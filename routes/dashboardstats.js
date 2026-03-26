@@ -1,5 +1,5 @@
 import express from "express";
-import DashboardStats from "../models/dashboardStats.js";
+import Dashboardstats from "../models/dashboardstats.js";
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ router.post("/save-dashboard-stats", async (req, res) => {
       return res.status(400).json({ error: "Year is required" });
     }
 
-    const existing = await DashboardStats.findOne({ year });
+    const existing = await Dashboardstats.findOne({ year });
 
     if (existing) {
       // update
@@ -24,7 +24,7 @@ router.post("/save-dashboard-stats", async (req, res) => {
       await existing.save();
     } else {
       // create new
-      await DashboardStats.create({
+      await Dashboardstats.create({
         year,
         students,
         qualified,
@@ -50,7 +50,7 @@ router.get("/dashboard-stats", async (req, res) => {
       return res.status(400).json({ error: "Year is required" });
     }
 
-    const data = await DashboardStats.findOne({ year });
+    const data = await Dashboardstats.findOne({ year });
 
     res.json(data || {});
 

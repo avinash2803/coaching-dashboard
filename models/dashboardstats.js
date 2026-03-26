@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const dashboardStatsSchema = new mongoose.Schema({
+const dashboardstatsSchema = new mongoose.Schema({
   year: { type: String, required: true, unique: true },
 
   students: {
@@ -32,4 +32,4 @@ const dashboardStatsSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-export default mongoose.model("DashboardStats", dashboardStatsSchema);
+export default mongoose.model("Dashboardstats", dashboardstatsSchema);
