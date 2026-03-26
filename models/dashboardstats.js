@@ -9,20 +9,13 @@ const dashboardstatsSchema = new mongoose.Schema({
     girls: Number
   },
 
-  qualified: {
-    cgpsc: {
-      boys: Number,
-      girls: Number
-    },
-    ctet: {
-      boys: Number,
-      girls: Number
-    },
-    lab: {
-      boys: Number,
-      girls: Number
-    }
-  },
+qualified: [
+  {
+    name: String,
+    boys: Number,
+    girls: Number
+  }
+],
 
   employment: {
     total: Number,

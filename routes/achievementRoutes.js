@@ -63,7 +63,7 @@ router.get("/manage", async (req, res) => {
     const year = req.query.year || "2025-26";
 
     // ✅ Dashboard stats fetch karo
-    const stats = await Dashboardstats.findOne({ year });
+    const stats = await Dashboardstats.findOne({ year }) || {};
 
     // ✅ Render page
     res.render("admin/manage-achievement", {

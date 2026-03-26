@@ -111,14 +111,11 @@
 <input type="number" id="boysCount" placeholder="Boys">
 <input type="number" id="girlsCount" placeholder="Girls">
 
-<input type="number" id="cgpscBoys" placeholder="CGPSC Boys">
-<input type="number" id="cgpscGirls" placeholder="CGPSC Girls">
+<h4>Qualified Exams</h4>
 
-<input type="number" id="ctetBoys" placeholder="CTET Boys">
-<input type="number" id="ctetGirls" placeholder="CTET Girls">
+<div id="examContainer"></div>
 
-<input type="number" id="labBoys" placeholder="Lab Boys">
-<input type="number" id="labGirls" placeholder="Lab Girls">
+<button type="button" onclick="addExam()">+ Add Exam</button>
 
 <input type="number" id="empTotal" placeholder="Total Employed">
 <input type="number" id="empBoys" placeholder="Emp Boys">
@@ -137,36 +134,32 @@ document.getElementById("saveDashboardStats").addEventListener("click", async ()
     alert("Please select year first");
     return;
   }
+const exams = [];
 
-  const data = {
-    year,
-    students: {
-      total: +document.getElementById("totalStudents").value || 0,
-      boys: +document.getElementById("boysCount").value || 0,
-      girls: +document.getElementById("girlsCount").value || 0
-    },
-    qualified: {
-      cgpsc: {
-        boys: +document.getElementById("cgpscBoys").value || 0,
-        girls: +document.getElementById("cgpscGirls").value || 0
-      },
-      ctet: {
-        boys: +document.getElementById("ctetBoys").value || 0,
-        girls: +document.getElementById("ctetGirls").value || 0
-      },
-      lab: {
-        boys: +document.getElementById("labBoys").value || 0,
-        girls: +document.getElementById("labGirls").value || 0
-      }
-    },
-    employment: {
-      total: +document.getElementById("empTotal").value || 0,
-      boys: +document.getElementById("empBoys").value || 0,
-      girls: +document.getElementById("empGirls").value || 0
-    }
-  };
+document.querySelectorAll("#examContainer > div").forEach(row => {
+  exams.push({
+    name: row.querySelector(".exam-name").value,
+    boys: +row.querySelector(".exam-boys").value || 0,
+    girls: +row.querySelector(".exam-girls").value || 0
+  });
+});
 
-  await fetch("/admin/save-dashboard-stats", {
+const data = {
+  year,
+  students: {
+    total: +document.getElementById("totalStudents").value || 0,
+    boys: +document.getElementById("boysCount").value || 0,
+    girls: +document.getElementById("girlsCount").value || 0
+  },
+  qualified: exams,
+  employment: {
+    total: +document.getElementById("empTotal").value || 0,
+    boys: +document.getElementById("empBoys").value || 0,
+    girls: +document.getElementById("empGirls").value || 0
+  }
+};
+
+await fetch("/admin/save-dashboard-stats", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
@@ -184,28 +177,45 @@ async function loadDashboardStats() {
 
   const res = await fetch(`/admin/dashboard-stats?year=${year}`);
   const data = await res.json();
+  if (!data) return;
 
-  if (!data || !data.students) return;
+// students
+document.getElementById("totalStudents").value = data.students?.total || "";
+document.getElementById("boysCount").value = data.students?.boys || "";
+document.getElementById("girlsCount").value = data.students?.girls || "";
 
-  document.getElementById("totalStudents").value = data.students.total || "";
-  document.getElementById("boysCount").value = data.students.boys || "";
-  document.getElementById("girlsCount").value = data.students.girls || "";
+// employment
+document.getElementById("empTotal").value = data.employment?.total || "";
+document.getElementById("empBoys").value = data.employment?.boys || "";
+document.getElementById("empGirls").value = data.employment?.girls || "";
 
-  document.getElementById("cgpscBoys").value = data.qualified?.cgpsc?.boys || "";
-  document.getElementById("cgpscGirls").value = data.qualified?.cgpsc?.girls || "";
+// 🔥 NEW PART (IMPORTANT)
+document.getElementById("examContainer").innerHTML = "";
 
-  document.getElementById("ctetBoys").value = data.qualified?.ctet?.boys || "";
-  document.getElementById("ctetGirls").value = data.qualified?.ctet?.girls || "";
-
-  document.getElementById("labBoys").value = data.qualified?.lab?.boys || "";
-  document.getElementById("labGirls").value = data.qualified?.lab?.girls || "";
-
-  document.getElementById("empTotal").value = data.employment?.total || "";
-  document.getElementById("empBoys").value = data.employment?.boys || "";
-  document.getElementById("empGirls").value = data.employment?.girls || "";
+data.qualified?.forEach(exam => {
+  addExam(exam.name, exam.boys, exam.girls);
+});
 }
+
 
 // 🔹 TRIGGER ON YEAR CHANGE
 document.getElementById("yearFilter").addEventListener("change", loadDashboardStats);
 
+</script>
+
+<script>
+function addExam(name = "", boys = "", girls = "") {
+  const container = document.getElementById("examContainer");
+
+  const div = document.createElement("div");
+  div.style.marginBottom = "10px";
+
+  div.innerHTML = `
+    <input placeholder="Exam Name" class="exam-name" value="${name}">
+    <input type="number" placeholder="Boys" class="exam-boys" value="${boys}">
+    <input type="number" placeholder="Girls" class="exam-girls" value="${girls}">
+  `;
+  container.appendChild(div);
+}
+addExam();
 </script>

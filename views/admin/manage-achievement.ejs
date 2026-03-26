@@ -25,30 +25,36 @@
   <!-- 🎯 QUALIFIED -->
   <div class="section">
     <div class="section-title">🎯 Qualified</div>
+    <% if (stats?.qualified && stats.qualified.length > 0) { %>
+
+  <% stats.qualified.forEach(exam => { %>
 
     <div class="item">
-      <div>🎓 CGPSC Pre</div>
-      <div class="numbers">
-        <span>👦 <%= stats?.qualified?.cgpsc?.boys || 0 %></span>
-        <span>👧 <%= stats?.qualified?.cgpsc?.girls || 0 %></span>
+
+      <!-- NAME + TOTAL -->
+      <div style="display:flex; justify-content:space-between;">
+        <span>🎓 <%= exam.name || "Unknown Exam" %></span>
+
+        <strong>
+          <%= (exam.boys || 0) + (exam.girls || 0) %>
+        </strong>
       </div>
+
+      <!-- BOYS GIRLS -->
+      <div class="numbers">
+        <span>👦 <%= exam.boys || 0 %></span>
+        <span>👧 <%= exam.girls || 0 %></span>
+      </div>
+
     </div>
 
-    <div class="item">
-      <div>📘 CG TET</div>
-      <div class="numbers">
-        <span>👦 <%= stats?.qualified?.ctet?.boys || 0 %></span>
-        <span>👧 <%= stats?.qualified?.ctet?.girls || 0 %></span>
-      </div>
-    </div>
+  <% }) %>
 
-    <div class="item">
-      <div>🧪 Lab Attendant</div>
-      <div class="numbers">
-        <span>👦 <%= stats?.qualified?.lab?.boys || 0 %></span>
-        <span>👧 <%= stats?.qualified?.lab?.girls || 0 %></span>
-      </div>
-    </div>
+<% } else { %>
+  <p>No data</p>
+<% } %>
+
+
   </div>
 
   <hr>
