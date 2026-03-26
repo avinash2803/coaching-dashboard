@@ -76,17 +76,5 @@ router.get("/manage", async (req, res) => {
     res.send("Error loading Manage Achievement page");
   }
 });
-      girls,
-      sscCount,
-      cgPoliceCount,
-      ctetCount
-    });
-
-  } catch (err) {
-    console.error("ERROR IN /achievement/manage:", err);
-    res.send("Error loading Manage Achievement page");
-  }
-});
-
 
 export default router;
