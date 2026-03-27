@@ -57,12 +57,7 @@ if (existing) {
 router.get("/manage", async (req, res) => {
   try {
     const achievements = await Achievement.find()
-      .populate({
-        path: "studentId",
-        populate: {
-          path: "course"   // 🔥 THIS WAS MISSING
-        }
-      })
+      .populate("studentId")
       .lean();
 
     const year = req.query.year || "2025-26";
