@@ -7,10 +7,17 @@
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
   <h3 style="margin:0;">Achievements</h3>
 
-  <select onchange="window.location='?year='+this.value" style="padding:5px;">
-    <option value="2025-26" <%= (req.query.year === "2025-26") ? "selected" : "" %>>2025-26</option>
-    <option value="2026-27" <%= (req.query.year === "2026-27") ? "selected" : "" %>>2026-27</option>
-  </select>
+<select onchange="window.location='?year='+this.value" style="padding:5px;">
+  
+  <option value="2025-26" <%= (year === "2025-26") ? "selected" : "" %>>
+    2025-26
+  </option>
+
+  <option value="2026-27" <%= (year === "2026-27") ? "selected" : "" %>>
+    2026-27
+  </option>
+
+</select>
 </div>
 
   <!-- 👨‍🎓 STUDENTS -->

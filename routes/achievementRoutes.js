@@ -65,6 +65,7 @@ router.get("/manage", async (req, res) => {
     const stats = await Dashboardstats.findOne({ year }) || {};
 
     res.render("admin/manage-achievement", {
+      year,
       achievements,
       stats
     });
