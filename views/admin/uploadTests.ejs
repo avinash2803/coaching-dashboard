@@ -4,6 +4,16 @@
 
 <form>
 
+<label>Year:</label>
+<select id="year">
+  <option value="2025-26">2025-26 (Year 1)</option>
+  <option value="2026-27">2026-27 (Year 2)</option>
+  <option value="2027-28">2027-28 (Year 3)</option>
+  <option value="2028-29">2028-29 (Year 4)</option>
+</select>
+
+<br><br>
+
 <label>Batch:</label>
 <select id="batch">
   <option value="CGPSC">CGPSC</option>
@@ -44,6 +54,12 @@
 </form>
 
 <script>
+
+window.onload = () => {
+  document.getElementById("year").value =
+    localStorage.getItem("bvcpYear") || "2025-26";
+};
+
 async function uploadTest(){
 
 const file = document.getElementById("file").files[0];
@@ -53,11 +69,11 @@ const testName = document.getElementById("testName").value;
 const subject = document.getElementById("subject").value;
 const fullMarks = document.getElementById("fullMarks").value;
 
-const year = localStorage.getItem("bvcpYear") || "2025-26";
+const year = document.getElementById("year").value;
 
-if(!file){
-alert("Select file");
-return;
+if(!file || !testName || !subject || !fullMarks || !batch){
+  alert("Fill all fields ❌");
+  return;
 }
 
 const formData = new FormData();
