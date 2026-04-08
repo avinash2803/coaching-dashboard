@@ -57,51 +57,7 @@
 
 <% } %>
 
-<% if(user && user.role === "admin"){ %>
 
-<!-- Excel Upload -->
-<div class="card p-3 mb-3">
- <div class="d-flex align-items-center gap-2 flex-nowrap overflow-auto excel-controls">
-
-<div style="min-width:140px;">
-<select id="excelBatch" class="form-control">
-<option value="">Select Batch</option>
-<option value="CGPSC">CGPSC</option>
-<option value="VYAPAM">VYAPAM</option>
-</select>
-</div>
-
-<div style="min-width:160px;">
-<select id="excelTestType" class="form-control">
-<option value="">Test Type</option>
-<option value="classTests">Class Test</option>
-<option value="mockTests">Mock Exam</option>
-</select>
-</div>
-      <div style="min-width:180px;">
-<input id="excelTestName" class="form-control" placeholder="Test Name">
-      </div>
-
-      <div style="min-width:180px;">
-<input id="excelSubject" class="form-control" placeholder="Subject">
-      </div>
-
-      <div style="min-width:120px;">
-<input id="excelFullMarks" type="number" class="form-control" placeholder="Full Marks">
-      </div>
-
-      <div style="min-width:220px;">
-<input id="excelFile" type="file" accept=".xlsx" class="form-control">
-      </div>
-
-      <div style="min-width:160px;">
-<button id="uploadExcelBtn" class="btn btn-primary">
-Upload Excel
-</button>
-      </div>
-    </div>
-  </div>
-<% } %>
 
   <!-- Dashboard -->
   <div id="dashboardArea" style="display:none;" class="mb-3">
