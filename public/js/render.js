@@ -19,17 +19,34 @@ function percentOfTest(test){
 
   return +((sc / fm) * 100).toFixed(2);
 }
-// per-student average test percentage (average of tests). If no tests, returns 0.
 function avgTestPercentFor(student){
   const tests = [
     ...Object.values(student.classTests || {}),
     ...Object.values(student.mockTests || {})
   ];
 
-  if(!tests.length) return 0;
+  let totalMarks = 0;
+  let totalFullMarks = 0;
 
-  const vals = tests.map(t => percentOfTest(t));
-  return +((vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2));
+  tests.forEach(t => {
+
+    // ❌ skip absent
+    if(t.score === "AB") return;
+
+    const score = Number(t.score) || 0;
+    const full = Number(t.fullMarks) || 0;
+
+    // ❌ skip invalid full marks
+    if(full === 0) return;
+
+    totalMarks += score;
+    totalFullMarks += full;
+  });
+
+  // ❌ no valid test
+  if(totalFullMarks === 0) return 0;
+
+  return +((totalMarks / totalFullMarks) * 100).toFixed(2);
 }
 
 function finalColorClass(val){ if(val<40) return 'score-red'; if(val<70) return 'score-orange'; return 'score-green'; }
