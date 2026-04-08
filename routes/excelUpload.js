@@ -182,5 +182,68 @@ res.status(500).json({ error: "Upload failed" });
 }
 
 });
+// ================= ATTENDANCE UPLOAD =================
 
+router.post("/upload-attendance", upload.single("file"), async (req, res) => {
+  try {
+    const { batch, month, totalDays } = req.body;
+
+    if (!req.file) return res.status(400).json({ error: "Excel file missing" });
+    if (!batch) return res.status(400).json({ error: "Batch missing" });
+    if (!month) return res.status(400).json({ error: "Month missing" });
+
+    const workbook = xlsx.readFile(req.file.path);
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const data = xlsx.utils.sheet_to_json(sheet);
+
+    fs.unlinkSync(req.file.path);
+
+    let updated = 0;
+
+    for (const row of data) {
+      const roll = Number(row["Roll No"]);
+      const present = Number(row["Present"]);
+      const absent = Number(row["Absent"]);
+
+      if (!roll) continue;
+
+      const student = await Student.findOne({
+        roll: roll,
+        course: batch
+      });
+
+      if (!student) continue;
+
+      const percentage = ((present / totalDays) * 100).toFixed(2);
+
+      student.attendance = student.attendance || [];
+
+      const existing = student.attendance.find(a => a.month === month);
+
+      if (existing) {
+        existing.totalDays = totalDays;
+        existing.present = present;
+        existing.absent = absent;
+        existing.percentage = percentage;
+      } else {
+        student.attendance.push({
+          month,
+          totalDays,
+          present,
+          absent,
+          percentage
+        });
+      }
+
+      await student.save();
+      updated++;
+    }
+
+    res.json({ success: true, updated });
+
+  } catch (err) {
+    console.error("Attendance upload error:", err);
+    res.status(500).json({ error: "Upload failed" });
+  }
+});
 export default router;

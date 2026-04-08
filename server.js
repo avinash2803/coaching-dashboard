@@ -199,6 +199,9 @@ app.get("/admin/dashboard", adminAuth, (req,res)=>{
 res.render("admin/dashboard");
 });
 
+app.get("/admin/upload-attendance", adminAuth, (req, res) => {
+  res.render("admin/uploadAttendance");
+});
 
 app.get("/admin/manage-success", adminAuth, async (req,res)=>{
 
