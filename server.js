@@ -62,39 +62,6 @@ app.use((req,res,next)=>{
   next();
 });
 
-// ✅ ADD LOGIN ROUTE HERE
-app.post("/login", async (req, res) => {
-
-  const { username, password } = req.body;
-
-  const user = await User.findOne({ username });
-
-  if (!user) {
-    return res.json({ success:false, message:"User not found" });
-  }
-
-  let match = false;
-
-  if (user.role === "admin") {
-  match = (password === user.password);
-} else {
-    // student password stored as plain text
-    match = (password === user.password);
-  }
-
-  if (!match) {
-    return res.json({ success:false, message:"Wrong password" });
-  }
-
-  req.session.user = {
-    id: user._id,
-    role: user.role,
-    studentId: user.studentId
-  };
-
-  res.json({ success:true, role:user.role });
-
-});
 
 app.get("/logout",(req,res)=>{
 req.session.destroy(()=>{

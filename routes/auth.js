@@ -5,7 +5,6 @@ const router = express.Router();
 
 /* LOGIN */
 router.post("/login", async (req, res) => {
-
   const { username, password } = req.body;
 
   const user = await User.findOne({ username, password });
@@ -14,17 +13,15 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ message: "Invalid login" });
   }
 
+  // ✅ SESSION STORE (already correct)
   req.session.user = {
     id: user._id,
     role: user.role,
     studentId: user.studentId
   };
 
-  res.json({
-    success: true,
-    role: user.role
-  });
-
+  // 🔥 IMPORTANT CHANGE
+  res.redirect('/');
 });
 
 /* LOGOUT */
