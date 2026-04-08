@@ -218,22 +218,22 @@ router.post("/upload-attendance", upload.single("file"), async (req, res) => {
 
       student.attendance = student.attendance || [];
 
-      const existing = student.attendance.find(a => a.month === month);
+      // ensure attendance array exists
+student.attendance = student.attendance || [];
 
-      if (existing) {
-        existing.totalDays = totalDays;
-        existing.present = present;
-        existing.absent = absent;
-        existing.percentage = percentage;
-      } else {
-        student.attendance.push({
-          month,
-          totalDays,
-          present,
-          absent,
-          percentage
-        });
-      }
+// ❌ same month ka purana data hatao
+student.attendance = student.attendance.filter(
+  a => a.month !== month
+);
+
+// ✅ fresh data add karo
+student.attendance.push({
+  month,
+  totalDays,
+  present,
+  absent,
+  percentage
+});
 
       await student.save();
       updated++;

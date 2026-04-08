@@ -4,9 +4,11 @@
   
   <label>Year:</label>
   <select id="year">
-    <option value="2025">2025</option>
-    <option value="2026">2026</option>
-  </select>
+  <option value="2025">2025-26 (Year 1)</option>
+  <option value="2026">2026-27 (Year 2)</option>
+  <option value="2027">2027-28 (Year 3)</option>
+  <option value="2028">2028-29 (Year 4)</option>
+</select>
 
   <br><br>
 
@@ -44,19 +46,34 @@ async function uploadAttendance() {
   const totalDays = document.getElementById("totalDays").value;
   const year = document.getElementById("year").value;
 
+  if (!file) {
+    alert("Please select Excel file");
+    return;
+  }
+
   const formData = new FormData();
   formData.append("file", file);
   formData.append("batch", batch);
   formData.append("month", month);
-  formData.append("totalDays", totalDays);
+  formData.append("totalDays", Number(totalDays));
   formData.append("year", year);
 
-  const res = await fetch("/api/excel/upload-attendance", {
-    method: "POST",
-    body: formData
-  });
+  try {
+    const res = await fetch("/api/excel/upload-attendance", {
+      method: "POST",
+      body: formData
+    });
 
-  const data = await res.json();
-  alert(data.success ? "Uploaded ✅" : "Failed ❌");
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Uploaded ✅");
+    } else {
+      alert(data.error || "Upload failed ❌");
+    }
+
+  } catch (err) {
+    alert("Server error ❌");
+  }
 }
 </script>
