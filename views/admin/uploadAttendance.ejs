@@ -66,14 +66,17 @@ async function uploadAttendance() {
 
     const data = await res.json();
 
-    if (res.ok) {
-      alert("Uploaded ✅");
-    } else {
-      alert(data.error || "Upload failed ❌");
-    }
-
-  } catch (err) {
-    alert("Server error ❌");
-  }
+if (data.success) {
+  alert(
+    `Uploaded ✅\n\nUpdated: ${data.updated}\nNot Found: ${data.notFound.length}\nErrors: ${data.errorsCount}`
+  );
+} else {
+  alert(data.error || "Upload failed ❌");
 }
+
+} catch (err) {
+  alert("Server error ❌");
+}
+}
+</script>
 </script>

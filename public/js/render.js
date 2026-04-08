@@ -718,20 +718,26 @@ formData.append("testName", testName);
 formData.append("subject", subject);
 formData.append("fullMarks", fullMarks);
 formData.append("testType", testType);
+const selectedYear = localStorage.getItem("bvcpYear") || "2025-26";
+formData.append("year", selectedYear);
 
 const res = await fetch("/api/excel/upload-tests", {
 method: "POST",
 body: formData
 });
+const data = await res.json();
 
-if (res.ok) {
-alert("Excel uploaded successfully");
+if (data.success) {
+  alert(
+    `Uploaded ✅\n\nUpdated: ${data.updated}\nNot Found: ${data.notFound.length}\nErrors: ${data.errorsCount}`
+  );
 
-// reload students from MongoDB
-const selectedYear = localStorage.getItem("bvcpYear") || "2025-26";
-loadStudentsByYear(selectedYear);
+  // reload students
+  const selectedYear = localStorage.getItem("bvcpYear") || "2025-26";
+  loadStudentsByYear(selectedYear);
+
 } else {
-alert("Upload failed");
+  alert(data.error || "Upload failed ❌");
 }
 
 })
