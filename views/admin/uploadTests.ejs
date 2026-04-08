@@ -77,7 +77,9 @@ body: formData
 const data = await res.json();
 
 if(data.success){
-alert(`Uploaded ✅\nUpdated: ${data.updated}`);
+alert(
+  `Uploaded ✅\n\nUpdated: ${data.updated}\nNot Found: ${data.notFound.length}\nErrors: ${data.errorsCount}`
+);
 }else{
 alert("Failed ❌");
 }

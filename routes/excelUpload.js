@@ -13,6 +13,7 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
   try {
     let { testName, subject, fullMarks, testType, batch } = req.body;
 
+
     if (testType === "Class Test") testType = "classTests";
     if (testType === "Mock Exam") testType = "mockTests";
 
@@ -20,6 +21,7 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
     if (!testName) return res.status(400).json({ error: "Test name missing" });
     if (!testType) return res.status(400).json({ error: "Test type missing" });
     if (!batch) return res.status(400).json({ error: "Batch not selected" });
+    if (!req.body.year) return res.status(400).json({ error: "Year missing" });
 
     let updated = 0;
     let notFound = [];
@@ -27,13 +29,13 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
 
     // delete old test
     await Student.updateMany(
-      { course: batch },
+      { course: batch, year: req.body.year },
       { $unset: { [`${testType}.${testName}`]: "" } }
     );
 
     // set AB for all
     await Student.updateMany(
-      { course: batch },
+      { course: batch, year: req.body.year },
       {
         $set: {
           [`${testType}.${testName}`]: {
@@ -122,6 +124,7 @@ router.post("/upload-attendance", upload.single("file"), async (req, res) => {
     if (!batch) return res.status(400).json({ error: "Batch missing" });
     if (!month) return res.status(400).json({ error: "Month missing" });
     if (!totalDays) return res.status(400).json({ error: "Total days missing" });
+    if (!year) return res.status(400).json({ error: "Year missing" });
 
     let updated = 0;
     let notFound = [];
@@ -157,21 +160,15 @@ router.post("/upload-attendance", upload.single("file"), async (req, res) => {
 
         const percentage = ((present / totalDays) * 100).toFixed(2);
 
-        student.attendance = student.attendance || [];
+        student.attendance = student.attendance || {};
 
-        // remove old month
-        student.attendance = student.attendance.filter(
-          a => a.month.toLowerCase() !== month.toLowerCase()
-        );
+student.attendance[month] = {
+  total: Number(totalDays),
+  present,
+  absent
+};
 
-        // add new
-        student.attendance.push({
-          month,
-          totalDays,
-          present,
-          absent,
-          percentage
-        });
+    
 
         await student.save();
         updated++;

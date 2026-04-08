@@ -697,50 +697,7 @@ function showNoData(year) {
   `;
 }
 
-document.getElementById("uploadExcelBtn")?.addEventListener("click", async () => {
 
-const file = document.getElementById("excelFile").files[0];
-const testType = document.getElementById("excelTestType").value;
-const batch = document.getElementById("excelBatch").value;
-const testName = document.getElementById("excelTestName").value.trim();
-const subject = document.getElementById("excelSubject").value.trim();
-const fullMarks = document.getElementById("excelFullMarks").value;
-
-if (!file || !testName || !subject || !fullMarks || !batch) {
-alert("Please fill all fields and choose Excel file");
-return;
-}
-
-const formData = new FormData();
-formData.append("file", file);
-formData.append("batch", batch);
-formData.append("testName", testName);
-formData.append("subject", subject);
-formData.append("fullMarks", fullMarks);
-formData.append("testType", testType);
-const selectedYear = localStorage.getItem("bvcpYear") || "2025-26";
-formData.append("year", selectedYear);
-
-const res = await fetch("/api/excel/upload-tests", {
-method: "POST",
-body: formData
-});
-const data = await res.json();
-
-if (data.success) {
-  alert(
-    `Uploaded ✅\n\nUpdated: ${data.updated}\nNot Found: ${data.notFound.length}\nErrors: ${data.errorsCount}`
-  );
-
-  // reload students
-  const selectedYear = localStorage.getItem("bvcpYear") || "2025-26";
-  loadStudentsByYear(selectedYear);
-
-} else {
-  alert(data.error || "Upload failed ❌");
-}
-
-})
 
 function renderPagination(totalStudents){
 
