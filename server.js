@@ -112,7 +112,7 @@ mongoose.connect(process.env.MONGO_URI)
 /* Routes */
 app.use("/api/upload", uploadRoutes);  // ✅ MUST be BEFORE app.listen
 app.use("/api/students", studentsRoutes);
-app.use("/auth", authRoutes);
+app.use("/", authRoutes);
 app.use("/api/excel", excelUpload);
 app.use("/", successRoutes);
 app.use("/admin", syllabusRoutes);
