@@ -1,0 +1,88 @@
+<%- include("../partials/header") %>
+
+<h2>Upload Test</h2>
+
+<form>
+
+<label>Batch:</label>
+<select id="batch">
+  <option value="CGPSC">CGPSC</option>
+  <option value="VYAPAM">VYAPAM</option>
+</select>
+
+<br><br>
+
+<label>Test Type:</label>
+<select id="testType">
+  <option value="classTests">Class Test</option>
+  <option value="mockTests">Mock Exam</option>
+</select>
+
+<br><br>
+
+<label>Test Name:</label>
+<input type="text" id="testName">
+
+<br><br>
+
+<label>Subject:</label>
+<input type="text" id="subject">
+
+<br><br>
+
+<label>Full Marks:</label>
+<input type="number" id="fullMarks">
+
+<br><br>
+
+<input type="file" id="file">
+
+<br><br>
+
+<button type="button" onclick="uploadTest()">Upload</button>
+
+</form>
+
+<script>
+async function uploadTest(){
+
+const file = document.getElementById("file").files[0];
+const batch = document.getElementById("batch").value;
+const testType = document.getElementById("testType").value;
+const testName = document.getElementById("testName").value;
+const subject = document.getElementById("subject").value;
+const fullMarks = document.getElementById("fullMarks").value;
+
+const year = localStorage.getItem("bvcpYear") || "2025-26";
+
+if(!file){
+alert("Select file");
+return;
+}
+
+const formData = new FormData();
+formData.append("file", file);
+formData.append("batch", batch);
+formData.append("testType", testType);
+formData.append("testName", testName);
+formData.append("subject", subject);
+formData.append("fullMarks", fullMarks);
+formData.append("year", year);
+
+const res = await fetch("/api/excel/upload-tests", {
+method: "POST",
+body: formData
+});
+
+const data = await res.json();
+
+if(data.success){
+alert(`Uploaded ✅\nUpdated: ${data.updated}`);
+}else{
+alert("Failed ❌");
+}
+
+}
+</script>
+
+<%- include("../partials/footer") %>
