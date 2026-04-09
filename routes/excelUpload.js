@@ -118,9 +118,12 @@ const student = await Student.findOne({
 
 router.post("/upload-attendance", upload.single("file"), async (req, res) => {
   try {
-    const { batch, totalDays } = req.body;
+    const batch = String(req.body.batch).trim();
+const totalDays = req.body.totalDays;
+
     const month = req.body.month.trim();
-    const year = String(req.body.year).split(" ")[0].trim();
+    const rawYear = req.body.year;
+const year = String(rawYear).split(" ")[0].trim();
 
     if (!req.file) return res.status(400).json({ error: "Excel file missing" });
     if (!batch) return res.status(400).json({ error: "Batch missing" });
@@ -158,11 +161,13 @@ const roll = Number(String(rollRaw).trim().replace(".0", ""));
       continue;
     }
 
-        const student = await Student.findOne({
-          roll,
-          course: batch,
-          year
-        });
+      const cleanBatch = String(batch).trim();
+
+const student = await Student.findOne({
+  roll: Number(roll),
+  year: year,
+  course: { $regex: `^${cleanBatch}$`, $options: "i" }
+});
 
         if (!student) {
           notFound.push(roll);
