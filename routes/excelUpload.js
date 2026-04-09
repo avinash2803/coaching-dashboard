@@ -123,7 +123,7 @@ const totalDays = req.body.totalDays;
 
     const month = req.body.month.trim();
     const rawYear = req.body.year;
-const year = String(rawYear).split(" ")[0].trim();
+const year = String(rawYear).match(/\d{4}-\d{2}/)?.[0];
 
     if (!req.file) return res.status(400).json({ error: "Excel file missing" });
     if (!batch) return res.status(400).json({ error: "Batch missing" });
