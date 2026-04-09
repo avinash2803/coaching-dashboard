@@ -375,7 +375,24 @@ function renderProfileEditHtml(s, idx){
 function renderAttendanceHtml(attObj){
   attObj = attObj || {};
 
-  const months = Object.keys(attObj);
+// 🔥 FIX: convert 2025-06 → June
+let months = Object.keys(attObj).map(m => {
+  if (m.includes("-")) {
+    const mm = m.split("-")[1];
+
+    const monthMap = {
+      "01":"January","02":"February","03":"March","04":"April",
+      "05":"May","06":"June","07":"July","08":"August",
+      "09":"September","10":"October","11":"November","12":"December"
+    };
+
+    return monthMap[mm] || m;
+  }
+  return m;
+});
+
+// 🔥 remove duplicates
+months = [...new Set(months)];
 
   if(!months.length){
     return '<div class="help-muted">No attendance data available</div>';
@@ -402,7 +419,23 @@ function renderAttendanceHtml(attObj){
       </thead>
       <tbody>
         ${months.map(m=>{
-          const v = attObj[m] || {};
+          let v = attObj[m];
+
+// 🔥 fallback for 2025-06 type keys
+if (!v) {
+  const reverseMap = {
+    January:"01", February:"02", March:"03", April:"04",
+    May:"05", June:"06", July:"07", August:"08",
+    September:"09", October:"10", November:"11", December:"12"
+  };
+
+  const mm = reverseMap[m];
+  const key = Object.keys(attObj).find(k => k.endsWith(`-${mm}`));
+
+  if (key) v = attObj[key];
+}
+
+v = v || {};
           const total = Number(v.total)||0;
           const present = Number(v.present)||0;
           const absent = Number(v.absent)||0;

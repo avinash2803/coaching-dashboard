@@ -21,7 +21,20 @@
   <br><br>
 
   <label>Month:</label>
-  <input type="text" id="month" placeholder="July">
+<select id="month" name="month" class="form-control">
+  <option>April</option>
+  <option>May</option>
+  <option>June</option>
+  <option>July</option>
+  <option>August</option>
+  <option>September</option>
+  <option>October</option>
+  <option>November</option>
+  <option>December</option>
+  <option>January</option>
+  <option>February</option>
+  <option>March</option>
+</select>
 
   <br><br>
 
@@ -70,6 +83,9 @@ if (data.success) {
   alert(
     `Uploaded ✅\n\nUpdated: ${data.updated}\nNot Found: ${data.notFound.length}\nErrors: ${data.errorsCount}`
   );
+
+  // 🔥 ADD THIS LINE
+  window.location.reload();
 } else {
   alert(data.error || "Upload failed ❌");
 }
