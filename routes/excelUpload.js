@@ -161,7 +161,13 @@ const roll = Number(String(rollRaw).trim().replace(".0", ""));
       continue;
     }
 
+    
       const cleanBatch = String(batch).trim();
+console.log("MATCH TRY:", {
+  roll: Number(roll),
+  batch,
+  year
+});
 
 const student = await Student.findOne({
   roll: Number(roll),
@@ -170,9 +176,12 @@ const student = await Student.findOne({
 });
 
         if (!student) {
-          notFound.push(roll);
-          continue;
-        }
+  console.log("NOT FOUND:", {
+    roll: Number(roll),
+    batch,
+    year
+  });
+}
 
         const percentage = ((present / totalDays) * 100).toFixed(2);
 
