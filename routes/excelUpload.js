@@ -137,15 +137,18 @@ router.post("/upload-attendance", upload.single("file"), async (req, res) => {
     fs.unlinkSync(req.file.path);
 
     for (const row of data) {
-      try {
-        const roll = Number(row["Roll No"]);
-        const present = Number(row["Present"]);
-        const absent = Number(row["Absent"]);
+  try {
 
-        if (!roll) {
-          errors.push(row);
-          continue;
-        }
+    const keys = Object.keys(row);
+
+    const roll = Number(row[keys.find(k => k.toLowerCase().includes("roll"))]);
+    const present = Number(row[keys.find(k => k.toLowerCase().includes("present"))]);
+    const absent = Number(row[keys.find(k => k.toLowerCase().includes("absent"))]);
+
+    if (!roll || isNaN(present) || isNaN(absent)) {
+      errors.push(row);
+      continue;
+    }
 
         const student = await Student.findOne({
           roll,
