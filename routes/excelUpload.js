@@ -140,24 +140,19 @@ const totalDays = req.body.totalDays;
 
     const workbook = xlsx.readFile(req.file.path);
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const data = xlsx.utils.sheet_to_json(sheet, { range: 2 });
+    const data = xlsx.utils.sheet_to_json(sheet, {
+  range: 2,
+  defval: 0
+});
 
     fs.unlinkSync(req.file.path);
 
     for (const row of data) {
   try {
 
-    const keys = Object.keys(row);
-
-    let rollRaw = row[keys.find(k => k.toLowerCase().includes("roll"))];
-
-const roll = Number(String(rollRaw).trim().replace(".0", ""));
-
-// 🔥 YAHI ADD KARNA HAI
-    console.log("ROLL:", rollRaw, "→", roll);
-
-    const present = Number(row[keys.find(k => k.toLowerCase().includes("present"))]);
-    const absent = Number(row[keys.find(k => k.toLowerCase().includes("absent"))]);
+    const roll = Number(row["Roll No"]);
+const present = Number(row["Present"]);
+const absent = Number(row["Absent"]);
 
     if (!roll || isNaN(present) || isNaN(absent)) {
       errors.push(row);
