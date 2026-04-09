@@ -184,6 +184,8 @@ const student = await Student.findOne({
     batch,
     year
   });
+  notFound.push(roll);
+  continue;   // 🔥 VERY IMPORTANT
 }
 
         const percentage = ((present / totalDays) * 100).toFixed(2);
