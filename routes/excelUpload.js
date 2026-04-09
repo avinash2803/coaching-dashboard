@@ -132,7 +132,7 @@ router.post("/upload-attendance", upload.single("file"), async (req, res) => {
 
     const workbook = xlsx.readFile(req.file.path);
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const data = xlsx.utils.sheet_to_json(sheet);
+    const data = xlsx.utils.sheet_to_json(sheet, { range: 2 });
 
     fs.unlinkSync(req.file.path);
 
