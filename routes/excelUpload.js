@@ -65,10 +65,12 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
           continue;
         }
 
-        const student = await Student.findOne({
+      const cleanBatch = String(batch).trim();
+
+const student = await Student.findOne({
   roll,
-  course: batch,
-  year: req.body.year
+  year,
+  course: { $regex: `^${cleanBatch}$`, $options: "i" }
 });
 
         if (!student) {
