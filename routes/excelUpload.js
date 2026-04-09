@@ -141,7 +141,13 @@ router.post("/upload-attendance", upload.single("file"), async (req, res) => {
 
     const keys = Object.keys(row);
 
-    const roll = Number(row[keys.find(k => k.toLowerCase().includes("roll"))]);
+    let rollRaw = row[keys.find(k => k.toLowerCase().includes("roll"))];
+
+const roll = Number(String(rollRaw).trim().replace(".0", ""));
+
+// 🔥 YAHI ADD KARNA HAI
+    console.log("ROLL:", rollRaw, "→", roll);
+    
     const present = Number(row[keys.find(k => k.toLowerCase().includes("present"))]);
     const absent = Number(row[keys.find(k => k.toLowerCase().includes("absent"))]);
 
