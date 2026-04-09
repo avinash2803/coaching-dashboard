@@ -118,7 +118,7 @@ router.post("/upload-attendance", upload.single("file"), async (req, res) => {
   try {
     const { batch, totalDays } = req.body;
     const month = req.body.month.trim();
-    const year = req.body.year;
+    const year = String(req.body.year).split(" ")[0].trim();
 
     if (!req.file) return res.status(400).json({ error: "Excel file missing" });
     if (!batch) return res.status(400).json({ error: "Batch missing" });
@@ -147,7 +147,7 @@ const roll = Number(String(rollRaw).trim().replace(".0", ""));
 
 // 🔥 YAHI ADD KARNA HAI
     console.log("ROLL:", rollRaw, "→", roll);
-    
+
     const present = Number(row[keys.find(k => k.toLowerCase().includes("present"))]);
     const absent = Number(row[keys.find(k => k.toLowerCase().includes("absent"))]);
 
