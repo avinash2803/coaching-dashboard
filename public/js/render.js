@@ -305,8 +305,20 @@ saveData(); renderStudents();
           student.attendance[key][field] = val;
           // update pct display next to line
           const pct = calcAttendancePercent(student.attendance[key]);
-          const pctInput = inp.closest('.d-flex')?.querySelector('input[readonly].small-input');
-          if(pctInput) pctInput.value = pct;
+          const row = inp.closest("tr");
+const pctCell = row.querySelector("td:nth-child(5)");
+
+if(pctCell){
+  pctCell.innerHTML = `
+    <span class="${
+      pct < 75 ? 'text-danger' :
+      pct < 90 ? 'text-warning' : 'text-success'
+    }">
+      ${pct}%
+    </span>
+  `;
+}
+
           // update mini summary numbers (not persisted until Save, but reflect immediately)
           const miniAttEl = document.getElementById(`miniAtt-${idx}`);
           if(miniAttEl) miniAttEl.textContent = avgAttendanceFor(student) + '%';
@@ -331,7 +343,7 @@ saveData(); renderStudents();
 
     // Add Month
     document.getElementById(`addMonth-${idx}`)?.addEventListener('click', ()=>{
-      const month = prompt('Enter month key (YYYY-MM) e.g., 2025-09:');
+      const month = prompt('Enter month (e.g., January):');
       if(!month) return;
       student.attendance = student.attendance || {};
       if(student.attendance[month]) { alert('Month exists'); return; }
@@ -431,20 +443,83 @@ function renderProfileEditHtml(s, idx){
 /* ---------- Attendance / Tests rendering ---------- */
 function renderAttendanceHtml(attObj){
   attObj = attObj || {};
-  const keys = Object.keys(attObj);
-  if(!keys.length) return '<div class="help-muted">No months yet. Use Add Month to create.</div>';
-  return keys.map(k=>{
-    const v = attObj[k];
-    const pct = calcAttendancePercent(v);
-    return `<div class="d-flex gap-2 align-items-center mb-2">
-      <div style="width:140px;"><div class="label-sm">Month</div><input class="form-control form-control-sm" value="${k}" readonly></div>
-      <div style="width:100px;"><div class="label-sm">Total Days</div><input data-key="${k}" data-field="total" class="form-control form-control-sm small-input" value="${v.total||0}"></div>
-      <div style="width:100px;"><div class="label-sm">Present</div><input data-key="${k}" data-field="present" class="form-control form-control-sm small-input" value="${v.present||0}"></div>
-      <div style="width:100px;"><div class="label-sm">Absent</div><input data-key="${k}" data-field="absent" class="form-control form-control-sm small-input" value="${v.absent||0}"></div>
-      <div style="width:100px;"><div class="label-sm">%</div><input class="form-control form-control-sm small-input" value="${pct}" readonly style="color:${pct<75? '#dc3545': pct<90? '#fd7e14':'#198754'}"></div>
-      <div><button class="btn btn-sm btn-danger del-month" data-key="${k}">Delete</button></div>
-    </div>`;
-  }).join('');
+
+  const months = Object.keys(attObj);
+
+  if(!months.length){
+    return '<div class="help-muted">No attendance data available</div>';
+  }
+
+  // sort months properly
+  const monthOrder = [
+    "July","August","September","October","November","December",
+    "January","February","March","April","May","June"
+  ];
+
+  months.sort((a,b) => monthOrder.indexOf(a) - monthOrder.indexOf(b));
+
+  return `
+    <table class="table table-bordered table-sm text-center align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Month</th>
+          <th>Total Class</th>
+          <th>Present</th>
+          <th>Absent</th>
+          <th>%</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${months.map(m=>{
+          const v = attObj[m] || {};
+          const total = Number(v.total)||0;
+          const present = Number(v.present)||0;
+          const absent = Number(v.absent)||0;
+          const pct = total ? ((present/total)*100).toFixed(2) : 0;
+
+          return `
+            <tr>
+              <td><b>${m}</b></td>
+
+              <td>
+                <input data-key="${m}" data-field="total"
+                  class="form-control form-control-sm text-center"
+                  value="${total}">
+              </td>
+
+              <td>
+                <input data-key="${m}" data-field="present"
+                  class="form-control form-control-sm text-center"
+                  value="${present}">
+              </td>
+
+              <td>
+                <input data-key="${m}" data-field="absent"
+                  class="form-control form-control-sm text-center"
+                  value="${absent}">
+              </td>
+
+              <td>
+                <span class="${
+                  pct < 75 ? 'text-danger' :
+                  pct < 90 ? 'text-warning' : 'text-success'
+                }">
+                  ${pct}%
+                </span>
+              </td>
+
+              <td>
+                <button class="btn btn-sm btn-danger del-month" data-key="${m}">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join("")}
+      </tbody>
+    </table>
+  `;
 }
 
 function renderTestsHtml(testsObj){
@@ -673,7 +748,9 @@ const testPercents = tests.map(t => percentOfTest(t));
 window.renderStudents = renderStudents;
 // ===== YEAR-WISE STUDENT LOADER =====
 function loadStudentsByYear(year) {
-  fetch(`/api/students/year/${year}`)
+  const selectedCourse = document.getElementById("filterCourse")?.value || "";
+
+fetch(`/api/students/year/${year}?course=${selectedCourse}`)
     .then(res => res.json())
     .then(data => {
       console.log("MongoDB Data:", data);
@@ -696,7 +773,14 @@ function showNoData(year) {
     </div>
   `;
 }
+const courseFilter = document.getElementById("filterCourse");
 
+if(courseFilter){
+  courseFilter.addEventListener("change", () => {
+    const year = localStorage.getItem("bvcpYear") || "2025-26";
+    loadStudentsByYear(year);
+  });
+}
 
 
 function renderPagination(totalStudents){
@@ -752,10 +836,6 @@ currentPage = 1;
 renderStudents();
 });
 
-filterCourse?.addEventListener("change", ()=>{
-currentPage = 1;
-renderStudents();
-});
 
 sortBy?.addEventListener("change", ()=>{
 currentPage = 1;

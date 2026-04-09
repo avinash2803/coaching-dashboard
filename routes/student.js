@@ -54,7 +54,15 @@ router.get("/year/:year", async (req, res) => {
     }
 
     // admin login → return all students for that year
-    const students = await Student.find({ year }).sort({ roll: 1 });
+    const { course } = req.query;
+
+let filter = { year };
+
+if (course) {
+  filter.course = course;
+}
+
+const students = await Student.find(filter).sort({ roll: 1 });
 
     res.json(students);
 
