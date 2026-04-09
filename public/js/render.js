@@ -169,10 +169,6 @@ function studentCardDom(student, idx){
       <div class="tab-pane fade show active" id="view-${idx}">${renderProfileViewHtml(student)}</div>
       <div class="tab-pane fade" id="att-${idx}">
         <div id="attList-${idx}">${renderAttendanceHtml(student.attendance)}</div>
-        <div class="mt-2 d-flex gap-2 justify-content-between">
-          <div><button class="btn btn-sm btn-primary" id="addMonth-${idx}">Add Month</button></div>
-          <div><button class="btn btn-sm btn-success" id="saveAtt-${idx}">Save Changes</button></div>
-        </div>
       </div>
 <div class="tab-pane fade" id="tests-${idx}">
 
@@ -247,7 +243,6 @@ formData.append("studentId", student._id);
       const data = await res.json();
 
       student.photoId = data.fileId;
-      saveData();
       renderStudents();
 
     } catch (err) {
@@ -257,110 +252,46 @@ formData.append("studentId", student._id);
   });
 }
 
-    // Save profile (from Edit tab)
-    const saveProfileBtn = document.getElementById(`saveProfile-${idx}`);
-    if(saveProfileBtn) saveProfileBtn.addEventListener('click', ()=>{
-      student.name = document.getElementById(`edit_name_${idx}`).value.trim();
-      student.studentMobile = document.getElementById(`edit_studentMobile_${idx}`).value.trim();
-      student.father = document.getElementById(`edit_father_${idx}`).value.trim();
-      student.fatherMobile = document.getElementById(`edit_fatherMobile_${idx}`).value.trim();
-      student.email = document.getElementById(`edit_email_${idx}`).value.trim();
-      student.dob = document.getElementById(`edit_dob_${idx}`).value.trim();
-      student.gender = document.getElementById(`edit_gender_${idx}`).value;
-      student.category = document.getElementById(`edit_category_${idx}`).value;
-      student.course = document.getElementById(`edit_course_${idx}`).value.trim();
-      student.aadhaar = document.getElementById(`edit_aadhaar_${idx}`).value.trim();
-student.rank = document.getElementById(`edit_rank_${idx}`).value.trim();
-student.admissionDate = document.getElementById(`edit_admission_${idx}`).value.trim();
-student.bloodGroup = document.getElementById(`edit_blood_${idx}`).value.trim();
-student.area = document.getElementById(`edit_area_${idx}`).value.trim();
-saveData(); renderStudents();
-
-    });
-
-    // Delete Student button
-    const deleteBtn = document.getElementById(`deleteStudent-${idx}`);
-    if(deleteBtn) deleteBtn.addEventListener('click', ()=>{
-      if(confirm('Are you sure you want to delete this student?')){
-        students.splice(idx, 1);
-        saveData();
-        renderStudents();
-      }
-    });
 
     // Remarks autosave
-    const remarksEl = document.getElementById(`remarks-${idx}`);
-    if(remarksEl) remarksEl.addEventListener('change', e => { student.remarks = e.target.value; saveData(); });
+const remarksEl = document.getElementById(`remarks-${idx}`);
 
-    // Attendance inputs live update (immediate percent recalc)
-    const attDiv = document.getElementById(`attList-${idx}`);
-    if(attDiv){
-      attDiv.querySelectorAll('input[data-key][data-field]').forEach(inp=>{
-        inp.addEventListener('input', ()=>{
-          const key = inp.dataset.key, field = inp.dataset.field;
-          if(!student.attendance) student.attendance = {};
-          student.attendance[key] = student.attendance[key] || { total:0, present:0, absent:0 };
-          // update in temp object (not saved until Save Changes)
-          const val = Number(inp.value) || 0;
-          student.attendance[key][field] = val;
-          // update pct display next to line
-          const pct = calcAttendancePercent(student.attendance[key]);
-          const row = inp.closest("tr");
-const pctCell = row.querySelector("td:nth-child(5)");
+let remarkTimer;
 
-if(pctCell){
-  pctCell.innerHTML = `
-    <span class="${
-      pct < 75 ? 'text-danger' :
-      pct < 90 ? 'text-warning' : 'text-success'
-    }">
-      ${pct}%
-    </span>
-  `;
+if(remarksEl){
+  remarksEl.addEventListener('input', (e) => {
+
+    clearTimeout(remarkTimer);
+
+    remarkTimer = setTimeout(async () => {
+
+      try {
+        await fetch(`/api/students/${student._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ remarks: e.target.value })
+        });
+
+        console.log("Remarks auto-saved ✅");
+
+      } catch (err) {
+        console.error("Auto-save failed ❌", err);
+      }
+
+    }, 800);
+
+  });
 }
 
+ 
           // update mini summary numbers (not persisted until Save, but reflect immediately)
           const miniAttEl = document.getElementById(`miniAtt-${idx}`);
           if(miniAttEl) miniAttEl.textContent = avgAttendanceFor(student) + '%';
           // refresh mini chart
           drawMiniChart(idx, student);
-        });
-      });
-      // delete month
-      attDiv.querySelectorAll('.del-month').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          const key = btn.getAttribute('data-key');
-          if(confirm('Delete month ' + key + ' ?')){ delete student.attendance[key]; saveData(); renderStudents(); }
-        });
-      });
-    }
 
-    // Save Attendance: persist changes (attendance inputs already modified student object), then save + re-render
-    document.getElementById(`saveAtt-${idx}`)?.addEventListener('click', ()=>{
-      saveData();
-      renderStudents();
-    });
-
-    // Add Month
-    document.getElementById(`addMonth-${idx}`)?.addEventListener('click', ()=>{
-      const month = prompt('Enter month (e.g., January):');
-      if(!month) return;
-      student.attendance = student.attendance || {};
-      if(student.attendance[month]) { alert('Month exists'); return; }
-      student.attendance[month] = { total: 0, present: 0, absent: 0 };
-      saveData();
-      const targetIdx = idx;
-      setTimeout(()=>{
-        renderStudents();
-        setTimeout(()=>{
-          const tabBtn = document.querySelector(`#tabs-${targetIdx} .nav-link[data-bs-target="#att-${targetIdx}"]`);
-          if(tabBtn){ try{ new bootstrap.Tab(tabBtn).show(); } catch(e){} }
-        }, 50);
-      }, 10);
-    });
-
-
- 
 
     // draw mini chart
     drawMiniChart(idx, student);
@@ -467,7 +398,6 @@ function renderAttendanceHtml(attObj){
           <th>Present</th>
           <th>Absent</th>
           <th>%</th>
-          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -483,22 +413,31 @@ function renderAttendanceHtml(attObj){
               <td><b>${m}</b></td>
 
               <td>
-                <input data-key="${m}" data-field="total"
-                  class="form-control form-control-sm text-center"
-                  value="${total}">
-              </td>
+  <input 
+    data-key="${m}" 
+    data-field="total"
+    class="form-control form-control-sm text-center"
+    value="${total}" 
+    readonly>
+</td>
 
-              <td>
-                <input data-key="${m}" data-field="present"
-                  class="form-control form-control-sm text-center"
-                  value="${present}">
-              </td>
+<td>
+  <input 
+    data-key="${m}" 
+    data-field="present"
+    class="form-control form-control-sm text-center"
+    value="${present}" 
+    readonly>
+</td>
 
-              <td>
-                <input data-key="${m}" data-field="absent"
-                  class="form-control form-control-sm text-center"
-                  value="${absent}">
-              </td>
+<td>
+  <input 
+    data-key="${m}" 
+    data-field="absent"
+    class="form-control form-control-sm text-center"
+    value="${absent}" 
+    readonly>
+</td>
 
               <td>
                 <span class="${
@@ -509,11 +448,6 @@ function renderAttendanceHtml(attObj){
                 </span>
               </td>
 
-              <td>
-                <button class="btn btn-sm btn-danger del-month" data-key="${m}">
-                  Delete
-                </button>
-              </td>
             </tr>
           `;
         }).join("")}
