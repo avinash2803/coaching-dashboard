@@ -192,10 +192,8 @@ student.attendance[month] = {
   present,
   absent
 };
-
-    
-
-        await student.save();
+student.markModified("attendance");
+          await student.save();
         updated++;
 
       } catch (err) {
