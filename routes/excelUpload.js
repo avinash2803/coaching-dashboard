@@ -70,7 +70,7 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
 const student = await Student.findOne({
   roll,
   year,
-  course: { $regex: `^${cleanBatch}$`, $options: "i" }
+  course: cleanBatch
 });
 
         if (!student) {
@@ -194,6 +194,12 @@ student.attendance[month] = {
 };
 student.markModified("attendance");
           await student.save();
+          console.log("SAVED:", {
+  roll,
+  month,
+  data: student.attendance[month]
+});
+
         updated++;
 
       } catch (err) {
