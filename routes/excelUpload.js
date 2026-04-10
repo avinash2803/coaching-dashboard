@@ -12,6 +12,7 @@ const upload = multer({ dest: "uploads/" });
 router.post("/upload-tests", upload.single("file"), async (req, res) => {
   try {
     let { testName, subject, fullMarks, testType, batch } = req.body;
+    const year = String(req.body.year).split("(")[0].trim();
 
 
     if (testType === "Class Test") testType = "classTests";
@@ -29,13 +30,13 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
 
     // delete old test
     await Student.updateMany(
-      { course: batch, year: req.body.year },
+      { course: batch, year },
       { $unset: { [`${testType}.${testName}`]: "" } }
     );
 
     // set AB for all
     await Student.updateMany(
-      { course: batch, year: req.body.year },
+      { course: batch, year },
       {
         $set: {
           [`${testType}.${testName}`]: {
@@ -56,7 +57,7 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
 
     for (const row of data) {
       try {
-        const roll = parseInt(String(row.Roll).trim());
+        const roll = parseInt(String(row.Roll || row["Roll No"]).trim());
         const score = Number(Number(row.Marks || 0).toFixed(2));
         const rank = Number(row.Rank || 0);
 
@@ -96,8 +97,9 @@ const student = await Student.findOne({
         updated++;
 
       } catch (err) {
-        errors.push(row);
-      }
+  console.log("ERROR:", err.message);
+  errors.push(row);
+}
     }
 
     res.json({
@@ -194,8 +196,10 @@ student.attendance[month] = {
 };
 student.markModified("attendance");
           await student.save();
-          console.log("SAVED:", {
+         console.log("SAVED:", {
   roll,
+  batch: student.course,
+  year: student.year,
   month,
   data: student.attendance[month]
 });
