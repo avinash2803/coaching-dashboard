@@ -52,8 +52,9 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
 
     const workbook = xlsx.readFile(req.file.path);
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const data = xlsx.utils.sheet_to_json(sheet, { range: 2 });
+    const data = xlsx.utils.sheet_to_json(sheet, { range: 3 });
     fs.unlinkSync(req.file.path);
+    console.log("TOTAL ROWS:", data.length);
 
     for (const row of data) {
       try {
@@ -97,9 +98,8 @@ const student = await Student.findOne({
         updated++;
 
       } catch (err) {
-  console.log("ERROR:", err.message);
-  errors.push(row);
-}
+        errors.push(row);
+      }
     }
 
     res.json({
