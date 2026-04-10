@@ -53,18 +53,19 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
     const workbook = xlsx.readFile(req.file.path);
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const data = xlsx.utils.sheet_to_json(sheet, {
-  range: 3,
-  defval: ""
+  header: 1
 });
     fs.unlinkSync(req.file.path);
     console.log("FIRST ROW:", data[0]);
 console.log("TOTAL ROWS:", data.length);
 
-    for (const row of data) {
-      try {
-        const roll = parseInt(String(row.Roll || row["Roll No"]).trim());
-        const score = Number(Number(row.Marks || 0).toFixed(2));
-        const rank = Number(row.Rank || 0);
+    for (let i = 3; i < data.length; i++) {
+  try {
+    const row = data[i];
+
+    const roll = Number(row[0]);   // Roll
+    const score = Number(row[7]);  // Marks
+    const rank = Number(row[8]);   // Rank
 
         if (!roll) {
           errors.push(row);
