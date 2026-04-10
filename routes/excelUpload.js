@@ -30,13 +30,13 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
 
     // delete old test
     await Student.updateMany(
-      { course: batch, year },
+      { course: { $regex: `^${batch.trim()}$`, $options: "i" }, year },
       { $unset: { [`${testType}.${testName}`]: "" } }
     );
 
     // set AB for all
     await Student.updateMany(
-      { course: batch, year },
+      { course: { $regex: `^${batch.trim()}$`, $options: "i" }, year },
       {
         $set: {
           [`${testType}.${testName}`]: {
@@ -72,7 +72,7 @@ router.post("/upload-tests", upload.single("file"), async (req, res) => {
 const student = await Student.findOne({
   roll,
   year,
-  course: cleanBatch
+  course: { $regex: `^${cleanBatch}$`, $options: "i" }
 });
 
         if (!student) {
