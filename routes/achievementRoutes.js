@@ -80,22 +80,6 @@ if (year === "all") {
   const allStats = await Dashboardstats.find();
 
   let totalStudents = 0, boys = 0, girls = 0;
-
-  allStats.forEach(s => {
-    totalStudents += s.students?.total || 0;
-    boys += s.students?.boys || 0;
-    girls += s.students?.girls || 0;
-  });
-
-  stats = {
-    students: { total: totalStudents, boys, girls },
-    qualified: [],
-    employment: []
-  };
-if (year === "all") {
-  const allStats = await Dashboardstats.find();
-
-  let totalStudents = 0, boys = 0, girls = 0;
   let qualifiedMap = {};
   let employmentMap = {};
 
@@ -133,7 +117,6 @@ if (year === "all") {
     qualified: Object.values(qualifiedMap),
     employment: Object.values(employmentMap)
   };
-}
 } else {
   stats = await Dashboardstats.findOne({ year }) || {};
 }
