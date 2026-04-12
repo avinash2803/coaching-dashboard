@@ -202,3 +202,25 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* 🔥 HEADER FIX (VERY IMPORTANT) */
+.achievement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+/* dropdown thoda clean */
+.achievement-header select {
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+@media (max-width: 500px) {
+  .achievement-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
