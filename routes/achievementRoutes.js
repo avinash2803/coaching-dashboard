@@ -60,11 +60,42 @@ router.get("/manage", async (req, res) => {
   try {
     const year = req.query.year || "2025-26";
 
-const achievements = await Achievement.find({ year })
-  .populate("studentId")
-  .lean();
+// 👉 ACHIEVEMENTS FIX
+let achievements;
 
-    const stats = await Dashboardstats.findOne({ year }) || {};
+if (year === "all") {
+  achievements = await Achievement.find()
+    .populate("studentId")
+    .lean();
+} else {
+  achievements = await Achievement.find({ year })
+    .populate("studentId")
+    .lean();
+}
+
+// 👉 STATS FIX
+let stats = {};
+
+if (year === "all") {
+  const allStats = await Dashboardstats.find();
+
+  let totalStudents = 0, boys = 0, girls = 0;
+
+  allStats.forEach(s => {
+    totalStudents += s.students?.total || 0;
+    boys += s.students?.boys || 0;
+    girls += s.students?.girls || 0;
+  });
+
+  stats = {
+    students: { total: totalStudents, boys, girls },
+    qualified: [],
+    employment: []
+  };
+
+} else {
+  stats = await Dashboardstats.findOne({ year }) || {};
+}
 
     res.render("admin/manage-achievement", {
       year,
@@ -75,6 +106,49 @@ const achievements = await Achievement.find({ year })
   } catch (err) {
     console.error("ERROR IN /achievement/manage:", err);
     res.send("Error loading Manage Achievement page");
+  }
+});
+
+
+// 👉 SAVE DASHBOARD STATS
+router.post("/admin/save-dashboard-stats", async (req, res) => {
+  try {
+    const { year, students, qualified, employment } = req.body;
+
+    await Dashboardstats.findOneAndUpdate(
+      { year },
+      {
+        students: {
+          total: Number(students?.total) || 0,
+          boys: Number(students?.boys) || 0,
+          girls: Number(students?.girls) || 0
+        },
+        qualified: qualified || [],
+        employment: employment || []
+      },
+      { upsert: true }
+    );
+
+    res.send("Dashboard Saved");
+
+  } catch (err) {
+    console.error(err);
+    res.send("Error saving dashboard");
+  }
+});
+
+// 👉 GET DASHBOARD STATS (FOR AUTO LOAD)
+router.get("/admin/dashboard-stats", async (req, res) => {
+  try {
+    const { year } = req.query;
+
+    const data = await Dashboardstats.findOne({ year });
+
+    res.json(data || {});
+
+  } catch (err) {
+    console.error(err);
+    res.json({});
   }
 });
 

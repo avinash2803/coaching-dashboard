@@ -10,6 +10,8 @@
 
   <select onchange="window.location='?year='+this.value">
     
+    <option value="all" <%= (year === "all") ? "selected" : "" %>>All</option>
+    
     <option value="2025-26" <%= (year === "2025-26") ? "selected" : "" %>>2025-26</option>
 
     <option value="2026-27" <%= (year === "2026-27") ? "selected" : "" %>>2026-27</option>
@@ -41,35 +43,42 @@
   <!-- 🎯 QUALIFIED -->
   <div class="section">
     <div class="section-title">🎯 Qualified</div>
-    <% if (stats?.qualified && stats.qualified.length > 0) { %>
 
+<% if (stats?.qualified && stats.qualified.length > 0) { %>
+
+  <% let totalQ = 0; %>
+
+  <% stats.qualified.forEach(exam => { 
+      totalQ += (exam.boys || 0) + (exam.girls || 0);
+  }); %>
+
+  <!-- 🔥 BIG NUMBER -->
+  <div class="big-number"><%= totalQ %></div>
+  <div class="label">Total Qualified</div>
+
+  <!-- DETAILS -->
   <% stats.qualified.forEach(exam => { %>
 
     <div class="item">
-
-      <!-- NAME + TOTAL -->
       <div style="display:flex; justify-content:space-between;">
         <span>🎓 <%= exam.name || "Unknown Exam" %></span>
-
-        <strong>
-          <%= (exam.boys || 0) + (exam.girls || 0) %>
-        </strong>
+        <strong><%= (exam.boys || 0) + (exam.girls || 0) %></strong>
       </div>
 
-      <!-- BOYS GIRLS -->
       <div class="numbers">
         <span>👦 <%= exam.boys || 0 %></span>
         <span>👧 <%= exam.girls || 0 %></span>
       </div>
-
     </div>
 
   <% }) %>
 
 <% } else { %>
-  <p>No data</p>
-<% } %>
 
+  <div class="big-number">0</div>
+  <div class="label">Total Qualified</div>
+
+<% } %>
 
   </div>
 
