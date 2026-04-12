@@ -92,7 +92,48 @@ if (year === "all") {
     qualified: [],
     employment: []
   };
+if (year === "all") {
+  const allStats = await Dashboardstats.find();
 
+  let totalStudents = 0, boys = 0, girls = 0;
+  let qualifiedMap = {};
+  let employmentMap = {};
+
+  allStats.forEach(s => {
+    // ✅ STUDENTS
+    totalStudents += s.students?.total || 0;
+    boys += s.students?.boys || 0;
+    girls += s.students?.girls || 0;
+
+    // ✅ QUALIFIED
+    if (Array.isArray(s.qualified)) {
+      s.qualified.forEach(q => {
+        if (!qualifiedMap[q.name]) {
+          qualifiedMap[q.name] = { name: q.name, boys: 0, girls: 0 };
+        }
+        qualifiedMap[q.name].boys += q.boys || 0;
+        qualifiedMap[q.name].girls += q.girls || 0;
+      });
+    }
+
+    // ✅ EMPLOYMENT
+    if (Array.isArray(s.employment)) {
+      s.employment.forEach(e => {
+        if (!employmentMap[e.name]) {
+          employmentMap[e.name] = { name: e.name, boys: 0, girls: 0 };
+        }
+        employmentMap[e.name].boys += e.boys || 0;
+        employmentMap[e.name].girls += e.girls || 0;
+      });
+    }
+  });
+
+  stats = {
+    students: { total: totalStudents, boys, girls },
+    qualified: Object.values(qualifiedMap),
+    employment: Object.values(employmentMap)
+  };
+}
 } else {
   stats = await Dashboardstats.findOne({ year }) || {};
 }
