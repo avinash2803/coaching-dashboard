@@ -119,9 +119,17 @@
 
 <button type="button" onclick="addExam()">+ Add Exam</button>
 
-<input type="number" id="empTotal" placeholder="Total Employed">
-<input type="number" id="empBoys" placeholder="Emp Boys">
-<input type="number" id="empGirls" placeholder="Emp Girls">
+<h4>💼 Employment</h4>
+
+<div id="employment-container">
+  <div class="emp-item">
+    <input type="text" name="empName[]" placeholder="Job / Company Name">
+    <input type="number" name="empBoys[]" placeholder="Boys">
+    <input type="number" name="empGirls[]" placeholder="Girls">
+  </div>
+</div>
+
+<button type="button" onclick="addEmployment()">+ Add Employment</button>
 
 <button id="saveDashboardStats">Save Dashboard</button>
 
@@ -146,6 +154,19 @@ document.querySelectorAll("#examContainer > div").forEach(row => {
   });
 });
 
+
+  // 👉 STEP A: employment array banana
+const employment = [];
+
+document.querySelectorAll("#employment-container > div").forEach(row => {
+  employment.push({
+    name: row.querySelector("input[name='empName[]']").value,
+    boys: +row.querySelector("input[name='empBoys[]']").value || 0,
+    girls: +row.querySelector("input[name='empGirls[]']").value || 0
+  });
+});
+
+// 👉 STEP B: data object banana
 const data = {
   year,
   students: {
@@ -154,11 +175,7 @@ const data = {
     girls: +document.getElementById("girlsCount").value || 0
   },
   qualified: exams,
-  employment: {
-    total: +document.getElementById("empTotal").value || 0,
-    boys: +document.getElementById("empBoys").value || 0,
-    girls: +document.getElementById("empGirls").value || 0
-  }
+  employment   // ✅ bas ye likhna hai
 };
 
 await fetch("/admin/save-dashboard-stats", {
@@ -187,9 +204,11 @@ document.getElementById("boysCount").value = data.students?.boys || "";
 document.getElementById("girlsCount").value = data.students?.girls || "";
 
 // employment
-document.getElementById("empTotal").value = data.employment?.total || "";
-document.getElementById("empBoys").value = data.employment?.boys || "";
-document.getElementById("empGirls").value = data.employment?.girls || "";
+document.getElementById("employment-container").innerHTML = "";
+
+data.employment?.forEach(emp => {
+  addEmployment(emp.name, emp.boys, emp.girls);
+});
 
 // 🔥 NEW PART (IMPORTANT)
 document.getElementById("examContainer").innerHTML = "";
@@ -220,4 +239,18 @@ function addExam(name = "", boys = "", girls = "") {
   container.appendChild(div);
 }
 addExam();
+
+function addEmployment(name = "", boys = "", girls = "") {
+  const container = document.getElementById("employment-container");
+
+  const div = document.createElement("div");
+
+  div.innerHTML = `
+    <input type="text" name="empName[]" placeholder="Job Name" value="${name}">
+    <input type="number" name="empBoys[]" placeholder="Boys" value="${boys}">
+    <input type="number" name="empGirls[]" placeholder="Girls" value="${girls}">
+  `;
+
+  container.appendChild(div);
+}
 </script>

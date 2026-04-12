@@ -81,18 +81,47 @@
   <hr>
 
   <!-- 💼 EMPLOYMENT -->
-  <div class="section">
-    <div class="section-title">💼 Employment</div>
+<div class="section">
+  <div class="section-title">💼 Employment</div>
 
-    <div class="big-number">
-      <%= stats?.employment?.total || 0 %>
-    </div>
+  <% if (stats?.employment && stats.employment.length > 0) { %>
+
+    <% let total = 0; %>
+
+    <% stats.employment.forEach(emp => { %>
+
+      <div class="item">
+
+        <!-- NAME + TOTAL -->
+        <div style="display:flex; justify-content:space-between;">
+          <span>💼 <%= emp.name || "Unknown Job" %></span>
+          <strong><%= (emp.boys || 0) + (emp.girls || 0) %></strong>
+        </div>
+
+        <!-- BOYS GIRLS -->
+        <div class="numbers">
+          <span>👦 <%= emp.boys || 0 %></span>
+          <span>👧 <%= emp.girls || 0 %></span>
+        </div>
+
+      </div>
+
+      <% total += (emp.boys || 0) + (emp.girls || 0); %>
+
+    <% }) %>
+
+    <!-- TOTAL -->
+    <div class="big-number"><%= total %></div>
     <div class="label">Total Employed</div>
 
-    <div class="split">
-      <span>👦 <b><%= stats?.employment?.boys || 0 %></b></span>
-      <span>👧 <b><%= stats?.employment?.girls || 0 %></b></span>
-    </div>
+  <% } else { %>
+
+    <div class="big-number">0</div>
+    <div class="label">Total Employed</div>
+
+  <% } %>
+
+</div>
   </div>
 
 </div>
