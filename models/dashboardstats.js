@@ -17,11 +17,13 @@ qualified: [
   }
 ],
 
-  employment: {
-    total: Number,
+ employment: [
+  {
+    name: String,
     boys: Number,
     girls: Number
   }
+]
 
 }, { timestamps: true });
 
