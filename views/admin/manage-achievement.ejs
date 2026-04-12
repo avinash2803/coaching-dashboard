@@ -11,7 +11,7 @@
   <select onchange="window.location='?year='+this.value">
     
     <option value="all" <%= (year === "all") ? "selected" : "" %>>All</option>
-    
+
     <option value="2025-26" <%= (year === "2025-26") ? "selected" : "" %>>2025-26</option>
 
     <option value="2026-27" <%= (year === "2026-27") ? "selected" : "" %>>2026-27</option>
@@ -44,7 +44,7 @@
   <div class="section">
     <div class="section-title">🎯 Qualified</div>
 
-<% if (stats?.qualified && stats.qualified.length > 0) { %>
+<% if (Array.isArray(stats?.qualified) && stats.qualified.length > 0) { %>
 
   <% let totalQ = 0; %>
 
@@ -61,7 +61,7 @@
 
     <div class="item">
       <div style="display:flex; justify-content:space-between;">
-        <span>🎓 <%= exam.name || "Unknown Exam" %></span>
+        <span>🎓 <%= exam.name?.trim() || "Unknown Exam" %></span>
         <strong><%= (exam.boys || 0) + (exam.girls || 0) %></strong>
       </div>
 
@@ -84,39 +84,38 @@
 
   <hr>
 
-  <!-- 💼 EMPLOYMENT -->
+<!-- 💼 EMPLOYMENT -->
 <div class="section">
   <div class="section-title">💼 Employment</div>
 
-  <% if (stats?.employment && stats.employment.length > 0) { %>
+  <% if (Array.isArray(stats?.employment) && stats.employment.length > 0) { %>
 
     <% let total = 0; %>
 
+    <% stats.employment.forEach(emp => { 
+      total += (emp.boys || 0) + (emp.girls || 0);
+    }); %>
+
+    <!-- 🔥 TOTAL FIRST -->
+    <div class="big-number"><%= total %></div>
+    <div class="label">Total Employed</div>
+
+    <!-- DETAILS -->
     <% stats.employment.forEach(emp => { %>
 
       <div class="item">
-
-        <!-- NAME + TOTAL -->
         <div style="display:flex; justify-content:space-between;">
-          <span>💼 <%= emp.name || "Unknown Job" %></span>
+          <span>💼 <%= emp.name?.trim() || "Unknown Job" %></span>
           <strong><%= (emp.boys || 0) + (emp.girls || 0) %></strong>
         </div>
 
-        <!-- BOYS GIRLS -->
         <div class="numbers">
           <span>👦 <%= emp.boys || 0 %></span>
           <span>👧 <%= emp.girls || 0 %></span>
         </div>
-
       </div>
 
-      <% total += (emp.boys || 0) + (emp.girls || 0); %>
-
     <% }) %>
-
-    <!-- TOTAL -->
-    <div class="big-number"><%= total %></div>
-    <div class="label">Total Employed</div>
 
   <% } else { %>
 
@@ -124,7 +123,6 @@
     <div class="label">Total Employed</div>
 
   <% } %>
-
 </div>
 
 </div>

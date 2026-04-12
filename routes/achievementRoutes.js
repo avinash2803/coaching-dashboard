@@ -113,58 +113,19 @@ if (year === "all") {
 // 👉 SAVE DASHBOARD STATS
 router.post("/admin/save-dashboard-stats", async (req, res) => {
   try {
-    const {
-  year,
-  totalStudents,
-  boys,
-  girls,
-  examName,
-  examBoys,
-  examGirls,
-  empName,
-  empBoys,
-  empGirls
-} = req.body;
+    const { year, students, qualified, employment } = req.body;
 
-// ✅ QUALIFIED
-let exams = [];
-if (examName) {
-  for (let i = 0; i < examName.length; i++) {
-    if (examName[i]) {
-      exams.push({
-        name: examName[i],
-        boys: Number(examBoys[i]) || 0,
-        girls: Number(examGirls[i]) || 0
-      });
-    }
-  }
-}
-
-// ✅ EMPLOYMENT
-let employment = [];
-if (empName) {
-  for (let i = 0; i < empName.length; i++) {
-    if (empName[i]) {
-      employment.push({
-        name: empName[i],
-        boys: Number(empBoys[i]) || 0,
-        girls: Number(empGirls[i]) || 0
-      });
-    }
-  }
-}
-
-// ✅ SAVE
+// ✅ SAVE DIRECTLY (same format as frontend)
 await Dashboardstats.findOneAndUpdate(
   { year },
   {
     students: {
-      total: Number(totalStudents) || 0,
-      boys: Number(boys) || 0,
-      girls: Number(girls) || 0
+      total: Number(students?.total) || 0,
+      boys: Number(students?.boys) || 0,
+      girls: Number(students?.girls) || 0
     },
-    qualified: exams,
-    employment: employment
+    qualified: qualified || [],
+    employment: employment || []
   },
   { upsert: true }
 );

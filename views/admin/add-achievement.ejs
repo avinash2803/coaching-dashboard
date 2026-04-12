@@ -147,11 +147,19 @@ document.getElementById("saveDashboardStats").addEventListener("click", async ()
 const exams = [];
 
 document.querySelectorAll("#examContainer > div").forEach(row => {
-  exams.push({
-    name: row.querySelector(".exam-name").value,
-    boys: +row.querySelector(".exam-boys").value || 0,
-    girls: +row.querySelector(".exam-girls").value || 0
-  });
+
+  const name = row.querySelector(".exam-name").value.trim();
+  const boys = +row.querySelector(".exam-boys").value || 0;
+  const girls = +row.querySelector(".exam-girls").value || 0;
+
+  if (name !== "") {
+    exams.push({
+      name,
+      boys,
+      girls
+    });
+  }
+
 });
 
 
@@ -159,11 +167,19 @@ document.querySelectorAll("#examContainer > div").forEach(row => {
 const employment = [];
 
 document.querySelectorAll("#employment-container > div").forEach(row => {
-  employment.push({
-    name: row.querySelector("input[name='empName[]']").value,
-    boys: +row.querySelector("input[name='empBoys[]']").value || 0,
-    girls: +row.querySelector("input[name='empGirls[]']").value || 0
-  });
+
+  const name = row.querySelector("input[name='empName[]']").value.trim();
+  const boys = +row.querySelector("input[name='empBoys[]']").value || 0;
+  const girls = +row.querySelector("input[name='empGirls[]']").value || 0;
+
+  if (name !== "") {
+    employment.push({
+      name,
+      boys,
+      girls
+    });
+  }
+
 });
 
 // 👉 STEP B: data object banana
