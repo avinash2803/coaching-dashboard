@@ -26,7 +26,7 @@ router.get("/add", async (req, res) => {
 // 👉 SAVE ACHIEVEMENT
 router.post("/add", async (req, res) => {
   try {
-    const { studentId, examQualified } = req.body;
+    const { studentId, examQualified, year } = req.body;
 
 const existing = await Achievement.findOne({
   studentId: new mongoose.Types.ObjectId(studentId)
@@ -35,12 +35,14 @@ const existing = await Achievement.findOne({
 if (existing) {
   // 👉 Update instead of duplicate
   existing.examQualified = examQualified;
+  existing.year = year;
   await existing.save();
 } else {
   // 👉 Create new
   await Achievement.create({
   studentId: new mongoose.Types.ObjectId(studentId),
-  examQualified
+  examQualified,
+  year
 });
 }
 
@@ -56,11 +58,11 @@ if (existing) {
 // 👉 SHOW ALL ACHIEVEMENTS
 router.get("/manage", async (req, res) => {
   try {
-    const achievements = await Achievement.find()
-      .populate("studentId")
-      .lean();
-
     const year = req.query.year || "2025-26";
+
+const achievements = await Achievement.find({ year })
+  .populate("studentId")
+  .lean();
 
     const stats = await Dashboardstats.findOne({ year }) || {};
 
