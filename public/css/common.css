@@ -199,13 +199,13 @@ body {
 @media (max-width: 900px) {
 
   .top-bar {
-    height: 50px;
-    padding: 0 8px;
-    gap: 4px;
+    height: 40px;
+    padding: 0 4px;
+    gap: 1px;
   }
 
   .top-bar img {
-    height: 22px;
+    height: 20px;
   }
 
   .menu-btn {
@@ -217,8 +217,20 @@ body {
     font-size: 12px;
     max-width: 140px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+        white-space: nowrap;
+  }
+
+}
+@media (max-width: 900px) {
+
+  .top-bar.scrolled {
+    height: 35px;       /* 🔥 same as normal */
+    min-height: 35px;
+    padding: 0 3px;
+  }
+
+  .top-bar.scrolled img {
+    height: 18px;       /* 🔥 no size change */
   }
 
 }
