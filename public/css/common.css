@@ -240,10 +240,6 @@ body {
 
 @media (max-width: 768px) {
 
-  .top-bar.scrolled {
-    height: 45px;   /* 🔥 shrink */
-  }
-
   .top-bar.scrolled img {
     height: 20px;
   }
