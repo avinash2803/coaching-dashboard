@@ -21,7 +21,7 @@ body {
    FLOATING MENU
    ========================================= */
 .floating-menu {
-  position: fixed;
+  position: relative;
   top: 80px;
   left: 16px;
   z-index: 20000;
@@ -43,6 +43,7 @@ body {
 .menu-dropdown {
   display: none;
   position: absolute;
+  top: 100%;
   margin-top: 8px;
   background: #fbf5ef;
   border-radius: 12px;
@@ -105,7 +106,7 @@ body {
 .top-bar .left {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 .top-bar .right {
   display: flex;
@@ -197,7 +198,7 @@ body {
 
   
   .floating-menu {
-  position: static !important;  
+  position: relative;  
     margin: 0;
 }
 
