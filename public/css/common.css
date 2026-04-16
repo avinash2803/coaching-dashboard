@@ -113,13 +113,6 @@ body {
   text-align: center;
 }
 
-.year-select {
-  padding: 4px 10px;
-  font-size: 13px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-}
 
 /* =========================================
    BUTTON
@@ -181,7 +174,7 @@ body {
   }
 
   .top-bar img {
-    height: 32px;
+    height: 24px;
   }
 
   .top-bar .center {
@@ -190,18 +183,15 @@ body {
 
   .program-name {
     font-size: 13px;
-    max-width: 180px;
+    max-width: 160px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .year-select {
-    font-size: 11px;
-    padding: 2px 6px;
-  }
-
+  
   .floating-menu {
+    position: static;
     top: 65px;
     left: 10px;
     transform: scale(0.9);
