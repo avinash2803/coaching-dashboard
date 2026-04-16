@@ -199,7 +199,7 @@ body {
 
   .top-bar {
     height: 50px;
-    padding: 0 8px 0 60px;
+    padding: 0 8px 0 80px;
   }
   .top-bar img {
     height: 26px;
@@ -231,7 +231,7 @@ body {
 
   .top-bar,
   .top-bar.scrolled {
-    padding-left: 60px !important;   /* 🔥 bas ye main fix */
+    padding-left: 70px !important;   /* 🔥 bas ye main fix */
   }
 .top-bar.scrolled img {
   height: 24px;
