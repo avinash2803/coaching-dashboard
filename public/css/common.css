@@ -198,7 +198,7 @@ body {
 @media (max-width: 900px) {
 
   .top-bar {
-    height: 45px;
+    height: 55px;
     padding: 0 8px 0 50px;
   }
   .top-bar img {
@@ -214,9 +214,9 @@ body {
 
   /* 🔥 MENU FIX */
   .floating-menu {
-    top: 10px;
+    top: 15px;
     left: 5px;
-    transform: scale(0.7);   /* 🔥 same scale as top-bar */
+    transform: scale(0.8);   /* 🔥 same scale as top-bar */
   }
 
   .menu-btn {
@@ -229,9 +229,8 @@ body {
  
 @media (max-width: 900px) {
 
-  .top-bar,
   .top-bar.scrolled {
-    padding-left: 50px !important;   /* 🔥 bas ye main fix */
+    all: unset;
   }
 
 }
