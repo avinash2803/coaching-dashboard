@@ -1,6 +1,5 @@
 /* =========================================
-   HOME PAGE STYLES ONLY
-   (Header & Footer handled in common.css)
+   HOME PAGE STYLES
    ========================================= */
 
 
@@ -8,8 +7,7 @@
 .hero {
   margin-top: 0;
   min-height: 80vh;
-
-  position: relative;  /* add here */
+  position: relative;
 
   background: linear-gradient(
     rgba(0,0,0,0.55),
@@ -19,22 +17,17 @@
   background-size: cover;
   background-position: center;
   color: #fff;
+
   display: flex;
   align-items: center;
-  padding: 120px 60px 60px 60px;
+
+  padding: 120px 60px 60px;
 }
 
-/* 🔥 HERO SLIDER FIX */
-
-
-
+/* HERO SLIDER */
 .hero-slide {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
+  inset: 0; /* shorthand for top/left/right/bottom */
   background-size: cover;
   background-position: center;
 
@@ -49,9 +42,6 @@
 .hero-content {
   position: relative;
   z-index: 2;
-}
-
-.hero-content {
   max-width: 700px;
 }
 
@@ -85,6 +75,17 @@
   padding: 60px 50px;
   max-width: 1500px;
   margin: auto;
+
+  /* animation */
+  opacity: 0;
+  transform: translateY(70px);
+  transition: all 1.6s cubic-bezier(0.22,1,0.36,1);
+  will-change: transform, opacity;
+}
+
+.section.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .section h2 {
@@ -113,6 +114,16 @@
   padding: 30px;
   text-align: center;
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+
+  /* animation */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1.2s cubic-bezier(0.22,1,0.36,1);
+}
+
+.stat-card.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .stat-card h3 {
@@ -192,30 +203,27 @@
   position: relative;
 }
 
-/* top separator */
-.info-section::before {
-  content: "";
-  display: block;
-  width: 95%;
-  margin: 0 auto 20px auto;
-  border-top: 1.5px solid #cfcfcf;
-}
-
-/* bottom separator */
+/* separators */
+.info-section::before,
 .info-section::after {
   content: "";
   display: block;
   width: 95%;
-  margin: 25px auto 0 auto;
+  margin: 20px auto;
   border-top: 1.5px solid #cfcfcf;
+}
+
+.info-section::after {
+  margin: 25px auto 0;
 }
 
 .info-grid {
   max-width: 1500px;
   margin: auto;
   padding: 0 40px;
+
   display: grid;
-grid-template-columns: 1.7fr 1.1fr 2.0fr 1.2fr;
+  grid-template-columns: 1.7fr 1.1fr 2fr 1.2fr;
   gap: 60px;
 }
 
@@ -226,29 +234,18 @@ grid-template-columns: 1.7fr 1.1fr 2.0fr 1.2fr;
   color: #2b1a12;
 }
 
-.info-box p{
-  font-size:15px;
-  line-height:1.5;
-  color:#5a4a42;
-  font-weight:400;
-  margin:4px 0;
-}
-
-
+.info-box p,
 .info-box li {
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.6;
   color: #5a4a42;
-  margin-bottom: 8px;
+  margin: 4px 0;
 }
 
 .info-box ul {
   list-style: none;
   padding-left: 0;
 }
-
-
-
 
 .info-box a {
   text-decoration: none;
@@ -257,11 +254,11 @@ grid-template-columns: 1.7fr 1.1fr 2.0fr 1.2fr;
 }
 
 .info-box a:hover {
-  color:#0a7c66;
+  color: #0a7c66;
 }
 
 
-/* ===== HIGHLIGHTS SECTION ===== */
+/* ===== HIGHLIGHTS ===== */
 .highlights-section {
   text-align: left;
 }
@@ -275,30 +272,32 @@ grid-template-columns: 1.7fr 1.1fr 2.0fr 1.2fr;
 .highlights-grid {
   max-width: 1200px;
   margin: auto;
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
 }
 
 .highlight-card {
-  background: #ffffff;
+  background: #fff;
   padding: 30px;
   border-radius: 16px;
   box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-  text-align:center;
+  text-align: center;
 }
 
-.highlight-card h3{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:10px;
-font-size:36px;
-color:#0a7c66;
+.highlight-card h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  font-size: 36px;
+  color: #0a7c66;
 }
-.highlight-icon{
-font-size:20px;
-text-align:left;
+
+.highlight-icon {
+  font-size: 20px;
 }
 
 .highlight-card p {
@@ -307,15 +306,14 @@ text-align:left;
 }
 
 
-/* ===== LEARNING ENVIRONMENT ===== */
+/* ===== LEARNING SECTION ===== */
 .learning-section {
   text-align: left;
 }
 
 .slider {
   max-width: 1200px;
-  margin: auto;
-  margin-top: 60px;
+  margin: 60px auto 0;
 }
 
 .slide {
@@ -350,29 +348,7 @@ text-align:left;
 }
 
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1000px) {
-  .info-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-    padding: 0 30px;
-  }
-}
-
-@media (max-width: 768px) {
-  .slide {
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 600px) {
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ===== ABOUT PROGRAM CARDS ===== */
-
+/* ===== PROGRAM CARDS ===== */
 .program-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -381,11 +357,22 @@ text-align:left;
 }
 
 .program-card {
-  background: #ffffff;
+  background: #fff;
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+
   transition: transform 0.3s;
+
+  /* animation */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1.2s cubic-bezier(0.22,1,0.36,1);
+}
+
+.program-card.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .program-card:hover {
@@ -403,51 +390,31 @@ text-align:left;
   line-height: 1.7;
   color: #5a4a42;
 }
+
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1000px) {
-  .program-cards {
-    grid-template-columns: repeat(2,1fr);
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 0 30px;
   }
-}
 
-@media (max-width: 600px) {
   .program-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-}
-/* ===== SCROLL SECTION ANIMATION ===== */
-
-.section{
-opacity:0;
-transform:translateY(70px);
-transition: all 1.6s cubic-bezier(0.22,1,0.36,1);
-will-change: transform, opacity;
-}
-
-.section.show{
-opacity:1;
-transform:translateY(0);
-}
-
-
-/* ===== CARD ANIMATION ===== */
-
-.program-card,
-.stat-card{
-opacity:0;
-transform:translateY(50px);
-transition: all 1.2s cubic-bezier(0.22,1,0.36,1);
-}
-
-.program-card.show,
-.stat-card.show{
-opacity:1;
-transform:translateY(0);
 }
 
 @media (max-width: 768px) {
+  .slide {
+    flex-direction: column;
+    gap: 30px;
+  }
+
   .hero {
-    padding: 160px 20px 40px 20px;
-    height: auto;   /* VERY IMPORTANT */
+    padding: 160px 20px 40px;
+    height: auto;
+    align-items: flex-start;
   }
 
   .hero h1 {
@@ -467,8 +434,13 @@ transform:translateY(0);
     height: 30px;
   }
 }
-@media (max-width: 768px) {
-  .hero {
-    align-items: flex-start;   /* better readability */
+
+@media (max-width: 600px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .program-cards {
+    grid-template-columns: 1fr;
   }
 }
