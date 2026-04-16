@@ -6,7 +6,7 @@
 /* ===== HERO SECTION ===== */
 .hero {
   margin-top: 0;
-  min-height: 80vh;
+  min-height: 70vh;
   position: relative;
 
   background: linear-gradient(
@@ -79,7 +79,7 @@
   /* animation */
   opacity: 0;
   transform: translateY(70px);
-  transition: all 1.6s cubic-bezier(0.22,1,0.36,1);
+  transition: all 0.8s ease;
   will-change: transform, opacity;
 }
 
@@ -412,10 +412,14 @@
   }
 
   .hero {
-    padding: 160px 20px 40px;
-    height: auto;
-    align-items: flex-start;
-  }
+  padding: 80px 15px 20px;     /* 🔥 160 → 80 */
+  min-height: unset;
+  height: 55vh;                /* 🔥 chhota hero */
+  align-items: flex-start;
+
+  background-size: cover;
+  background-position: top center;   /* 🔥 top visible, niche crop */
+}
 
   .hero h1 {
     font-size: 26px;
