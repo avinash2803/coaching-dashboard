@@ -201,7 +201,7 @@ body {
     transform: scale(0.6);
     transform-origin: top left;
     width: 160%;
-    padding: 0 10px 0 75px;
+    padding: 0 10px 0 85px;
   }
 
   /* 🔥 MENU FIX */
@@ -233,8 +233,7 @@ body {
 
   .top-bar,
   .top-bar.scrolled {
-    padding-left: 80px !important;   /* 🔥 bas ye main fix */
-    padding-right: 8px;
+    padding-left: 100px !important;   /* 🔥 bas ye main fix */
   }
 
 }
