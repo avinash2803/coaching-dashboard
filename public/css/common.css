@@ -197,9 +197,14 @@ body {
 @media (max-width: 900px) {
 
   .top-bar {
-    transform: scale(0.85);       /* 🔥 pura header chhota */
-    transform-origin: top left;   /* 🔥 left se shrink */
-    width: 118%;                  /* 🔥 compensate shrink */
+    transform: scale(0.7);       
+    transform-origin: top left;  
+    width: 140%;                 
   }
 
+}
+@media (max-width: 900px) {
+  .program-name {
+    font-size: 10px;   /* 🔥 extra control */
+  }
 }
