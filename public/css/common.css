@@ -238,41 +238,53 @@ body {
   z-index: 10000;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
-  .top-bar.scrolled {
-    height: 50px;
-    padding: 0 6px;
-    gap: 4px;
+  .top-bar {
+    padding: 0 8px;
+    gap: 6px;
   }
 
-  /* Left, center, right sab squeeze */
-  .top-bar.scrolled .left,
-  .top-bar.scrolled .center,
-  .top-bar.scrolled .right {
+  /* Allow wrapping control */
+  .top-bar .left,
+  .top-bar .center,
+  .top-bar .right {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
   }
 
-  /* Logos small */
-  .top-bar.scrolled img {
-    height: 18px;
+  /* LOGOS smaller */
+  .top-bar img {
+    height: 28px;
   }
 
   /* Menu button small */
-  .top-bar.scrolled .menu-btn {
-    font-size: 11px;
-    padding: 3px 6px;
+  .menu-btn {
+    font-size: 12px;
+    padding: 4px 8px;
   }
 
   /* Program name shrink */
-  .top-bar.scrolled .program-name {
-    font-size: 11px;
-    max-width: 100px;
+  .program-name {
+    font-size: 14px;
+    max-width: 140px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .top-bar.scrolled {
+    height: 55px;
+    padding: 0 6px;
+  }
+
+  .top-bar.scrolled img {
+    height: 22px;
   }
 
 }
