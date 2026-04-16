@@ -98,6 +98,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .top-bar .left,
@@ -197,10 +198,10 @@ body {
 @media (max-width: 900px) {
 
   .top-bar {
-    transform: scale(0.65);
+    transform: scale(0.6);
     transform-origin: top left;
-    width: 150%;
-    padding: 0 10px 0 70px;
+    width: 160%;
+    padding: 0 10px 0 75px;
   }
 
   /* 🔥 MENU FIX */
@@ -221,10 +222,19 @@ body {
 
   .program-name {
     font-size: 12px;     /* 🔥 force chhota */
-    max-width: 160px;    /* 🔥 overflow control */
-    white-space: normal;
+    max-width: 100%;    /* 🔥 overflow control */
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+}
+@media (max-width: 900px) {
+
+  .top-bar,
+  .top-bar.scrolled {
+    padding-left: 80px !important;   /* 🔥 bas ye main fix */
+    padding-right: 8px;
   }
 
 }
