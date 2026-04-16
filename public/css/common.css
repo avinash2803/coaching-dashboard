@@ -97,7 +97,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 12px;
 }
 
 .top-bar .left,
