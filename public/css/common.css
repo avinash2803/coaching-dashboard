@@ -227,7 +227,7 @@ body {
    ========================================= */
 
 .top-bar.scrolled {
-  padding: 5px 48px 5px 100px;  /* 👈 left 120px SAME rakho */
+  padding: 5px 48px 5px 120px;   /* 🔥 SAME as normal */
   background: rgba(251, 245, 239, 0.98);
 }
 
