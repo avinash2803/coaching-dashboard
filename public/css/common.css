@@ -198,9 +198,18 @@ body {
 @media (max-width: 900px) {
 
   .top-bar {
-    transform: scale(0.6);
-    transform-origin: top left;
+    height: 45px;
     padding: 0 10px 0 85px;
+  }
+  .top-bar img {
+    height: 22px;
+  }
+   .program-name {
+    font-size: 12px;     /* 🔥 force chhota */
+    max-width: 100%;    /* 🔥 overflow control */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* 🔥 MENU FIX */
@@ -217,17 +226,7 @@ body {
 
 }
 
-@media (max-width: 900px) {
-
-  .program-name {
-    font-size: 12px;     /* 🔥 force chhota */
-    max-width: 100%;    /* 🔥 overflow control */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-}
+ 
 @media (max-width: 900px) {
 
   .top-bar,
