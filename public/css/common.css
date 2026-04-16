@@ -22,8 +22,6 @@ body {
    ========================================= */
 .floating-menu {
   position: relative;
-  top: 80px;
-  left: 16px;
   z-index: 20000;
   display: flex;          
   align-items: center;   
