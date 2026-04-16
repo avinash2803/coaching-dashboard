@@ -199,10 +199,10 @@ body {
 
   .top-bar {
     height: 45px;
-    padding: 0 10px 0 85px;
+    padding: 0 8px 0 50px;
   }
   .top-bar img {
-    height: 22px;
+    height: 24px;
   }
    .program-name {
     font-size: 12px;     /* 🔥 force chhota */
@@ -231,7 +231,7 @@ body {
 
   .top-bar,
   .top-bar.scrolled {
-    padding-left: 100px !important;   /* 🔥 bas ye main fix */
+    padding-left: 50px !important;   /* 🔥 bas ye main fix */
   }
 
 }
