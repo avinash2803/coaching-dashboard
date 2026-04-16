@@ -188,7 +188,7 @@ body {
 }
 
 .top-bar.scrolled img {
-  height: 45px;
+  height: 40px;
 }
 .top-bar {
   z-index: 10000;
@@ -200,7 +200,7 @@ body {
     transform: scale(0.65);
     transform-origin: top left;
     width: 150%;
-    padding: 0 10px 0 20px;
+    padding: 0 10px 0 40px;
   }
 
   /* 🔥 MENU FIX */
