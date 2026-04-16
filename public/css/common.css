@@ -198,7 +198,7 @@ body {
 
   .top-bar {
     transform: scale(0.65);
-    transform-origin: top left;
+    transform-origin: center;
     width: 150%;
   }
 
@@ -206,12 +206,12 @@ body {
   .floating-menu {
     top: 10px;
     left: 10px;
-    transform: scale(0.65);   /* 🔥 same scale as top-bar */
+    transform: scale(0.7);   /* 🔥 same scale as top-bar */
   }
 
   .menu-btn {
-    font-size: 10px;
-    padding: 2px 5px;
+    font-size: 12px;
+    padding: 3px 6px;
   }
 
 }
