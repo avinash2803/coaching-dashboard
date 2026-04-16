@@ -25,6 +25,8 @@ body {
   top: 80px;
   left: 16px;
   z-index: 20000;
+  display: flex;          
+  align-items: center;   
 }
 
 .menu-btn {
@@ -100,7 +102,11 @@ body {
   gap: 16px;
 }
 
-.top-bar .left,
+.top-bar .left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 .top-bar .right {
   display: flex;
   align-items: center;
@@ -191,11 +197,10 @@ body {
 
   
   .floating-menu {
-    position: static;
-    top: 65px;
-    left: 10px;
-    transform: scale(0.9);
-  }
+  position: static !important;  
+    margin: 0;
+}
+
 
   .footer-text {
     white-space: normal;
@@ -209,4 +214,15 @@ body {
   .program-name {
     max-width: 140px;
   }
+}
+@media (max-width: 768px) {
+
+  .top-bar.scrolled {
+    min-height: 45px;
+  }
+
+  .top-bar.scrolled img {
+    height: 20px;
+  }
+
 }
