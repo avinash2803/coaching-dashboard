@@ -226,22 +226,5 @@ body {
 
 }
 
- 
-@media (max-width: 900px) {
 
-  .top-bar,
-  .top-bar.scrolled {
-    height: 45px;
-    padding-left: 70px !important;   /* 🔥 bas ye main fix */
-  }
-.top-bar.scrolled img {
-  height: 24px;
-  }
-  .top-bar.scrolled .program-name {
-    font-size: 11px;
-    max-width: 100%;    /* 🔥 overflow control */
-    white-space: normal;
-  }
-
-}
 

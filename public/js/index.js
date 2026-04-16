@@ -2,6 +2,7 @@
   const topBar = document.querySelector(".top-bar");
 
   window.addEventListener("scroll", () => {
+    if (window.innerWidth <= 900) return;
     if (window.scrollY > 80) {
       topBar.classList.add("scrolled");
     } else {
