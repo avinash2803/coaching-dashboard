@@ -4,7 +4,7 @@
 
 /* ---------- Body ---------- */
 body {
-  margin: 8px;
+  margin: 2px;
   font-family: "Segoe UI", Arial, sans-serif;
   background: #fbf5ef;
   color: #222;
@@ -178,50 +178,6 @@ body {
    MOBILE RESPONSIVE (FINAL CLEAN)
    ========================================= */
 
-@media (max-width: 768px) {
-
-  .top-bar {
-    height: 60px;
-    min-height: 60px;
-    padding: 0 10px;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 6px;
-  }
-
-  .top-bar img {
-    height: 30px;
-  }
-
-  .top-bar .left,
-  .top-bar .center,
-  .top-bar .right {
-    justify-content: center;
-    flex-wrap: nowrap;
-  }
-
-  .program-name {
-    font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 140px;
-    text-align: center;
-  }
-
-  .year-select {
-    font-size: 11px;
-    padding: 2px 6px;
-  }
-
-  .floating-menu {
-    top: 10px;
-    left: 10px;
-    transform: scale(0.9);
-  }
-
-}
-
 /* =========================================
    SCROLL EFFECT
    ========================================= */
@@ -240,51 +196,41 @@ body {
 
 @media (max-width: 900px) {
 
+  .top-bar,
+  .top-bar.scrolled {
+    padding: 0 10px;   /* 🔥 SAME padding (no shift) */
+    gap: 6px;
+  }
+
   .top-bar {
-    padding: 0 8px;
-    gap: 6px;
+    height: 60px;
   }
 
-  /* Allow wrapping control */
-  .top-bar .left,
-  .top-bar .center,
-  .top-bar .right {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* LOGOS smaller */
   .top-bar img {
-    height: 28px;
+    height: 26px;
   }
 
-  /* Menu button small */
+  .top-bar.scrolled img {
+    height: 22px;
+  }
+
   .menu-btn {
     font-size: 12px;
     padding: 4px 8px;
   }
 
-  /* Program name shrink */
   .program-name {
-    font-size: 14px;
-    max-width: 140px;
+    font-size: 13px;
+    max-width: 130px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-}
-
-@media (max-width: 900px) {
-
-  .top-bar.scrolled {
-    height: 55px;
-    padding: 0 6px;
-  }
-
-  .top-bar.scrolled img {
-    height: 22px;
+  .floating-menu {
+    top: 10px;
+    left: 8px;
+    transform: scale(0.9);
   }
 
 }
