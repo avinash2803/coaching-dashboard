@@ -200,7 +200,7 @@ body {
     transform: scale(0.65);
     transform-origin: top left;
     width: 150%;
-    padding: 0 10px 0 65px;
+    padding: 0 10px 0 70px;
   }
 
   /* 🔥 MENU FIX */
@@ -220,9 +220,9 @@ body {
 @media (max-width: 900px) {
 
   .program-name {
-    font-size: 10px;     /* 🔥 force chhota */
-    max-width: 140px;    /* 🔥 overflow control */
-    white-space: nowrap;
+    font-size: 12px;     /* 🔥 force chhota */
+    max-width: 160px;    /* 🔥 overflow control */
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
   }
