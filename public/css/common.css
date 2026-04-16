@@ -240,8 +240,39 @@ body {
 
 @media (max-width: 768px) {
 
+  .top-bar.scrolled {
+    height: 50px;
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  /* Left, center, right sab squeeze */
+  .top-bar.scrolled .left,
+  .top-bar.scrolled .center,
+  .top-bar.scrolled .right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Logos small */
   .top-bar.scrolled img {
-    height: 20px;
+    height: 18px;
+  }
+
+  /* Menu button small */
+  .top-bar.scrolled .menu-btn {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  /* Program name shrink */
+  .top-bar.scrolled .program-name {
+    font-size: 11px;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
 }
