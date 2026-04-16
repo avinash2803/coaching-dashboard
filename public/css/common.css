@@ -196,41 +196,10 @@ body {
 
 @media (max-width: 900px) {
 
-  .top-bar,
-  .top-bar.scrolled {
-    padding: 0 10px;   /* 🔥 SAME padding (no shift) */
-    gap: 6px;
-  }
-
   .top-bar {
-    height: 60px;
-  }
-
-  .top-bar img {
-    height: 26px;
-  }
-
-  .top-bar.scrolled img {
-    height: 22px;
-  }
-
-  .menu-btn {
-    font-size: 12px;
-    padding: 4px 8px;
-  }
-
-  .program-name {
-    font-size: 13px;
-    max-width: 130px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .floating-menu {
-    top: 10px;
-    left: 8px;
-    transform: scale(0.9);
+    transform: scale(0.85);       /* 🔥 pura header chhota */
+    transform-origin: top left;   /* 🔥 left se shrink */
+    width: 118%;                  /* 🔥 compensate shrink */
   }
 
 }
