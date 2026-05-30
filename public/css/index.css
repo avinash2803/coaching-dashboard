@@ -191,7 +191,7 @@ linear-gradient(
 
 .hero h1 {
 
-  font-size: clamp(42px, 5vw, 56px);
+  font-size: clamp(40px, 5vw, 50px);
 
   font-weight: 700;
 

@@ -1,24 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include("partials/header") %>
 
-<head>
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/analytics.css">
 
-  <meta charset="UTF-8">
+<!-- =========================================
+     ANALYTICS HERO
+========================================= -->
 
-  <title>Program Health Dashboard</title>
+<section class="section analytics-hero">
 
-</head>
+  <div class="section-line-header">
 
-<body>
+    <div class="section-badge">
+      Program Analytics
+    </div>
 
-  <h1>
-    Program Health Dashboard
-  </h1>
+  </div>
 
-  <p>
-    Analytics page connected successfully 🚀
+  <div class="analytics-hero-content">
+
+    <h1>
+      Program Health Dashboard
+    </h1>
+
+    <p>
+      Real-time overview of attendance, student engagement,
+      academic performance, and batch-wise program outcomes
+      across BALCO Connect Coaching Program.
+    </p>
+
+    <div class="analytics-filter">
+
+      <label for="yearFilter">
+        Academic Year
+      </label>
+
+      <select id="yearFilter">
+
+        <option value="all">
+          All Years
+        </option>
+
+        <option value="2025-26">
+          2025-26
+        </option>
+
+        <option value="2026-27">
+          2026-27
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================
+     KPI OVERVIEW
+========================================= -->
+
+<section class="section">
+
+  <div class="stats">
+
+    <div class="stat-card">
+      <h3>
+        <span class="icon">🎓</span>
+        <span class="counter">250</span>
+      </h3>
+      <p>Total Students Enrolled</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>
+        <span class="icon">✅</span>
+        <span class="counter">214</span>
+      </h3>
+      <p>Active Students</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>
+        <span class="icon">⚠️</span>
+        <span class="counter">36</span>
+      </h3>
+      <p>Dropout Students</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>
+        <span class="icon">📊</span>
+        <h3>
+  <span class="icon">📊</span>
+  <span>78%</span>
+</h3>
+      </h3>
+      <p>Average Attendance</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================
+     ATTENDANCE ANALYTICS
+========================================= -->
+
+<section class="section">
+
+  <div class="section-line-header">
+
+    <div class="section-badge">
+      Attendance Analytics
+    </div>
+
+  </div>
+
+  <p class="section-subtitle">
+    Batch-wise monthly attendance overview for CGPSC
+    and VYAPAM coaching batches.
   </p>
 
-</body>
+  <div class="analytics-grid">
 
-</html>
+    <!-- CGPSC -->
+
+    <div class="program-card">
+
+      <h3>
+        <span class="icon">📘</span>
+        <span class="heading-text">
+          CGPSC Batch
+        </span>
+      </h3>
+
+     <div class="chart-container">
+
+  <canvas id="cgpscChart"></canvas>
+
+</div>
+
+    </div>
+
+    <!-- VYAPAM -->
+
+    <div class="program-card">
+
+      <h3>
+        <span class="icon">📗</span>
+        <span class="heading-text">
+          VYAPAM Batch
+        </span>
+      </h3>
+
+      <div class="chart-container">
+
+  <canvas id="vyapamChart"></canvas>
+
+</div>
+
+    </div>
+
+  </div>
+
+</section>
+<%- include("partials/footer") %>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/analytics.js"></script>
