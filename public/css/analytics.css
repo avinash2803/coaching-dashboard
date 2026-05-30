@@ -1,3 +1,15 @@
+.analytics-hero,
+.analytics-hero * {
+
+  color: #111827 !important;
+
+  -webkit-text-fill-color:
+    #111827 !important;
+}
+.analytics-hero {
+
+  background: transparent !important;
+}
 .analytics-hero {
 
   padding-top: 130px;
