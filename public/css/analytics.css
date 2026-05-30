@@ -1,27 +1,66 @@
-.analytics-hero {
+.analytics-page {
 
-  padding-top: 130px;
+  padding-top: 140px;
+
+  padding-bottom: 80px;
+
+  background: #eef3f3;
+
+  min-height: 100vh;
 }
 
-.analytics-hero-content {
+.analytics-container {
 
-  max-width: 900px;
+  width: 92%;
+
+  max-width: 1300px;
+
+  margin: auto;
 }
 
-.analytics-hero h1 {
+.analytics-header {
 
-  font-size: clamp(42px,5vw,62px);
+  margin-bottom: 50px;
+}
+
+.analytics-badge {
+
+  display: inline-block;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #0072ce,
+    #00a651
+  );
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  margin-bottom: 24px;
+}
+
+.analytics-header h1 {
+
+  font-size: clamp(42px,5vw,64px);
 
   font-weight: 800;
 
-  line-height: 1.05;
-
-  margin-bottom: 22px;
-
   color: #111827;
+
+  margin-bottom: 20px;
+
+  line-height: 1.05;
 }
 
-.analytics-hero p {
+.analytics-header p {
 
   font-size: 18px;
 
@@ -29,9 +68,9 @@
 
   color: #4b5563;
 
-  margin-bottom: 30px;
-
   max-width: 760px;
+
+  margin-bottom: 30px;
 }
 
 .analytics-filter {
@@ -47,8 +86,6 @@
 
 .analytics-filter label {
 
-  font-size: 15px;
-
   font-weight: 600;
 
   color: #374151;
@@ -60,37 +97,83 @@
 
   border-radius: 14px;
 
-  border: 1px solid rgba(0,114,206,0.12);
+  border: 1px solid #d1d5db;
 
-  background: #ffffff;
+  background: white;
 
   font-size: 15px;
 
   outline: none;
 }
 
-.analytics-hero,
-.analytics-hero * {
+.analytics-cards {
 
-  -webkit-text-fill-color:
-  unset !important;
+  display: grid;
+
+  grid-template-columns:
+  repeat(3,1fr);
+
+  gap: 24px;
+}
+
+.analytics-card {
+
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 32px;
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,0.06);
+}
+
+.analytics-card h3 {
+
+  font-size: 36px;
+
+  margin-bottom: 14px;
+
+  color: #111827;
+}
+
+.analytics-card p {
+
+  font-size: 16px;
+
+  color: #6b7280;
+}
+
+@media(max-width:992px){
+
+  .analytics-cards{
+
+    grid-template-columns:
+    repeat(2,1fr);
+  }
+
 }
 
 @media(max-width:768px){
 
-  .analytics-hero{
+  .analytics-page{
 
-    padding-top:110px;
+    padding-top:120px;
   }
 
-  .analytics-hero h1{
+  .analytics-header h1{
 
-    font-size:38px;
+    font-size:42px;
   }
 
-  .analytics-hero p{
+  .analytics-header p{
 
     font-size:16px;
+  }
+
+  .analytics-cards{
+
+    grid-template-columns:1fr;
   }
 
 }

@@ -1,144 +1,107 @@
 <%- include("partials/header") %>
 
-<link rel="stylesheet" href="/css/index.css">
 <link rel="stylesheet" href="/css/analytics.css">
 
-<!-- =========================================
-     ANALYTICS HERO
-========================================= -->
+<div class="analytics-page">
 
-<section class="section analytics-hero">
+  <div class="analytics-container">
 
-  <div class="section-line-header">
+    <div class="analytics-header">
 
-    <div class="section-badge">
-      Program Analytics
-    </div>
+      <span class="analytics-badge">
+        Program Analytics
+      </span>
 
-  </div>
-
-  <div class="analytics-hero-content">
-
-    <h1>
-      Program Health Dashboard
-    </h1>
-
-    <p>
-      Real-time overview of student participation,
-      attendance trends, academic engagement,
-      and overall coaching program performance.
-    </p>
-
-    <div class="analytics-filter">
-
-      <label for="yearFilter">
-        Academic Year
-      </label>
-
-      <select id="yearFilter">
-
-        <option value="all">
-          All Years
-        </option>
-
-        <option value="2025-26">
-          2025-26
-        </option>
-
-        <option value="2026-27">
-          2026-27
-        </option>
-
-      </select>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- =========================================
-     KPI OVERVIEW
-========================================= -->
-
-<section class="section">
-
-  <div class="stats">
-
-    <div class="stat-card">
-
-      <h3>
-        🎓 250
-      </h3>
+      <h1>
+        Program Health Dashboard
+      </h1>
 
       <p>
-        Total Students Enrolled
+        Real-time overview of attendance,
+        student engagement, and program
+        performance across all batches.
       </p>
+
+      <div class="analytics-filter">
+
+        <label>
+          Academic Year
+        </label>
+
+        <select>
+
+          <option>
+            All Years
+          </option>
+
+          <option>
+            2025-26
+          </option>
+
+          <option>
+            2026-27
+          </option>
+
+        </select>
+
+      </div>
 
     </div>
 
-    <div class="stat-card">
+    <div class="analytics-cards">
 
-      <h3>
-        ✅ 214
-      </h3>
+      <div class="analytics-card">
 
-      <p>
-        Active Students
-      </p>
+        <h3>🎓 250</h3>
 
-    </div>
+        <p>Total Students</p>
 
-    <div class="stat-card">
+      </div>
 
-      <h3>
-        ⚠️ 36
-      </h3>
+      <div class="analytics-card">
 
-      <p>
-        Dropout Students
-      </p>
+        <h3>✅ 214</h3>
 
-    </div>
+        <p>Active Students</p>
 
-    <div class="stat-card">
+      </div>
 
-      <h3>
-        📊 78%
-      </h3>
+      <div class="analytics-card">
 
-      <p>
-        Average Attendance
-      </p>
+        <h3>⚠️ 36</h3>
 
-    </div>
+        <p>Dropout Students</p>
 
-    <div class="stat-card">
+      </div>
 
-      <h3>
-        📝 42
-      </h3>
+      <div class="analytics-card">
 
-      <p>
-        Tests Conducted
-      </p>
+        <h3>📊 78%</h3>
 
-    </div>
+        <p>Average Attendance</p>
 
-    <div class="stat-card">
+      </div>
 
-      <h3>
-        💼 12
-      </h3>
+      <div class="analytics-card">
 
-      <p>
-        Students Employed
-      </p>
+        <h3>📝 42</h3>
+
+        <p>Tests Conducted</p>
+
+      </div>
+
+      <div class="analytics-card">
+
+        <h3>💼 12</h3>
+
+        <p>Students Employed</p>
+
+      </div>
 
     </div>
 
   </div>
 
-</section>
+</div>
 
 <%- include("partials/footer") %>
