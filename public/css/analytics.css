@@ -14,9 +14,11 @@
 
   font-weight: 800;
 
-  margin-bottom: 20px;
-
   line-height: 1.05;
+
+  margin-bottom: 22px;
+
+  color: #111827;
 }
 
 .analytics-hero p {
@@ -43,6 +45,15 @@
   max-width: 240px;
 }
 
+.analytics-filter label {
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  color: #374151;
+}
+
 .analytics-filter select {
 
   padding: 14px 18px;
@@ -51,40 +62,14 @@
 
   border: 1px solid rgba(0,114,206,0.12);
 
-  background: #fff;
-}
+  background: #ffffff;
 
-.analytics-grid {
+  font-size: 15px;
 
-  display: grid;
-
-  grid-template-columns: repeat(2,1fr);
-
-  gap: 24px;
-}
-
-.chart-container {
-
-  height: 320px;
-
-  margin-top: 20px;
-}
-
-.section-subtitle {
-
-  margin-bottom: 28px;
-
-  color: #6b7280;
-
-  line-height: 1.7;
+  outline: none;
 }
 
 @media(max-width:768px){
-
-  .analytics-grid{
-
-    grid-template-columns:1fr;
-  }
 
   .analytics-hero{
 

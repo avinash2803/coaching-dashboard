@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/css/analytics.css">
 
 <!-- =========================================
-     HERO
+     ANALYTICS HERO
 ========================================= -->
 
 <section class="section analytics-hero">
@@ -25,8 +25,8 @@
 
     <p>
       Real-time overview of attendance, student engagement,
-      academic performance, and test analytics across
-      BALCO Connect Coaching Program.
+      academic progress, and program performance across
+      BALCO Connect Coaching Program batches.
     </p>
 
     <div class="analytics-filter">
@@ -58,7 +58,7 @@
 </section>
 
 <!-- =========================================
-     KPI OVERVIEW
+     KPI CARDS
 ========================================= -->
 
 <section class="section">
@@ -113,154 +113,32 @@
 
     </div>
 
-  </div>
-
-</section>
-
-<!-- =========================================
-     ATTENDANCE ANALYTICS
-========================================= -->
-
-<section class="section">
-
-  <div class="section-line-header">
-
-    <div class="section-badge">
-      Attendance Analytics
-    </div>
-
-  </div>
-
-  <p class="section-subtitle">
-
-    Batch-wise monthly attendance overview for
-    CGPSC and VYAPAM batches.
-
-  </p>
-
-  <div class="analytics-grid">
-
-    <!-- CGPSC -->
-
-    <div class="program-card">
+    <div class="stat-card">
 
       <h3>
-        📘 CGPSC Batch
+        📝 42
       </h3>
 
-      <div class="chart-container">
-
-        <canvas id="cgpscChart"></canvas>
-
-      </div>
+      <p>
+        Tests Conducted
+      </p>
 
     </div>
 
-    <!-- VYAPAM -->
-
-    <div class="program-card">
+    <div class="stat-card">
 
       <h3>
-        📗 VYAPAM Batch
+        💼 12
       </h3>
 
-      <div class="chart-container">
-
-        <canvas id="vyapamChart"></canvas>
-
-      </div>
+      <p>
+        Students Employed
+      </p>
 
     </div>
-
-  </div>
-
-</section>
-
-<!-- =========================================
-     TEST ANALYTICS
-========================================= -->
-
-<section class="section">
-
-  <div class="section-line-header">
-
-    <div class="section-badge">
-      Test Analytics
-    </div>
-
-  </div>
-
-  <p class="section-subtitle">
-
-    Performance insights generated automatically
-    from uploaded test data.
-
-  </p>
-
-  <div class="analytics-grid">
-
-    <% testAnalytics.forEach(test => { %>
-
-      <div class="program-card">
-
-        <h3>
-          📝 <%= test.testName %>
-        </h3>
-
-        <p>
-          <strong>Subject:</strong>
-          <%= test.subject %>
-        </p>
-
-        <p>
-          <strong>Full Marks:</strong>
-          <%= test.fullMarks %>
-        </p>
-
-        <p>
-          <strong>Candidates:</strong>
-          <%= test.candidatesAppeared %>
-        </p>
-
-        <p>
-          <strong>Absent:</strong>
-          <%= test.absentStudents %>
-        </p>
-
-        <p>
-          <strong>Average Score:</strong>
-          <%= test.averageScore %>
-        </p>
-
-        <p>
-          <strong>Average %:</strong>
-          <%= test.averagePercentage %>%
-        </p>
-
-        <p>
-          <strong>Above 50%:</strong>
-          <%= test.above50 %>
-        </p>
-
-        <p>
-          <strong>Topper:</strong>
-          <%= test.topperName %>
-        </p>
-
-        <p>
-          <strong>Top Score:</strong>
-          <%= test.topScore %>
-        </p>
-
-      </div>
-
-    <% }) %>
 
   </div>
 
 </section>
 
 <%- include("partials/footer") %>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/js/analytics.js"></script>
