@@ -884,6 +884,17 @@ rgba(0,114,206,0.18);
   -webkit-text-fill-color: transparent;
 }
 
+/* HERO FIX */
+
+.hero .heading-text {
+
+  background: none !important;
+
+  color: #ffffff !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+}
+
 .program-card p {
   font-size: 15px;
   line-height: 1.7;
