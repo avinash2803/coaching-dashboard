@@ -1213,3 +1213,10 @@ html {
 
   background: none !important;
 }
+
+.hero h1 {
+
+  color: #fff !important;
+
+  -webkit-text-fill-color: #fff !important;
+}
