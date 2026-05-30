@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/css/analytics.css">
 
 <!-- =========================================
-     ANALYTICS HERO
+     HERO
 ========================================= -->
 
 <section class="section analytics-hero">
@@ -25,27 +25,27 @@
 
     <p>
       Real-time overview of attendance, student engagement,
-      academic performance, and batch-wise program outcomes
-      across BALCO Connect Coaching Program.
+      academic performance, and test analytics across
+      BALCO Connect Coaching Program.
     </p>
 
     <div class="analytics-filter">
 
-      <label for="yearFilter">
+      <label>
         Academic Year
       </label>
 
-      <select id="yearFilter">
+      <select>
 
-        <option value="all">
+        <option>
           All Years
         </option>
 
-        <option value="2025-26">
+        <option>
           2025-26
         </option>
 
-        <option value="2026-27">
+        <option>
           2026-27
         </option>
 
@@ -66,38 +66,51 @@
   <div class="stats">
 
     <div class="stat-card">
+
       <h3>
-        <span class="icon">🎓</span>
-        <span class="counter">250</span>
+        🎓 250
       </h3>
-      <p>Total Students Enrolled</p>
+
+      <p>
+        Total Students Enrolled
+      </p>
+
     </div>
 
     <div class="stat-card">
+
       <h3>
-        <span class="icon">✅</span>
-        <span class="counter">214</span>
+        ✅ 214
       </h3>
-      <p>Active Students</p>
+
+      <p>
+        Active Students
+      </p>
+
     </div>
 
     <div class="stat-card">
+
       <h3>
-        <span class="icon">⚠️</span>
-        <span class="counter">36</span>
+        ⚠️ 36
       </h3>
-      <p>Dropout Students</p>
+
+      <p>
+        Dropout Students
+      </p>
+
     </div>
 
     <div class="stat-card">
+
       <h3>
-        <span class="icon">📊</span>
-        <h3>
-  <span class="icon">📊</span>
-  <span>78%</span>
-</h3>
+        📊 78%
       </h3>
-      <p>Average Attendance</p>
+
+      <p>
+        Average Attendance
+      </p>
+
     </div>
 
   </div>
@@ -119,8 +132,10 @@
   </div>
 
   <p class="section-subtitle">
-    Batch-wise monthly attendance overview for CGPSC
-    and VYAPAM coaching batches.
+
+    Batch-wise monthly attendance overview for
+    CGPSC and VYAPAM batches.
+
   </p>
 
   <div class="analytics-grid">
@@ -130,17 +145,14 @@
     <div class="program-card">
 
       <h3>
-        <span class="icon">📘</span>
-        <span class="heading-text">
-          CGPSC Batch
-        </span>
+        📘 CGPSC Batch
       </h3>
 
-     <div class="chart-container">
+      <div class="chart-container">
 
-  <canvas id="cgpscChart"></canvas>
+        <canvas id="cgpscChart"></canvas>
 
-</div>
+      </div>
 
     </div>
 
@@ -149,23 +161,105 @@
     <div class="program-card">
 
       <h3>
-        <span class="icon">📗</span>
-        <span class="heading-text">
-          VYAPAM Batch
-        </span>
+        📗 VYAPAM Batch
       </h3>
 
       <div class="chart-container">
 
-  <canvas id="vyapamChart"></canvas>
+        <canvas id="vyapamChart"></canvas>
 
-</div>
+      </div>
 
     </div>
 
   </div>
 
 </section>
+
+<!-- =========================================
+     TEST ANALYTICS
+========================================= -->
+
+<section class="section">
+
+  <div class="section-line-header">
+
+    <div class="section-badge">
+      Test Analytics
+    </div>
+
+  </div>
+
+  <p class="section-subtitle">
+
+    Performance insights generated automatically
+    from uploaded test data.
+
+  </p>
+
+  <div class="analytics-grid">
+
+    <% testAnalytics.forEach(test => { %>
+
+      <div class="program-card">
+
+        <h3>
+          📝 <%= test.testName %>
+        </h3>
+
+        <p>
+          <strong>Subject:</strong>
+          <%= test.subject %>
+        </p>
+
+        <p>
+          <strong>Full Marks:</strong>
+          <%= test.fullMarks %>
+        </p>
+
+        <p>
+          <strong>Candidates:</strong>
+          <%= test.candidatesAppeared %>
+        </p>
+
+        <p>
+          <strong>Absent:</strong>
+          <%= test.absentStudents %>
+        </p>
+
+        <p>
+          <strong>Average Score:</strong>
+          <%= test.averageScore %>
+        </p>
+
+        <p>
+          <strong>Average %:</strong>
+          <%= test.averagePercentage %>%
+        </p>
+
+        <p>
+          <strong>Above 50%:</strong>
+          <%= test.above50 %>
+        </p>
+
+        <p>
+          <strong>Topper:</strong>
+          <%= test.topperName %>
+        </p>
+
+        <p>
+          <strong>Top Score:</strong>
+          <%= test.topScore %>
+        </p>
+
+      </div>
+
+    <% }) %>
+
+  </div>
+
+</section>
+
 <%- include("partials/footer") %>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
