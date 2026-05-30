@@ -1,0 +1,9 @@
+Copyright (c) 2026 Avinash
+
+All Rights Reserved.
+
+This project (Student Portal) and its source code are the intellectual
+property of the author.
+
+No part of this software may be copied, modified, distributed,
+or used without permission from the author.

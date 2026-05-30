@@ -1,0 +1,149 @@
+<%- include("partials/header") %>
+
+<link rel="stylesheet" href="/css/success.css">
+
+<div class="container mt-5 pt-5">
+
+<h1 class="text-center mb-4">Success Stories</h1>
+
+<!-- STORY CARDS -->
+
+<div class="story-grid">
+
+<% stories.forEach(story => { 
+   const photoUrl = story.photoId ? "/api/upload/" + story.photoId : "/images/default-user.png";
+%>
+
+<div class="story-card"
+data-photo="<%= photoUrl %>"
+data-name="<%= story.name %>"
+data-title="<%= story.title %>"
+data-subtitle="<%= story.subtitle %>"
+data-achievement="<%= story.achievement %>"
+data-story="<%- story.story %>"
+onclick="openStory(this)"
+>
+
+<img src="<%= photoUrl %>" alt="<%= story.name %>">
+
+<h3><%= story.name %></h3>
+
+<p class="tagline"><%= story.subtitle %></p>
+
+<div class="badge">
+  <%= story.achievement %>
+</div>
+
+</div>
+
+<% }) %>
+
+<!-- STORY DETAIL LAYOUT -->
+
+<div id="storyDetail" class="story-layout" style="display:none">
+
+<div class="story-left">
+
+<img id="detailPhoto">
+
+<h2 id="detailTitle"></h2>
+
+<h3 id="detailAchievement"></h3>
+
+<p id="detailSubtitle"></p>
+
+</div>
+
+<div class="story-right">
+
+<div class="quote-box">
+
+<p id="detailStory"></p>
+
+<strong id="detailName"></strong>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function openStory(card){
+
+const photo = card.dataset.photo;
+const name = card.dataset.name;
+const title = card.dataset.title;
+const subtitle = card.dataset.subtitle;
+const achievement = card.dataset.achievement;
+const story = card.dataset.story;
+
+const layout = document.getElementById("storyDetail");
+
+layout.style.display="flex";
+
+setTimeout(()=>{
+layout.style.opacity="1";
+layout.style.transform="translateY(0)";
+},100);
+
+document.getElementById("detailPhoto").src = photo;
+document.getElementById("detailTitle").innerText = title;
+document.getElementById("detailAchievement").innerText = achievement;
+document.getElementById("detailSubtitle").innerText = subtitle;
+document.getElementById("detailStory").innerHTML = `"${story}"`;
+document.getElementById("detailName").innerText = "– " + name;
+
+const grid = document.querySelector(".story-grid");
+const cards = Array.from(grid.children);
+
+// find index of clicked card
+const index = cards.indexOf(card);
+
+// calculate cards per row
+const cardsPerRow = Math.floor(grid.offsetWidth / card.offsetWidth);
+
+// find last card of that row
+const rowEndIndex = Math.min(
+  index - (index % cardsPerRow) + (cardsPerRow - 1),
+  cards.length - 1
+);
+
+// move detail below that row
+cards[rowEndIndex].after(layout);
+}
+/* CARD SCROLL ANIMATION */
+
+window.addEventListener("DOMContentLoaded", () => {
+
+const cards = document.querySelectorAll(".story-card");
+
+function revealCards(){
+
+const trigger = window.innerHeight * 0.85;
+
+cards.forEach(card => {
+
+const cardTop = card.getBoundingClientRect().top;
+
+if(cardTop < trigger){
+card.style.opacity = "1";
+card.style.transform = "translateY(0)";
+}
+
+});
+
+}
+
+window.addEventListener("scroll", revealCards);
+revealCards();
+
+});
+
+</script>
+
+<%- include("partials/footer") %>

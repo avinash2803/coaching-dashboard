@@ -1,0 +1,98 @@
+<h2>Upload Attendance</h2>
+
+<form id="attendanceForm">
+  
+  <label>Year:</label>
+  <select id="year">
+  <option value="2025-26">2025-26 (Year 1)</option>
+  <option value="2026-27">2026-27 (Year 2)</option>
+  <option value="2027-28">2027-28 (Year 3)</option>
+  <option value="2028-29">2028-29 (Year 4)</option>
+</select>
+
+  <br><br>
+
+  <label>Batch:</label>
+  <select id="batch">
+    <option value="CGPSC">CGPSC</option>
+    <option value="VYAPAM">VYAPAM</option>
+  </select>
+
+  <br><br>
+
+  <label>Month:</label>
+<select id="month" name="month" class="form-control">
+  <option>April</option>
+  <option>May</option>
+  <option>June</option>
+  <option>July</option>
+  <option>August</option>
+  <option>September</option>
+  <option>October</option>
+  <option>November</option>
+  <option>December</option>
+  <option>January</option>
+  <option>February</option>
+  <option>March</option>
+</select>
+
+  <br><br>
+
+  <label>Total Days:</label>
+  <input type="number" id="totalDays">
+
+  <br><br>
+
+  <input type="file" id="file">
+
+  <br><br>
+
+  <button type="button" onclick="uploadAttendance()">Upload</button>
+
+</form>
+
+<script>
+async function uploadAttendance() {
+  const file = document.getElementById("file").files[0];
+  const batch = document.getElementById("batch").value;
+  const month = document.getElementById("month").value;
+  const totalDays = document.getElementById("totalDays").value;
+  const year = document.getElementById("year").value;
+
+  if (!file) {
+    alert("Please select Excel file");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("batch", batch);
+  formData.append("month", month);
+  formData.append("totalDays", Number(totalDays));
+  formData.append("year", year);
+
+  try {
+    const res = await fetch("/api/excel/upload-attendance", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+
+if (data.success) {
+  alert(
+    `Uploaded ✅\n\nUpdated: ${data.updated}\nNot Found: ${data.notFound.length}\nErrors: ${data.errorsCount}`
+  );
+
+  // 🔥 ADD THIS LINE
+  window.location.reload();
+} else {
+  alert(data.error || "Upload failed ❌");
+}
+
+} catch (err) {
+  alert("Server error ❌");
+}
+}
+</script>
+</script>

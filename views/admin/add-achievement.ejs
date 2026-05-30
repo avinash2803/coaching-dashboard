@@ -1,0 +1,272 @@
+<h2>Add Achievement</h2>
+
+<form>
+
+  <!-- 🔹 Filters Row -->
+  <div style="display:flex; gap:10px; margin-bottom:15px;">
+
+    <!-- Year -->
+    <select id="yearFilter" name="year" style="padding:8px;">
+      <option value="">Select Year</option>
+      <option value="2025-26">2025-26</option>
+      <option value="2026-27">2026-27</option>
+      <option value="2027-28">2027-28</option>
+      <option value="2028-29">2028-29</option>
+    </select>
+
+    <!-- Course -->
+    <select id="courseFilter" style="padding:8px;">
+      <option value="">Select Course</option>
+      <option value="CGPSC">CGPSC</option>
+      <option value="VYAPAM">VYAPAM</option>
+    </select>
+
+  </div>
+
+
+  <!-- 🔍 Search -->
+  <input 
+    type="text" 
+    id="searchStudent" 
+    placeholder="Search student..." 
+    style="width:100%; padding:8px; margin-bottom:10px;"
+  >
+
+
+  <!-- 👇 Student Dropdown -->
+  <select name="studentId" id="studentDropdown" required style="width:100%; padding:8px;">
+    <option value="">-- Select Student --</option>
+
+    <% if (students && students.length > 0) { %>
+      <% students.forEach(student => { %>
+        <option value="<%= student._id %>">
+          <%= student.name %> (<%= student.course %> - <%= student.year %>)
+        </option>
+      <% }) %>
+    <% } else { %>
+      <option>No students found</option>
+    <% } %>
+  </select>
+
+
+  <br><br>
+
+  <!-- ✍️ Exam -->
+  <input 
+    type="text" 
+    name="examQualified" 
+    placeholder="Enter Exam (SSC GD / CTET)" 
+    required 
+    style="width:100%; padding:8px;"
+  >
+
+  <br><br>
+
+  <button type="submit" style="padding:10px 20px;">
+    Save Achievement
+  </button>
+
+</form>
+
+<script>
+  const yearFilter = document.getElementById("yearFilter");
+  const courseFilter = document.getElementById("courseFilter");
+  const studentDropdown = document.getElementById("studentDropdown");
+
+  const originalOptions = Array.from(studentDropdown.options);
+
+  function filterStudents() {
+    const selectedYear = yearFilter.value;
+    const selectedCourse = courseFilter.value;
+
+    // Reset dropdown
+    studentDropdown.innerHTML = "";
+
+    // Default option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "-- Select Student --";
+    studentDropdown.appendChild(defaultOption);
+
+    originalOptions.forEach(option => {
+      if (!option.value) return;
+
+      const text = option.textContent;
+
+      const matchYear = selectedYear ? text.includes(selectedYear) : true;
+      const matchCourse = selectedCourse ? text.includes(selectedCourse) : true;
+
+      if (matchYear && matchCourse) {
+        studentDropdown.appendChild(option);
+      }
+    });
+  }
+
+  yearFilter.addEventListener("change", filterStudents);
+  courseFilter.addEventListener("change", filterStudents);
+</script>
+
+<hr>
+<h3>Dashboard Stats</h3>
+
+<input type="number" id="totalStudents" placeholder="Total Students">
+<input type="number" id="boysCount" placeholder="Boys">
+<input type="number" id="girlsCount" placeholder="Girls">
+
+<h4>Qualified Exams</h4>
+
+<div id="examContainer"></div>
+
+<button type="button" onclick="addExam()">+ Add Exam</button>
+
+<h4>💼 Employment</h4>
+
+<div id="employment-container">
+  <div class="emp-item">
+    <input type="text" name="empName[]" placeholder="Job / Company Name">
+    <input type="number" name="empBoys[]" placeholder="Boys">
+    <input type="number" name="empGirls[]" placeholder="Girls">
+  </div>
+</div>
+
+<button type="button" onclick="addEmployment()">+ Add Employment</button>
+
+<button id="saveDashboardStats">Save Dashboard</button>
+
+<script>
+
+// 🔹 SAVE BUTTON
+document.getElementById("saveDashboardStats").addEventListener("click", async () => {
+
+  const year = document.getElementById("yearFilter").value;
+
+  if (!year) {
+    alert("Please select year first");
+    return;
+  }
+const exams = [];
+
+document.querySelectorAll("#examContainer > div").forEach(row => {
+
+  const name = row.querySelector(".exam-name").value.trim();
+  const boys = +row.querySelector(".exam-boys").value || 0;
+  const girls = +row.querySelector(".exam-girls").value || 0;
+
+  if (name !== "") {
+    exams.push({
+      name,
+      boys,
+      girls
+    });
+  }
+
+});
+
+
+  // 👉 STEP A: employment array banana
+const employment = [];
+
+document.querySelectorAll("#employment-container > div").forEach(row => {
+
+  const name = row.querySelector("input[name='empName[]']").value.trim();
+  const boys = +row.querySelector("input[name='empBoys[]']").value || 0;
+  const girls = +row.querySelector("input[name='empGirls[]']").value || 0;
+
+  if (name !== "") {
+    employment.push({
+      name,
+      boys,
+      girls
+    });
+  }
+
+});
+
+// 👉 STEP B: data object banana
+const data = {
+  year,
+  students: {
+    total: +document.getElementById("totalStudents").value || 0,
+    boys: +document.getElementById("boysCount").value || 0,
+    girls: +document.getElementById("girlsCount").value || 0
+  },
+  qualified: exams,
+  employment   // ✅ bas ye likhna hai
+};
+
+await fetch("/admin/save-dashboard-stats", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  alert("Dashboard Saved!");
+});
+
+
+// 🔹 AUTO LOAD DATA WHEN YEAR CHANGES
+async function loadDashboardStats() {
+  const year = document.getElementById("yearFilter").value;
+
+  if (!year) return;
+
+  const res = await fetch(`/admin/dashboard-stats?year=${year}`);
+  const data = await res.json();
+  if (!data) return;
+
+// students
+document.getElementById("totalStudents").value = data.students?.total || "";
+document.getElementById("boysCount").value = data.students?.boys || "";
+document.getElementById("girlsCount").value = data.students?.girls || "";
+
+// employment
+document.getElementById("employment-container").innerHTML = "";
+
+data.employment?.forEach(emp => {
+  addEmployment(emp.name, emp.boys, emp.girls);
+});
+
+// 🔥 NEW PART (IMPORTANT)
+document.getElementById("examContainer").innerHTML = "";
+
+data.qualified?.forEach(exam => {
+  addExam(exam.name, exam.boys, exam.girls);
+});
+}
+
+
+// 🔹 TRIGGER ON YEAR CHANGE
+document.getElementById("yearFilter").addEventListener("change", loadDashboardStats);
+
+</script>
+
+<script>
+function addExam(name = "", boys = "", girls = "") {
+  const container = document.getElementById("examContainer");
+
+  const div = document.createElement("div");
+  div.style.marginBottom = "10px";
+
+  div.innerHTML = `
+    <input placeholder="Exam Name" class="exam-name" value="${name}">
+    <input type="number" placeholder="Boys" class="exam-boys" value="${boys}">
+    <input type="number" placeholder="Girls" class="exam-girls" value="${girls}">
+  `;
+  container.appendChild(div);
+}
+addExam();
+
+function addEmployment(name = "", boys = "", girls = "") {
+  const container = document.getElementById("employment-container");
+
+  const div = document.createElement("div");
+
+  div.innerHTML = `
+    <input type="text" name="empName[]" placeholder="Job Name" value="${name}">
+    <input type="number" name="empBoys[]" placeholder="Boys" value="${boys}">
+    <input type="number" name="empGirls[]" placeholder="Girls" value="${girls}">
+  `;
+
+  container.appendChild(div);
+}
+</script>

@@ -1,0 +1,45 @@
+.admin-container{
+display:flex;
+min-height:80vh;
+}
+
+.sidebar{
+width:220px;
+background:#1e293b;
+color:white;
+padding:20px;
+}
+
+.sidebar ul{
+list-style:none;
+padding:0;
+}
+
+.sidebar ul li{
+margin:15px 0;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+}
+
+.admin-content{
+flex:1;
+padding:30px;
+}
+
+.dashboard-cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-top:30px;
+}
+
+.card{
+background:#f1f5f9;
+padding:30px;
+border-radius:10px;
+text-align:center;
+font-weight:bold;
+}

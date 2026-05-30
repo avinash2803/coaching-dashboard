@@ -1,0 +1,226 @@
+/* ===== PREMIUM PANEL ===== */
+
+.premium-panel {
+  background: #f8fafc;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+.overview-panel.premium-panel {
+  background: #f8fafc; /* override */
+}
+/* Sections */
+.section {
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: #2c3e50;
+}
+
+.big-number {
+  font-size: 26px;
+  font-weight: bold;
+  color: #1d4ed8;
+}
+
+.label {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.split {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 8px;
+}
+
+.numbers {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* ===== MAIN LAYOUT ===== */
+
+.achievement-container {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;   /* 🔥 ADD THIS */
+}
+
+.overview-panel {
+  width: 25%;
+  background: #f5f6fa;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.achievement-content {
+  width: 75%;
+  min-width: 0;
+}
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  width: 100%;
+  justify-content: start;   /* 🔥 VERY IMPORTANT */
+}
+
+.achievement-card-wrapper {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ===== CERTIFICATE CARD ===== */
+
+.certificate {
+  flex-grow: 1;
+  padding: 10px;
+  text-align: center;
+  background: linear-gradient(135deg, #fff8e1, #ffe082);
+  border: 2px solid #d4af37;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px; /* 🔥 spacing kam */
+  width: 100%; 
+}
+.certificate {
+  min-width: 0;
+}
+.certificate:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* ===== TEXT ===== */
+
+.title {
+  font-family: cursive;
+  color: goldenrod;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.quote {
+  font-size: 13px;
+  color: #555;
+  margin: 2px 0;
+  min-height: 25px; /* 🔥 fixed height */
+}
+
+.name {
+  color: #d32f2f;
+  font-weight: bold;
+  margin-top: 4px;
+  min-height: 30px;
+  font-size: 18px;
+}
+.course-text {
+  color: #000;        /* black */
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+/* ===== IMAGE ===== */
+
+.photo-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 2px auto;
+}
+
+.photo-wrapper .profile {
+  position: absolute;
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  top: 10px;
+  left: 10px;
+  object-fit: cover;
+  border: 3px solid white;
+}
+
+
+/* ===== BADGE ===== */
+
+.exam {
+  background: #d32f2f;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 15px;
+  display: inline-block;
+  margin: 2px auto;
+  width: auto;
+  max-width: fit-content;
+}
+
+.batch {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 600px) {
+  .achievement-container {
+    flex-direction: column;
+  }
+
+  .overview-panel {
+    width: 100%;
+  }
+
+  .achievement-content {
+    width: 100%;
+  }
+
+  .achievement-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .achievement-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 🔥 HEADER FIX (VERY IMPORTANT) */
+.achievement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+/* dropdown thoda clean */
+.achievement-header select {
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+@media (max-width: 500px) {
+  .achievement-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,181 @@
+<%- include("../partials/header") %>
+<link rel="stylesheet" href="/css/achievement.css">
+<div class="achievement-container">
+
+  <!-- 🟦 LEFT SIDE -->
+  <div class="overview-panel premium-panel">
+  <div class="achievement-header">
+
+  <h3>Achievements</h3>
+
+  <select onchange="window.location='?year='+this.value">
+    
+    <option value="all" <%= (year === "all") ? "selected" : "" %>>All</option>
+
+    <option value="2025-26" <%= (year === "2025-26") ? "selected" : "" %>>2025-26</option>
+
+    <option value="2026-27" <%= (year === "2026-27") ? "selected" : "" %>>2026-27</option>
+
+    <option value="2027-28" <%= (year === "2027-28") ? "selected" : "" %>>2027-28</option>
+
+    <option value="2028-29" <%= (year === "2028-29") ? "selected" : "" %>>2028-29</option>
+
+  </select>
+
+</div>
+
+  <!-- 👨‍🎓 STUDENTS -->
+  <div class="section">
+    <div class="section-title">👨‍🎓 Students</div>
+
+    <div class="big-number">
+      <%= stats?.students?.total || 0 %>
+    </div>
+    <div class="label">Total Students</div>
+
+    <div class="split">
+      <span>👦 <b><%= stats?.students?.boys || 0 %></b></span>
+      <span>👧 <b><%= stats?.students?.girls || 0 %></b></span>
+    </div>
+  </div>
+  <hr>
+
+  <!-- 🎯 QUALIFIED -->
+  <div class="section">
+    <div class="section-title">🎯 Qualified</div>
+
+<% if (Array.isArray(stats?.qualified) && stats.qualified.length > 0) { %>
+
+  <% let totalQ = 0; %>
+
+  <% stats.qualified.forEach(exam => { 
+      totalQ += (exam.boys || 0) + (exam.girls || 0);
+  }); %>
+
+  <!-- 🔥 BIG NUMBER -->
+  <div class="big-number"><%= totalQ %></div>
+  <div class="label">Total Qualified</div>
+
+  <!-- DETAILS -->
+  <% stats.qualified.forEach(exam => { %>
+
+    <div class="item">
+      <div style="display:flex; justify-content:space-between;">
+        <span>🎓 <%= exam.name?.trim() || "Unknown Exam" %></span>
+        <strong><%= (exam.boys || 0) + (exam.girls || 0) %></strong>
+      </div>
+
+      <div class="numbers">
+        <span>👦 <%= exam.boys || 0 %></span>
+        <span>👧 <%= exam.girls || 0 %></span>
+      </div>
+    </div>
+
+  <% }) %>
+
+<% } else { %>
+
+  <div class="big-number">0</div>
+  <div class="label">Total Qualified</div>
+
+<% } %>
+
+  </div>
+
+  <hr>
+
+<!-- 💼 EMPLOYMENT -->
+<div class="section">
+  <div class="section-title">💼 Employment</div>
+
+  <% if (Array.isArray(stats?.employment) && stats.employment.length > 0) { %>
+
+    <% let total = 0; %>
+
+    <% stats.employment.forEach(emp => { 
+      total += (emp.boys || 0) + (emp.girls || 0);
+    }); %>
+
+    <!-- 🔥 TOTAL FIRST -->
+    <div class="big-number"><%= total %></div>
+    <div class="label">Total Employed</div>
+
+    <!-- DETAILS -->
+    <% stats.employment.forEach(emp => { %>
+
+      <div class="item">
+        <div style="display:flex; justify-content:space-between;">
+          <span>💼 <%= emp.name?.trim() || "Unknown Job" %></span>
+          <strong><%= (emp.boys || 0) + (emp.girls || 0) %></strong>
+        </div>
+
+        <div class="numbers">
+          <span>👦 <%= emp.boys || 0 %></span>
+          <span>👧 <%= emp.girls || 0 %></span>
+        </div>
+      </div>
+
+    <% }) %>
+
+  <% } else { %>
+
+    <div class="big-number">0</div>
+    <div class="label">Total Employed</div>
+
+  <% } %>
+</div>
+
+</div>
+
+  <!-- 🟩 RIGHT SIDE -->
+  <div class="achievement-content">
+
+    <div class="achievement-grid">
+
+      <% if (achievements && achievements.length > 0) { %>
+
+        <% achievements.forEach(item => { %>
+
+          <!-- ✅ WRAPPER (VERY IMPORTANT) -->
+ <div class="achievement-card-wrapper">
+
+  <div class="certificate" id="certificate-<%= item._id %>">
+
+    <h3 class="title">Congratulations</h3>
+
+    <div class="photo-wrapper">
+      <img src="/api/upload/<%= item.studentId?.photoId %>" class="profile" />
+    </div>
+
+    <p class="quote">
+      From Classroom Walls <br> to Success Halls
+    </p>
+
+    <h2 class="name">
+  <%= item.studentId?.name %> -
+  <span class="course-text"><%= item.studentId?.course %></span>
+</h2>
+
+    <div class="exam">
+      <%= item.examQualified %>
+    </div>
+
+  </div>  <!-- ✅ certificate close -->
+
+</div>    <!-- ✅ wrapper close -->
+
+        <% }) %>
+
+      <% } else { %>
+
+        <p>No achievements found</p>
+
+      <% } %>
+
+    </div>
+
+  </div>
+
+</div>
+
+<%- include("../partials/footer") %>

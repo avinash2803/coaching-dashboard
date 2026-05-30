@@ -1,0 +1,109 @@
+<%- include("../partials/header") %>
+
+<link rel="stylesheet" href="/css/common.css">
+
+<div class="page-content">
+  <h2 class="title">Syllabus Management</h2>
+  <div class="divider"></div>
+
+  <form action="/admin/upload-syllabus" method="POST" enctype="multipart/form-data">
+
+    <div class="form-group">
+      <label>Year:</label>
+      <select name="year" required>
+        <option value="">Select Year</option>
+        <option value="2025-26">2025-26</option>
+        <option value="2026-27">2026-27</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Course:</label>
+      <select name="course" required>
+        <option value="">Select Course</option>
+        <option value="CGPSC">CGPSC</option>
+        <option value="VYAPAM">VYAPAM</option>
+      </select>
+    </div>
+    <div class="form-group">
+  <label>Month-wise Progress:</label>
+
+  <div class="month-grid">
+
+    <div>
+  <label>May</label>
+  <input type="number" name="May" min="0" max="100">
+</div>
+
+    <div>
+      <label>June</label>
+      <input type="number" name="June" min="0" max="100">
+    </div>
+
+    <div>
+      <label>July</label>
+      <input type="number" name="July" min="0" max="100">
+    </div>
+
+    <div>
+      <label>August</label>
+      <input type="number" name="August" min="0" max="100">
+    </div>
+
+    <div>
+      <label>September</label>
+      <input type="number" name="September" min="0" max="100">
+    </div>
+
+    <div>
+      <label>October</label>
+      <input type="number" name="October" min="0" max="100">
+    </div>
+
+    <div>
+      <label>November</label>
+      <input type="number" name="November" min="0" max="100">
+    </div>
+
+    <div>
+      <label>December</label>
+      <input type="number" name="December" min="0" max="100">
+    </div>
+
+    <div>
+      <label>January</label>
+      <input type="number" name="January" min="0" max="100">
+    </div>
+
+    <div>
+      <label>February</label>
+      <input type="number" name="February" min="0" max="100">
+    </div>
+
+    <div>
+      <label>March</label>
+      <input type="number" name="March" min="0" max="100">
+    </div>
+    <div>
+  <label>April</label>
+  <input type="number" name="April" min="0" max="100">
+</div>
+
+
+
+  </div>
+</div>
+
+
+
+    <div class="form-group">
+      <label>Upload Excel File:</label>
+      <input type="file" name="file" accept=".xlsx,.xls">
+         </div>
+
+    <button type="submit" class="btn-primary">Upload / Update</button>
+
+  </form>
+</div>
+
+<%- include("../partials/footer") %>

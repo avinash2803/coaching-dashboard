@@ -1,0 +1,340 @@
+/* =========================================
+   VEDANTA + BALCO THEME COLORS
+   ========================================= */
+
+:root{
+
+  --primary-blue: #0072CE;
+  --primary-blue-light: #00A3E0;
+
+  --primary-green: #00A651;
+  --primary-green-light: #6CC24A;
+
+  --light-green: #E6F4EA;
+  --light-blue: #F0F7FF;
+
+  --dark-blue: #0A2540;
+
+  --text-dark: #1A2B4D;
+  --text-light: #667085;
+
+  --white: #FFFFFF;
+
+  --shadow: 0 10px 25px rgba(0,114,206,0.08);
+}
+
+/* ---------- Body ---------- */
+body {
+  margin: 2px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(
+  180deg,
+  #f7fbff 0%,
+  #eef8f0 100%
+);
+  color: #222;
+}
+body {
+  padding-top: 80px;  /* header height ke equal */
+}
+
+/* =========================================
+   FLOATING MENU (GLOBAL)
+   ========================================= */
+
+.floating-menu {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 20000;
+}
+
+.menu-btn {
+
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--primary-green)
+  );
+
+  border: none;
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  padding: 3px 6px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0,114,206,0.15);
+
+  transition: all 0.3s ease;
+}
+
+.menu-btn:hover{
+  opacity: 0.92;
+}
+
+
+.menu-dropdown {
+  display: none;
+  position: absolute;
+  margin-top: 8px;
+  background: linear-gradient(
+  180deg,
+  #f7fbff 0%,
+  #eef8f0 100%
+);
+  border-radius: 12px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+  min-width: 220px;
+}
+
+.menu-dropdown a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #3b1f16;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.menu-dropdown a.logout {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.menu-dropdown a:hover {
+  background:
+rgba(0,114,206,0.08);
+}
+
+/* =========================================
+   TOP BAR (HEADER)
+   ========================================= */
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  height: 70px;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 48px 0 120px;
+
+  background: rgba(255,255,255,0.92);
+
+  backdrop-filter: blur(8px);
+
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+
+  box-shadow: var(--shadow);
+
+  z-index: 10000;
+
+  transition: all 0.3s ease;
+}
+
+.top-bar img {
+  height: 65px;
+  transition: all 0.3s ease;
+}
+
+.top-bar .center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.top-bar .left,
+.top-bar .right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.program-name{
+
+  font-size: 28px;
+  font-weight: 700;
+
+  background: linear-gradient(
+    90deg,
+    var(--primary-blue),
+    var(--primary-green)
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.year-select {
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+/* =========================================
+   PAGE SPACING (for fixed header)
+   ========================================= */
+
+.page-content {
+  margin-top: 120px;
+}
+
+/* =========================================
+   BUTTON
+   ========================================= */
+
+.btn-primary {
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary-blue),
+      var(--primary-green)
+    );
+
+  color: white;
+
+  padding: 14px 26px;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  display: inline-block;
+
+  border: none;
+
+  box-shadow:
+    0 8px 20px rgba(0,114,206,0.18);
+
+  transition:
+    all 0.3s ease;
+}
+
+.btn-primary:hover {
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 14px 28px rgba(0,114,206,0.22);
+}
+
+.btn-primary:hover {
+  background: #c8d9b0;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.footer-bottom {
+  text-align: center;
+  padding: 15px 10px 20px;
+  background:
+linear-gradient(
+  180deg,
+  #f7fbff,
+  #eef8f0
+);
+  font-size: 14px;
+  font-style: italic;
+}
+
+.footer-text {
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .footer-text {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 767px) {
+  .divider {
+    display: none;
+  }
+}
+
+/* =========================================
+   MOBILE RESPONSIVE (FINAL CLEAN)
+   ========================================= */
+
+/* =========================================
+   SCROLL EFFECT
+   ========================================= */
+
+.top-bar.scrolled {
+  height: 55px;
+  min-height: 55px;
+
+  padding: 0 40px 0 110px;
+
+  background:
+rgba(255,255,255,0.96);
+
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+/* Logo shrink */
+.top-bar.scrolled img {
+  height: 40px;
+}
+
+/* Text shrink */
+.top-bar.scrolled .program-name {
+  font-size: 18px;
+}
+.top-bar {
+  z-index: 10000;
+}
+
+@media (max-width: 900px) {
+
+  .top-bar {
+    height: 50px;
+    padding: 0 8px 0 70px;
+  }
+  .top-bar img {
+    height: 26px;
+  }
+   .program-name {
+    font-size: 10px;     /* 🔥 force chhota */
+    max-width: 100%;    /* 🔥 overflow control */
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* 🔥 MENU FIX */
+  .floating-menu {
+    top: 15px;
+    left: 3px;
+    transform: scale(0.8);   /* 🔥 same scale as top-bar */
+  }
+
+  
+}
+
+
+

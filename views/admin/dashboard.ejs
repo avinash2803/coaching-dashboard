@@ -1,0 +1,61 @@
+<%- include("../partials/header") %>
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/admin.css">
+
+<div class="admin-container">
+
+<div class="sidebar">
+
+<h4>Admin Panel</h4>
+
+<ul>
+
+<li><a href="/admin/dashboard">Dashboard</a></li>
+
+<li><a href="/student">Student Management</a></li>
+
+<li><a href="/admin/manage-success">Success Stories</a></li>
+
+<li><a href="/admin/manage-faculty">Faculty</a></li>
+
+<li><a href="/admin/manage-feedback">Feedback</a></li>
+
+<li><a href="/admin/gallery">Gallery</a></li>
+
+<li><a href="/logout">Logout</a></li>
+
+</ul>
+
+</div>
+
+<div class="admin-content">
+
+<h2>Admin Dashboard</h2>
+
+<p>Welcome to the Admin Control Panel</p>
+
+<div class="dashboard-cards">
+
+<a href="/student" class="card">Students</a>
+
+<a href="/admin/upload-tests" class="card">Update Tests</a>
+
+<a href="/student" class="card">Attendance</a>
+<a href="/admin/upload-attendance" class="card">Update Attendance</a>
+
+<a href="/admin/manage-success" class="card">Success Stories</a>
+
+<a href="/admin/syllabus" class="card">Syllabus</a>
+<a href="/admin/upload-syllabus" class="card">Upload Syllabus</a>
+
+<a href="/achievement/manage" class="card">Achievements</a>
+<a href="/achievement/add" class="card">Add Achievement</a>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<%- include("../partials/footer") %>

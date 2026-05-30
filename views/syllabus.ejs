@@ -1,0 +1,353 @@
+<%- include("partials/header") %>
+<link rel="stylesheet" href="/css/syllabus.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<div class="page-content">
+<div class="title-row">
+  <h1 class="title">Syllabus Status</h1>
+
+  <select onchange="window.location.href='/admin/syllabus?year=' + this.value">
+  <option value="2025-26" <%= year === '2025-26' ? 'selected' : '' %>>2025-26</option>
+  <option value="2026-27" <%= year === '2026-27' ? 'selected' : '' %>>2026-27</option>
+</select>
+</div>
+
+<div class="graph-box">
+
+  <canvas id="syllabusChart"></canvas>
+
+</div>
+
+<div class="divider"></div>
+
+  <!-- ✅ YAHAN ADD KARNA HAI -->
+  <div class="progress-cards">
+
+  <div class="progress-card cgpsc-card"
+onclick="showTab('CGpsc')">
+
+    <div class="progress-circle blue">
+      <span><%= CGpscProgress %>%</span>
+    </div>
+
+    <div>
+      <h2>CGPSC - <%= CGpscProgress %>%</h2>
+      <p>Syllabus Completed</p>
+    </div>
+
+  </div>
+
+  <div class="progress-card vyapam-card"
+onclick="showTab('vyapam')">
+
+    <div class="progress-circle green">
+      <span><%= vyapamProgress %>%</span>
+    </div>
+
+    <div>
+      <h2>VYAPAM - <%= vyapamProgress %>%</h2>
+      <p>Syllabus Completed</p>
+    </div>
+
+  </div>
+
+</div>
+  
+  <!-- 👇 IMPORTANT: table div ke andar -->
+<div id="CGpscTable" class="table-box">
+  <table class="syllabus-table">
+    <thead>
+      <tr>
+        <th>S.N</th>
+        <th>Subject</th>
+        <th>Faculty</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Planned</th>
+        <th>Executed</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+  
+    <tbody>
+  <% if (CGpscData && CGpscData.length > 0) { %>
+    <% CGpscData.forEach(row => { %>
+      <tr>
+        <td><%= row.sn %></td>
+        <td><%= row.subject %></td>
+        <td><%= row.faculty %></td>
+        <td><%= row.startDate %></td>
+        <td><%= row.endDate %></td>
+        <td><%= row.planned %></td>
+        <td><%= row.executed %></td>
+        <td class="<%= row.status.toLowerCase() %>"><%= row.status %></td>
+      </tr>
+    <% }) %>
+  <% } else { %>
+    <tr>
+      <td colspan="8">No data found</td>
+    </tr>
+  <% } %>
+</tbody>
+  </table>
+</div>
+
+<div id="vyapamTable" class="table-box" style="display:none;">
+  <table class="syllabus-table">
+    <thead>
+      <tr>
+        <th>S.N</th>
+        <th>Subject</th>
+        <th>Faculty</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Planned</th>
+        <th>Executed</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if (vyapamData && vyapamData.length > 0) { %>
+        <% vyapamData.forEach(row => { %>
+          <tr>
+            <td><%= row.sn %></td>
+            <td><%= row.subject %></td>
+            <td><%= row.faculty %></td>
+            <td><%= row.startDate %></td>
+            <td><%= row.endDate %></td>
+            <td><%= row.planned %></td>
+            <td><%= row.executed %></td>
+            <td class="<%= row.status.toLowerCase() %>"><%= row.status %></td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr>
+          <td colspan="8">No data found</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<!-- table ke baad -->
+<script>
+
+function showTab(tab) {
+
+    const cg =
+    document.getElementById("CGpscTable");
+
+    const vy =
+    document.getElementById("vyapamTable");
+
+    if(tab === "CGpsc"){
+
+        cg.style.display = "block";
+        vy.style.display = "none";
+
+    }else{
+
+        cg.style.display = "none";
+        vy.style.display = "block";
+    }
+
+}
+
+function changeYear(year){
+
+    window.location.href =
+    "/admin/syllabus?year=" + year;
+
+}
+
+</script>
+<script>
+
+async function loadGraph(){
+
+    const year = "<%= year %>";
+
+    const response = await fetch(`/admin/api/monthly-progress/${year}`);
+
+    const data = await response.json();
+
+    const monthOrder = [
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+  "January",
+  "February",
+  "March",
+  "April"
+];
+
+const cgpscMap = {};
+const vyapamMap = {};
+
+data.cgpsc.forEach(item => {
+  cgpscMap[item.month] = item.progress;
+});
+
+data.vyapam.forEach(item => {
+  vyapamMap[item.month] = item.progress;
+});
+
+const months = monthOrder;
+
+const cgpscData =
+monthOrder.map(month =>
+  cgpscMap[month] || 0
+);
+
+const vyapamData =
+monthOrder.map(month =>
+  vyapamMap[month] || 0
+);
+
+    
+    const ctx =
+    document.getElementById("syllabusChart");
+    Chart.register(ChartDataLabels);
+    new Chart(ctx, {
+
+        type:'line',
+
+data:{
+
+    labels:months,
+
+    datasets:[
+
+        {
+            label:'CGPSC Batch',
+            data:cgpscData,
+            borderColor:'#2563eb',
+            backgroundColor:'#2563eb',
+            borderWidth:3,
+            pointRadius:4,
+            pointHoverRadius:6,
+            pointBackgroundColor:'#2563eb',
+            fill:false,
+            tension:0
+        },
+
+        {
+            label:'VYAPAM Batch',
+            data:vyapamData,
+            borderColor:'#16a34a',
+            backgroundColor:'#16a34a',
+            borderWidth:3,
+            pointRadius:4,
+            pointHoverRadius:6,
+            pointBackgroundColor:'#16a34a',
+            fill:false,
+            tension:0
+        }
+
+    ]
+
+},
+
+       options:{
+
+    responsive:true,
+
+layout:{
+    padding:{
+        right:10,
+        left:10,
+        top:10,
+        bottom:10
+    }
+},
+maintainAspectRatio:false,
+    plugins:{
+
+        title:{
+            display:true,
+            text:'Month-wise Syllabus Completion (%)',
+            align:'center',
+            color:'#111',
+            font:{
+                size:14,
+                weight:'bold'
+            }
+        },
+
+legend:{
+    display:false
+},
+
+        datalabels:{
+
+    color:'#111',
+
+    font:{
+        size:11,
+        weight:'bold'
+    },
+
+    formatter:(value)=>
+        value ? value + '%' : '',
+
+  align:(context)=>{
+
+    // GREEN = always top
+    if(context.datasetIndex === 1){
+        return 'top';
+    }
+
+    // BLUE = always bottom
+    return 'bottom';
+
+    },
+    anchor:'end',
+    offset:10,
+    clamp:true
+
+},
+},
+
+    scales:{
+
+        y:{
+            beginAtZero:true,
+            max:105,
+            ticks:{
+    stepSize:5
+},
+            grid:{
+    color:'#e5e7eb',
+    borderDash:[5,5]
+},
+
+            title:{
+                display:true,
+                text:'Completion Percentage (%)',
+                color:'#111',
+                font:{
+                    weight:'bold'
+                }
+            }
+        },
+
+    }
+
+}
+
+    });
+
+}
+
+loadGraph();
+
+</script>
+
+<%- include("partials/footer") %>
