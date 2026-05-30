@@ -94,7 +94,7 @@ linear-gradient(
   transparent 78%
 );
 
-  z-index: 1;
+  z-index: 2;
 }
 .initiative-line {
 
@@ -141,13 +141,20 @@ linear-gradient(
 }
 /* HERO SLIDER */
 .hero-slide {
+
   position: absolute;
-  inset: 0; /* shorthand for top/left/right/bottom */
+
+  inset: 0;
+
   background-size: cover;
+
   background-position: center center;
 
   opacity: 0;
+
   transition: opacity 1s ease-in-out;
+
+  z-index: 0;
 }
 
 .hero-slide.active {
