@@ -1193,3 +1193,23 @@ html {
   transform:
     translateY(-1px);
 }
+
+/* FINAL HERO FIX */
+
+.hero .hero-content h1 {
+
+  color: #ffffff !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+
+  background: none !important;
+}
+
+.hero .hero-content p {
+
+  color: rgba(255,255,255,0.92) !important;
+
+  -webkit-text-fill-color: rgba(255,255,255,0.92) !important;
+
+  background: none !important;
+}
