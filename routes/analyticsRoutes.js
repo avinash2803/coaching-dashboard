@@ -124,3 +124,4 @@ router.get("/analytics", async (req, res) => {
     res.send("Analytics Error");
   }
 });
+export default router;
