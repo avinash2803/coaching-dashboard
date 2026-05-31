@@ -123,7 +123,7 @@ app.use("/admin", syllabusRoutes);
 app.use("/admin", dashboardRoutes);
 app.use("/achievement", achievementRoutes);
 app.use("/analytics", analyticsRoutes);
-app.use("/manageAalytics", manageAnalytics);
+app.use("/manageanalytics", manageAnalytics);
 app.put("/api/students/:id/tests", async (req, res) => {
   
   try {
