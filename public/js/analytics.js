@@ -1,9 +1,5 @@
-```js
-// =========================================
-// COMMON MONTH LABELS
-// =========================================
+const months = [
 
-const monthLabels = [
   "June",
   "July",
   "August",
@@ -16,6 +12,7 @@ const monthLabels = [
   "March",
   "April",
   "May"
+
 ];
 
 
@@ -32,13 +29,14 @@ new Chart(cgpscCtx, {
 
   data: {
 
-    labels: monthLabels,
+    labels: months,
 
     datasets: [{
 
       label: "Attendance %",
 
-      data: cgpscAttendance,
+      data:
+      window.cgpscAttendance,
 
       borderColor: "#0072CE",
 
@@ -78,13 +76,14 @@ new Chart(vyapamCtx, {
 
   data: {
 
-    labels: monthLabels,
+    labels: months,
 
     datasets: [{
 
       label: "Attendance %",
 
-      data: vyapamAttendance,
+      data:
+      window.vyapamAttendance,
 
       borderColor: "#00A651",
 
@@ -109,4 +108,3 @@ new Chart(vyapamCtx, {
     maintainAspectRatio: false
   }
 });
-```
