@@ -139,8 +139,6 @@ if(
   selectedYear;
 }
 
-const students =
-await Student.find(testFilter);
 
 function generateTestAnalytics(
   students,
@@ -168,7 +166,7 @@ function generateTestAnalytics(
 
           appeared: 0,
 
-          above50: 0,
+          above60: 0,
 
           topper: "",
 
@@ -223,24 +221,62 @@ isNaN(Number(testData.percent))
   return Object.values(testMap);
 }
 
-const classTestAnalytics =
-generateTestAnalytics(students, "classTests");
+const cgpscStudents =
+await Student.find({
+  ...testFilter,
+  course: "CGPSC"
+});
 
-const mockTestAnalytics =
-generateTestAnalytics(students, "mockTests");
+const vyapamStudents =
+await Student.find({
+  ...testFilter,
+  course: "VYAPAM"
+});
 
-const mainsTestAnalytics =
-generateTestAnalytics(students, "mainsTests");
+const cgpscClassTests =
+generateTestAnalytics(
+  cgpscStudents,
+  "classTests"
+);
+
+const cgpscMockTests =
+generateTestAnalytics(
+  cgpscStudents,
+  "mockTests"
+);
+
+const cgpscMainsTests =
+generateTestAnalytics(
+  cgpscStudents,
+  "mainsTests"
+);
+
+const vyapamClassTests =
+generateTestAnalytics(
+  vyapamStudents,
+  "classTests"
+);
+
+const vyapamMockTests =
+generateTestAnalytics(
+  vyapamStudents,
+  "mockTests"
+);
 
 
 const totalClassTests =
-classTestAnalytics.length;
+
+cgpscClassTests.length +
+vyapamClassTests.length;
 
 const totalMockTests =
-mockTestAnalytics.length;
+
+cgpscMockTests.length +
+vyapamMockTests.length;
 
 const totalMainsTests =
-mainsTestAnalytics.length;
+
+cgpscMainsTests.length;
 
 const totalTests =
 
@@ -251,7 +287,7 @@ totalMainsTests;
 const analyticsData =
 await Analytics.findOne({
   year: selectedYear
-});
+}) || {};
 
 res.render("analytics", {
 
@@ -262,11 +298,12 @@ res.render("analytics", {
 
   vyapamAttendance,
 
-  classTestAnalytics,
+ cgpscClassTests,
+cgpscMockTests,
+cgpscMainsTests,
 
-  mockTestAnalytics,
-
-  mainsTestAnalytics,
+vyapamClassTests,
+vyapamMockTests,
 
   totalClassTests,
 

@@ -153,17 +153,107 @@
 
   <!-- Total Tests -->
 
-  <div class="module-card analytics-card">
+<div
+  class="module-card analytics-card clickable-card"
+  onclick="showBatchOptions()"
+>
 
-    <h3>
-      📝 <%= totalTests %>
-    </h3>
+  <h3>
+    📝 <%= totalTests %>
+  </h3>
+
+  <p>
+    Total Tests
+  </p>
+
+</div>
+
+<!-- Batch Selection -->
+
+<div
+  id="batchOptions"
+  style="display:none;"
+>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showCGPSC()"
+  >
+
+    <h3>📘 CGPSC</h3>
 
     <p>
-      Total Tests
+      Open CGPSC Analytics
     </p>
 
   </div>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showVYAPAM()"
+  >
+
+    <h3>📗 VYAPAM</h3>
+
+    <p>
+      Open VYAPAM Analytics
+    </p>
+
+  </div>
+
+</div>
+<!-- CGPSC Categories -->
+
+<div
+  id="cgpscOptions"
+  style="display:none;"
+>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('cgpscClass')"
+  >
+    📘 Class Tests
+  </div>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('cgpscMock')"
+  >
+    🎯 Mock Exams
+  </div>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('cgpscMains')"
+  >
+    🏆 Mains Tests
+  </div>
+
+</div>
+
+<!-- VYAPAM Categories -->
+
+<div
+  id="vyapamOptions"
+  style="display:none;"
+>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('vyapamClass')"
+  >
+    📘 Class Tests
+  </div>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('vyapamMock')"
+  >
+    🎯 Mock Exams
+  </div>
+
+</div>
 
 
   <!-- Class Tests -->
@@ -374,57 +464,186 @@ yearFilter.addEventListener(
 <!-- =========================================
      CLASS TEST ANALYTICS
 ========================================= -->
-<%- include(
-  "partials/testTable",
-  {
-    badge:
-    "Class Test Analytics",
-
-    title:
-    "Class Test Performance",
-
-    subtitle:
-    "Student performance analytics across all class tests.",
-
-    tests:
-    classTestAnalytics
-  }
-) %>
-
+<div
+  id="cgpscClass"
+  style="display:none;"
+>
 
 <%- include(
   "partials/testTable",
   {
     badge:
-    "Mock Test Analytics",
+    "CGPSC Class Tests",
 
     title:
-    "Mock Exam Performance",
+    "CGPSC Class Test Performance",
 
     subtitle:
-    "Student performance analytics across all mock exams.",
+    "CGPSC student performance.",
 
     tests:
-    mockTestAnalytics
+    cgpscClassTests
   }
 ) %>
 
+</div>
+
+
+<div
+  id="cgpscMock"
+  style="display:none;"
+>
 
 <%- include(
   "partials/testTable",
   {
     badge:
-    "Mains Test Analytics",
+    "CGPSC Mock Tests",
 
     title:
-    "Mains Test Performance",
+    "CGPSC Mock Exam Performance",
 
     subtitle:
-    "Student performance analytics across all mains tests.",
+    "CGPSC mock exam analytics.",
 
     tests:
-    mainsTestAnalytics
+    cgpscMockTests
   }
 ) %>
+
+</div>
+
+
+<div
+  id="cgpscMains"
+  style="display:none;"
+>
+
+<%- include(
+  "partials/testTable",
+  {
+    badge:
+    "CGPSC Mains Tests",
+
+    title:
+    "CGPSC Mains Performance",
+
+    subtitle:
+    "CGPSC mains analytics.",
+
+    tests:
+    cgpscMainsTests
+  }
+) %>
+
+</div>
+
+<div
+  id="vyapamClass"
+  style="display:none;"
+>
+
+<%- include(
+  "partials/testTable",
+  {
+    badge:
+    "VYAPAM Class Tests",
+
+    title:
+    "VYAPAM Class Test Performance",
+
+    subtitle:
+    "VYAPAM class test analytics.",
+
+    tests:
+    vyapamClassTests
+  }
+) %>
+
+</div>
+
+<div
+  id="vyapamMock"
+  style="display:none;"
+>
+
+<%- include(
+  "partials/testTable",
+  {
+    badge:
+    "VYAPAM Mock Tests",
+
+    title:
+    "VYAPAM Mock Exam Performance",
+
+    subtitle:
+    "VYAPAM mock analytics.",
+
+    tests:
+    vyapamMockTests
+  }
+) %>
+
+</div>
+
+<script>
+
+function showBatchOptions(){
+
+  document.getElementById(
+    "batchOptions"
+  ).style.display = "grid";
+}
+
+function showCGPSC(){
+
+  document.getElementById(
+    "cgpscOptions"
+  ).style.display = "grid";
+
+  document.getElementById(
+    "vyapamOptions"
+  ).style.display = "none";
+}
+
+function showVYAPAM(){
+
+  document.getElementById(
+    "vyapamOptions"
+  ).style.display = "grid";
+
+  document.getElementById(
+    "cgpscOptions"
+  ).style.display = "none";
+}
+
+function showTable(id){
+
+  const sections = [
+
+    "cgpscClass",
+    "cgpscMock",
+    "cgpscMains",
+    "vyapamClass",
+    "vyapamMock"
+  ];
+
+  sections.forEach(section => {
+
+    const element =
+    document.getElementById(section);
+
+    if(element){
+
+      element.style.display = "none";
+    }
+  });
+
+  document.getElementById(
+    id
+  ).style.display = "block";
+}
+
+</script>
 
 <%- include("partials/footer") %>
