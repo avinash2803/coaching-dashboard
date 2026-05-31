@@ -1,5 +1,6 @@
 import express from "express";
-
+import Analytics
+from "../models/analytics.js";
 import Student from "../models/student.js";
 
 const router = express.Router();
@@ -180,10 +181,10 @@ isNaN(Number(testData.percent))
         testMap[testName]
         .appeared++;
 
-        if(percent >= 50){
+        if(percent >= 60){
 
           testMap[testName]
-          .above50++;
+          .above60++;
         }
 
         if(
@@ -232,6 +233,11 @@ totalClassTests +
 totalMockTests +
 totalMainsTests;
 
+const analyticsData =
+await Analytics.findOne({
+  year: selectedYear
+});
+
 res.render("analytics", {
 
   cgpscAttendance,
@@ -243,15 +249,16 @@ res.render("analytics", {
   mockTestAnalytics,
 
   mainsTestAnalytics,
-  
-totalClassTests,
 
-totalMockTests,
+  totalClassTests,
 
-totalMainsTests,
+  totalMockTests,
 
-totalTests,
+  totalMainsTests,
 
+  totalTests,
+
+  analyticsData,
 
   selectedYear
 });
