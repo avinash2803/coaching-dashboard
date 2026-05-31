@@ -112,75 +112,109 @@ await Student.find(filter);
       "VYAPAM"
     );
 
+const testFilter = {};
+
+if(
+  selectedYear &&
+  selectedYear !== "all"
+){
+
+  testFilter.year =
+  selectedYear;
+}
+
 const students =
-await Student.find({});
+await Student.find(testFilter);
 
-const testMap = {};
+function generateTestAnalytics(
+  students,
+  testField
+){
 
-students.forEach(student => {
+  const testMap = {};
 
-  const tests =
-  student.classTests || {};
+  students.forEach(student => {
 
-  Object.entries(tests)
-  .forEach(([testName, testData]) => {
+    const tests =
+    student[testField] || {};
 
-    if(!testMap[testName]){
+    Object.entries(tests)
+    .forEach(([testName, testData]) => {
 
-      testMap[testName] = {
+      if(!testMap[testName]){
 
-        testName,
+        testMap[testName] = {
 
-        appeared: 0,
+          testName,
 
-        above50: 0,
+          subject:
+          testData.subject || "-",
 
-        topper: "",
+          appeared: 0,
 
-        topScore: 0,
+          above50: 0,
 
-        fullMarks:
-        testData.fullMarks || 0
-      };
-    }
+          topper: "",
 
-    const score =
-    Number(testData.score || 0);
+          topScore: 0,
 
-    const percent =
-    Number(testData.percent || 0);
-
-    if(score > 0){
-
-      testMap[testName]
-      .appeared++;
-
-      if(percent >= 50){
-
-        testMap[testName]
-        .above50++;
+          fullMarks:
+          testData.fullMarks || 0
+        };
       }
 
-      if(
-        score >
-        testMap[testName]
-        .topScore
-      ){
+const score =
+
+isNaN(Number(testData.score))
+? 0
+: Number(testData.score);
+
+const percent =
+
+isNaN(Number(testData.percent))
+? 0
+: Number(testData.percent);
+
+      if(score > 0){
 
         testMap[testName]
-        .topScore =
-        score;
+        .appeared++;
 
-        testMap[testName]
-        .topper =
-        student.name;
+        if(percent >= 50){
+
+          testMap[testName]
+          .above50++;
+        }
+
+        if(
+          score >
+          testMap[testName]
+          .topScore
+        ){
+
+          testMap[testName]
+          .topScore =
+          score;
+
+          testMap[testName]
+          .topper =
+          student.name;
+        }
       }
-    }
+    });
   });
-});
+
+  return Object.values(testMap);
+}
 
 const classTestAnalytics =
-Object.values(testMap);
+generateTestAnalytics(students, "classTests");
+
+const mockTestAnalytics =
+generateTestAnalytics(students, "mockTests");
+
+const mainsTestAnalytics =
+generateTestAnalytics(students, "mainsTests");
 
 res.render("analytics", {
 
@@ -189,6 +223,10 @@ res.render("analytics", {
   vyapamAttendance,
 
   classTestAnalytics,
+
+  mockTestAnalytics,
+
+  mainsTestAnalytics,
 
   selectedYear
 });

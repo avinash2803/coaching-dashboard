@@ -1,0 +1,101 @@
+<section class="test-section">
+
+  <div class="analytics-header">
+
+    <span class="page-badge">
+      <%= badge %>
+    </span>
+
+    <h2>
+      <%= title %>
+    </h2>
+
+    <p>
+      <%= subtitle %>
+    </p>
+
+  </div>
+
+  <div class="table-container">
+
+    <table class="analytics-table">
+
+      <thead>
+
+        <tr>
+
+          <th>Test Name</th>
+
+          <th>Subject</th>
+
+          <th>Appeared</th>
+
+          <th>Above 50%</th>
+
+          <th>Topper</th>
+
+          <th>Top Score</th>
+
+          <th>Full Marks</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+        
+<% if(tests.length === 0){ %>
+
+<tr>
+
+  <td colspan="7">
+    No test data available
+  </td>
+
+</tr>
+
+<% } %>
+
+        <% tests.forEach(test => { %>
+
+          <tr>
+
+            <td>
+              <%= test.testName %>
+            </td>
+
+            <td>
+              <%= test.subject %>
+            </td>
+
+            <td>
+              <%= test.appeared %>
+            </td>
+
+            <td>
+              <%= test.above50 %>
+            </td>
+
+            <td>
+              <%= test.topper %>
+            </td>
+
+            <td>
+              <%= test.topScore %>
+            </td>
+
+            <td>
+              <%= test.fullMarks %>
+            </td>
+
+          </tr>
+
+        <% }) %>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>

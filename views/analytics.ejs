@@ -280,106 +280,57 @@ yearFilter.addEventListener(
 <!-- =========================================
      CLASS TEST ANALYTICS
 ========================================= -->
+<%- include(
+  "partials/testTable",
+  {
+    badge:
+    "Class Test Analytics",
 
-<section class="attendance-section">
+    title:
+    "Class Test Performance",
 
-  <div class="analytics-header">
+    subtitle:
+    "Student performance analytics across all class tests.",
 
-    <span class="page-badge">
-      Test Analytics
-    </span>
+    tests:
+    classTestAnalytics
+  }
+) %>
 
-    <h2>
-      Class Test Performance
-    </h2>
 
-    <p>
-      Student performance analytics across
-      all class tests.
-    </p>
+<%- include(
+  "partials/testTable",
+  {
+    badge:
+    "Mock Test Analytics",
 
-  </div>
+    title:
+    "Mock Exam Performance",
 
-  <div class="module-card">
+    subtitle:
+    "Student performance analytics across all mock exams.",
 
-    <div class="table-container">
+    tests:
+    mockTestAnalytics
+  }
+) %>
 
-      <table class="analytics-table">
 
-        <thead>
+<%- include(
+  "partials/testTable",
+  {
+    badge:
+    "Mains Test Analytics",
 
-          <tr>
+    title:
+    "Mains Test Performance",
 
-            <th>
-              Test Name
-            </th>
+    subtitle:
+    "Student performance analytics across all mains tests.",
 
-            <th>
-              Appeared
-            </th>
-
-            <th>
-              Above 50%
-            </th>
-
-            <th>
-              Topper
-            </th>
-
-            <th>
-              Top Score
-            </th>
-
-            <th>
-              Full Marks
-            </th>
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          <% classTestAnalytics.forEach(test => { %>
-
-            <tr>
-
-              <td>
-                <%= test.testName %>
-              </td>
-
-              <td>
-                <%= test.appeared %>
-              </td>
-
-              <td>
-                <%= test.above50 %>
-              </td>
-
-              <td>
-                <%= test.topper %>
-              </td>
-
-              <td>
-                <%= test.topScore %>
-              </td>
-
-              <td>
-                <%= test.fullMarks %>
-              </td>
-
-            </tr>
-
-          <% }) %>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-</section>
+    tests:
+    mainsTestAnalytics
+  }
+) %>
 
 <%- include("partials/footer") %>
