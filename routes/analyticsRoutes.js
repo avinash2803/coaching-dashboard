@@ -233,23 +233,10 @@ totalClassTests +
 totalMockTests +
 totalMainsTests;
 
-let analyticsData;
-
-if(
-  selectedYear &&
-  selectedYear !== "all"
-){
-
-  analyticsData =
-  await Analytics.findOne({
-    year: selectedYear
-  });
-
-}else{
-
-  analyticsData =
-  await Analytics.findOne({});
-}
+const analyticsData =
+await Analytics.findOne({
+  year: selectedYear
+});
 
 res.render("analytics", {
 
@@ -280,10 +267,10 @@ res.render("analytics", {
 
   } catch (error) {
 
-    console.log(error);
+  console.log(error);
 
-    res.send("Analytics Error");
-  }
+  res.send(error.message);
+}
 });
 
 export default router;
