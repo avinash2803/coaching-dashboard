@@ -233,10 +233,23 @@ totalClassTests +
 totalMockTests +
 totalMainsTests;
 
-const analyticsData =
-await Analytics.findOne({
-  year: selectedYear
-});
+let analyticsData;
+
+if(
+  selectedYear &&
+  selectedYear !== "all"
+){
+
+  analyticsData =
+  await Analytics.findOne({
+    year: selectedYear
+  });
+
+}else{
+
+  analyticsData =
+  await Analytics.findOne({});
+}
 
 res.render("analytics", {
 
