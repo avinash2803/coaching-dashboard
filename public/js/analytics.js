@@ -1,3 +1,24 @@
+```js
+// =========================================
+// COMMON MONTH LABELS
+// =========================================
+
+const monthLabels = [
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May"
+];
+
+
 // =========================================
 // CGPSC CHART
 // =========================================
@@ -11,20 +32,13 @@ new Chart(cgpscCtx, {
 
   data: {
 
-    labels: [
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov"
-    ],
+    labels: monthLabels,
 
     datasets: [{
 
       label: "Attendance %",
 
-      data: [72,78,80,76,84,82],
+      data: cgpscAttendance,
 
       borderColor: "#0072CE",
 
@@ -64,20 +78,13 @@ new Chart(vyapamCtx, {
 
   data: {
 
-    labels: [
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov"
-    ],
+    labels: monthLabels,
 
     datasets: [{
 
       label: "Attendance %",
 
-      data: [65,70,74,72,76,74],
+      data: vyapamAttendance,
 
       borderColor: "#00A651",
 
@@ -102,3 +109,4 @@ new Chart(vyapamCtx, {
     maintainAspectRatio: false
   }
 });
+```

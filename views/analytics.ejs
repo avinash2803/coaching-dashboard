@@ -1,10 +1,14 @@
-<%- include("partials/header") %>
+<%_ include("partials/header") %>
 
 <link rel="stylesheet" href="/css/analytics.css">
 
 <div class="analytics-page">
 
   <div class="analytics-container">
+
+    <!-- =========================================
+         PAGE HEADER
+    ========================================= -->
 
     <div class="analytics-header">
 
@@ -48,53 +52,82 @@
 
     </div>
 
+
+    <!-- =========================================
+         KPI CARDS
+    ========================================= -->
+
     <div class="analytics-cards">
 
       <div class="module-card analytics-card">
 
-        <h3>🎓 250</h3>
+        <h3>
+          🎓 250
+        </h3>
 
-        <p>Total Students</p>
-
-      </div>
-
-      <div class="module-card analytics-card">
-
-        <h3>✅ 214</h3>
-
-        <p>Active Students</p>
+        <p>
+          Total Students
+        </p>
 
       </div>
 
       <div class="module-card analytics-card">
 
-        <h3>⚠️ 36</h3>
+        <h3>
+          ✅ 214
+        </h3>
 
-        <p>Dropout Students</p>
-
-      </div>
-
-      <div class="module-card analytics-card">
-
-        <h3>📊 78%</h3>
-
-        <p>Average Attendance</p>
+        <p>
+          Active Students
+        </p>
 
       </div>
 
       <div class="module-card analytics-card">
 
-        <h3>📝 42</h3>
+        <h3>
+          ⚠️ 36
+        </h3>
 
-        <p>Tests Conducted</p>
+        <p>
+          Dropout Students
+        </p>
 
       </div>
 
       <div class="module-card analytics-card">
 
-        <h3>💼 12</h3>
+        <h3>
+          📊 78%
+        </h3>
 
-        <p>Students Employed</p>
+        <p>
+          Average Attendance
+        </p>
+
+      </div>
+
+      <div class="module-card analytics-card">
+
+        <h3>
+          📝 42
+        </h3>
+
+        <p>
+          Tests Conducted
+        </p>
+
+      </div>
+
+      <div class="module-card analytics-card">
+
+        <h3>
+          💼 12
+        </h3>
+
+        <p>
+          Students Employed
+        </p>
 
       </div>
 
@@ -103,6 +136,7 @@
   </div>
 
 </div>
+
 
 <!-- =========================================
      ATTENDANCE ANALYTICS
@@ -127,11 +161,12 @@
 
   </div>
 
+
   <div class="analytics-grid">
 
     <!-- CGPSC -->
 
-    <div class="dashboard-card analytics-card">
+    <div class="module-card analytics-card">
 
       <h3>
         📘 CGPSC Batch
@@ -145,9 +180,10 @@
 
     </div>
 
+
     <!-- VYAPAM -->
 
-    <div class="dashboard-card analytics-card">
+    <div class="module-card analytics-card">
 
       <h3>
         📗 VYAPAM Batch
@@ -165,6 +201,23 @@
 
 </section>
 
+
+<!-- =========================================
+     CHART JS
+========================================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+  window.cgpscAttendance =
+  <%- JSON.stringify(cgpscAttendance || []) %>;
+
+  window.vyapamAttendance =
+  <%- JSON.stringify(vyapamAttendance || []) %>;
+
+</script>
+
 <script src="/js/analytics.js"></script>
+
 <%- include("partials/footer") %>

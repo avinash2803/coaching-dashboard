@@ -1,40 +1,87 @@
 import express from "express";
 
+import Student from "../models/student.js";
+
 const router = express.Router();
 
 router.get("/", async (req, res) => {
 
   try {
 
-    const testAnalytics = [
+    const months = [
 
-      {
-
-        testName: "Test-1",
-
-        subject: "Indian History + Polity",
-
-        fullMarks: 200,
-
-        candidatesAppeared: 82,
-
-        absentStudents: 14,
-
-        averageScore: 94,
-
-        averagePercentage: 47,
-
-        above50: 26,
-
-        topperName: "Ravi Kumar",
-
-        topScore: 188
-      }
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+      "January",
+      "February",
+      "March",
+      "April",
+      "May"
     ];
+
+    async function getBatchAttendance(courseName) {
+
+      const students =
+      await Student.find({
+
+        course: courseName
+      });
+
+      const monthlyAverage = [];
+
+      for (const month of months) {
+
+        let total = 0;
+
+        let count = 0;
+
+        students.forEach(student => {
+
+          const attendance =
+          student.attendance?.[month];
+
+          if (
+            attendance &&
+            attendance.percentage !==
+            undefined
+          ) {
+
+            total +=
+            attendance.percentage;
+
+            count++;
+          }
+        });
+
+        const average =
+        count > 0
+        ? total / count
+        : 0;
+
+        monthlyAverage.push(
+
+          Number(average.toFixed(1))
+        );
+      }
+
+      return monthlyAverage;
+    }
+
+    const cgpscAttendance =
+    await getBatchAttendance("CGPSC");
+
+    const vyapamAttendance =
+    await getBatchAttendance("VYAPAM");
 
     res.render("analytics", {
 
-      testAnalytics
+      cgpscAttendance,
+
+      vyapamAttendance
     });
 
   } catch (error) {
