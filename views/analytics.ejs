@@ -138,17 +138,20 @@
 
   <!-- Average Attendance -->
 
-  <div class="module-card analytics-card">
+<div
+  class="module-card analytics-card clickable-card"
+  onclick="scrollToAttendance()"
+>
 
-    <h3>
-      📊 <%= averageAttendance %>%
-    </h3>
+  <h3>
+    📊 <%= averageAttendance %>%
+  </h3>
 
-    <p>
-      Average Attendance
-    </p>
+  <p>
+    Average Attendance
+  </p>
 
-  </div>
+</div>
 
 
   <!-- Total Tests -->
@@ -675,6 +678,57 @@ function showBatchOptions(){
     batchOptions.style.display =
     "grid";
   }
+}
+function showCGPSC(){
+
+  document.getElementById(
+    "cgpscOptions"
+  ).style.display = "grid";
+
+  document.getElementById(
+    "vyapamOptions"
+  ).style.display = "none";
+
+  document.getElementById(
+    "cgpscOptions"
+  ).scrollIntoView({
+
+    behavior: "smooth",
+
+    block: "start"
+  });
+}
+
+function showVYAPAM(){
+
+  document.getElementById(
+    "vyapamOptions"
+  ).style.display = "grid";
+
+  document.getElementById(
+    "cgpscOptions"
+  ).style.display = "none";
+
+  document.getElementById(
+    "vyapamOptions"
+  ).scrollIntoView({
+
+    behavior: "smooth",
+
+    block: "start"
+  });
+}
+
+function scrollToAttendance(){
+
+  document.querySelector(
+    ".attendance-section"
+  ).scrollIntoView({
+
+    behavior: "smooth",
+
+    block: "start"
+  });
 }
 
 function showTable(id){
