@@ -12,7 +12,11 @@ new mongoose.Schema({
 
   dropoutStudents: Number,
 
-  employedStudents: Number
+  employedStudents: Number,
+
+    qualifiedStudents: Number,
+
+  hybridStudents: Number
 });
 
 export default mongoose.model(

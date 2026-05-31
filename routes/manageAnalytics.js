@@ -50,17 +50,21 @@ router.post(
 
       const {
 
-        year,
+  year,
 
-        totalStudents,
+  totalStudents,
 
-        activeStudents,
+  activeStudents,
 
-        dropoutStudents,
+  dropoutStudents,
 
-        employedStudents
+  employedStudents,
 
-      } = req.body;
+  qualifiedStudents,
+
+  hybridStudents
+
+} = req.body;
 
       await Analytics.findOneAndUpdate(
 
@@ -76,7 +80,11 @@ router.post(
 
           dropoutStudents,
 
-          employedStudents
+          employedStudents,
+
+          qualifiedStudents,
+          
+          hybridStudents
         },
 
         {

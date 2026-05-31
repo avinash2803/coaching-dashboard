@@ -86,119 +86,175 @@
          KPI CARDS
     ========================================= -->
 
-    <div class="analytics-cards">
+<div class="analytics-cards">
 
-      <div class="module-card analytics-card">
+  <!-- Total Students -->
 
-        <h3>
-          🎓 250
-        </h3>
+  <div class="module-card analytics-card">
 
-        <p>
-          Total Students
-        </p>
+    <h3>
+      🎓
+      <%= analyticsData?.totalStudents || 0 %>
+    </h3>
 
-      </div>
+    <p>
+      Total Students
+    </p>
 
-      <div class="module-card analytics-card">
-
-        <h3>
-          ✅ 214
-        </h3>
-
-        <p>
-          Active Students
-        </p>
-
-      </div>
-
-      <div class="module-card analytics-card">
-
-        <h3>
-          ⚠️ 36
-        </h3>
-
-        <p>
-          Dropout Students
-        </p>
-
-      </div>
-
-      <div class="module-card analytics-card">
-
-        <h3>
-          📊 78%
-        </h3>
-
-        <p>
-          Average Attendance
-        </p>
-
-      </div>
-
-<div class="module-card analytics-card">
-
-  <h3>
-    📝 <%= totalTests %>
-  </h3>
-
-  <p>
-    Total Tests
-  </p>
-
-</div>
-
-<div class="module-card analytics-card">
-
-  <h3>
-    📘 <%= totalClassTests %>
-  </h3>
-
-  <p>
-    Class Tests
-  </p>
-
-</div>
-
-<div class="module-card analytics-card">
-
-  <h3>
-    🎯 <%= totalMockTests %>
-  </h3>
-
-  <p>
-    Mock Exams
-  </p>
-
-</div>
-
-<div class="module-card analytics-card">
-
-  <h3>
-    🏆 <%= totalMainsTests %>
-  </h3>
-
-  <p>
-    Mains Tests
-  </p>
-
-</div>
+  </div>
 
 
-<div class="module-card analytics-card">
+  <!-- Active Students -->
 
-  <h3>
-    💼 12
-  </h3>
+  <div class="module-card analytics-card">
 
-  <p>
-    Students Employed
-  </p>
+    <h3>
+      ✅
+      <%= analyticsData?.activeStudents || 0 %>
+    </h3>
 
-</div>
+    <p>
+      Active Students
+    </p>
 
-</div>
+  </div>
 
+
+  <!-- Dropout Students -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      ⚠️
+      <%= analyticsData?.dropoutStudents || 0 %>
+    </h3>
+
+    <p>
+      Dropout Students
+    </p>
+
+  </div>
+
+
+  <!-- Average Attendance -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      📊 <%= averageAttendance %>%
+    </h3>
+
+    <p>
+      Average Attendance
+    </p>
+
+  </div>
+
+
+  <!-- Total Tests -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      📝 <%= totalTests %>
+    </h3>
+
+    <p>
+      Total Tests
+    </p>
+
+  </div>
+
+
+  <!-- Class Tests -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      📘 <%= totalClassTests %>
+    </h3>
+
+    <p>
+      Class Tests
+    </p>
+
+  </div>
+
+
+  <!-- Mock Exams -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      🎯 <%= totalMockTests %>
+    </h3>
+
+    <p>
+      Mock Exams
+    </p>
+
+  </div>
+
+
+  <!-- Mains Tests -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      🏆 <%= totalMainsTests %>
+    </h3>
+
+    <p>
+      Mains Tests
+    </p>
+
+  </div>
+
+
+  <!-- Students Employed -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      💼
+      <%= analyticsData?.employedStudents || 0 %>
+    </h3>
+
+    <p>
+      Students Employed
+    </p>
+
+  </div>
+
+
+  <!-- Students Qualified -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      🥇
+      <%= analyticsData?.qualifiedStudents || 0 %>
+    </h3>
+
+    <p>
+      Students Qualified
+    </p>
+
+  </div>
+
+
+  <!-- Hybrid Learning -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      💻
+      <%= analyticsData?.hybridStudents || 0 %>
+    </h3>
+
+    <p>
+      Hybrid Learning Students
+    </p>
 
   </div>
 
