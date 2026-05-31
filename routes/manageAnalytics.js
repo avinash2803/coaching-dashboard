@@ -12,7 +12,7 @@ express.Router();
 // =========================================
 
 router.get(
-  "/manageanalytics",
+  "/",
   async (req, res) => {
 
     try {
@@ -43,7 +43,7 @@ router.get(
 // =========================================
 
 router.post(
-  "/manageanalytics",
+  "/",
   async (req, res) => {
 
     try {
