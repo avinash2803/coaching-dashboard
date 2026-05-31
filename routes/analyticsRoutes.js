@@ -113,6 +113,21 @@ await Student.find(filter);
       "VYAPAM"
     );
 
+    const combinedAttendance = [
+  ...cgpscAttendance,
+  ...vyapamAttendance
+];
+
+const averageAttendance =
+combinedAttendance.length > 0
+? (
+    combinedAttendance.reduce(
+      (sum, val) => sum + val,
+      0
+    ) / combinedAttendance.length
+  ).toFixed(1)
+: 0;
+
 const testFilter = {};
 
 if(
@@ -239,6 +254,9 @@ await Analytics.findOne({
 });
 
 res.render("analytics", {
+
+  
+  averageAttendance,
 
   cgpscAttendance,
 
