@@ -110,12 +110,85 @@ await Student.find(filter);
       "VYAPAM"
     );
 
-    res.render("analytics", {
+const students =
+await Student.find({});
 
-      cgpscAttendance,
+const testMap = {};
 
-      vyapamAttendance
-    });
+students.forEach(student => {
+
+  const tests =
+  student.classTests || {};
+
+  Object.entries(tests)
+  .forEach(([testName, testData]) => {
+
+    if(!testMap[testName]){
+
+      testMap[testName] = {
+
+        testName,
+
+        appeared: 0,
+
+        above50: 0,
+
+        topper: "",
+
+        topScore: 0,
+
+        fullMarks:
+        testData.fullMarks || 0
+      };
+    }
+
+    const score =
+    Number(testData.score || 0);
+
+    const percent =
+    Number(testData.percent || 0);
+
+    if(score > 0){
+
+      testMap[testName]
+      .appeared++;
+
+      if(percent >= 50){
+
+        testMap[testName]
+        .above50++;
+      }
+
+      if(
+        score >
+        testMap[testName]
+        .topScore
+      ){
+
+        testMap[testName]
+        .topScore =
+        score;
+
+        testMap[testName]
+        .topper =
+        student.name;
+      }
+    }
+  });
+});
+
+const classTestAnalytics =
+Object.values(testMap);
+
+res.render("analytics", {
+
+  cgpscAttendance,
+
+  vyapamAttendance,
+
+  classTestAnalytics
+});
+
 
   } catch (error) {
 

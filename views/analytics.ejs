@@ -256,4 +256,109 @@ yearFilter.addEventListener(
 
 </script>
 
+<!-- =========================================
+     CLASS TEST ANALYTICS
+========================================= -->
+
+<section class="attendance-section">
+
+  <div class="analytics-header">
+
+    <span class="page-badge">
+      Test Analytics
+    </span>
+
+    <h2>
+      Class Test Performance
+    </h2>
+
+    <p>
+      Student performance analytics across
+      all class tests.
+    </p>
+
+  </div>
+
+  <div class="module-card">
+
+    <div class="table-container">
+
+      <table class="analytics-table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Test Name
+            </th>
+
+            <th>
+              Appeared
+            </th>
+
+            <th>
+              Above 50%
+            </th>
+
+            <th>
+              Topper
+            </th>
+
+            <th>
+              Top Score
+            </th>
+
+            <th>
+              Full Marks
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <% classTestAnalytics.forEach(test => { %>
+
+            <tr>
+
+              <td>
+                <%= test.testName %>
+              </td>
+
+              <td>
+                <%= test.appeared %>
+              </td>
+
+              <td>
+                <%= test.above50 %>
+              </td>
+
+              <td>
+                <%= test.topper %>
+              </td>
+
+              <td>
+                <%= test.topScore %>
+              </td>
+
+              <td>
+                <%= test.fullMarks %>
+              </td>
+
+            </tr>
+
+          <% }) %>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
 <%- include("partials/footer") %>
