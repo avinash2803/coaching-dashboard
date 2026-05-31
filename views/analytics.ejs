@@ -220,6 +220,7 @@
 
 <div
   id="cgpscOptions"
+  class="analytics-cards"
   style="display:none;"
 >
 
@@ -227,21 +228,47 @@
     class="module-card analytics-card clickable-card"
     onclick="showTable('cgpscClass')"
   >
-    📘 Class Tests
+
+    <h3>
+      📘 <%= cgpscClassTests.length %>
+    </h3>
+
+    <p>
+      Class Tests
+    </p>
+
   </div>
+
 
   <div
     class="module-card analytics-card clickable-card"
     onclick="showTable('cgpscMock')"
   >
-    🎯 Mock Exams
+
+    <h3>
+      🎯 <%= cgpscMockTests.length %>
+    </h3>
+
+    <p>
+      Mock Exams
+    </p>
+
   </div>
+
 
   <div
     class="module-card analytics-card clickable-card"
     onclick="showTable('cgpscMains')"
   >
-    🏆 Mains Tests
+
+    <h3>
+      🏆 <%= cgpscMainsTests.length %>
+    </h3>
+
+    <p>
+      Mains Tests
+    </p>
+
   </div>
 
 </div>
@@ -250,6 +277,7 @@
 
 <div
   id="vyapamOptions"
+  class="analytics-cards"
   style="display:none;"
 >
 
@@ -257,14 +285,31 @@
     class="module-card analytics-card clickable-card"
     onclick="showTable('vyapamClass')"
   >
-    📘 Class Tests
+
+    <h3>
+      📘 <%= vyapamClassTests.length %>
+    </h3>
+
+    <p>
+      Class Tests
+    </p>
+
   </div>
+
 
   <div
     class="module-card analytics-card clickable-card"
     onclick="showTable('vyapamMock')"
   >
-    🎯 Mock Exams
+
+    <h3>
+      🎯 <%= vyapamMockTests.length %>
+    </h3>
+
+    <p>
+      Mock Exams
+    </p>
+
   </div>
 
 </div>
