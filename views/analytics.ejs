@@ -649,31 +649,32 @@ yearFilter.addEventListener(
 
 function showBatchOptions(){
 
+  const batchOptions =
   document.getElementById(
     "batchOptions"
-  ).style.display = "grid";
-}
+  );
 
-function showCGPSC(){
+  if(
+    batchOptions.style.display ===
+    "grid"
+  ){
 
-  document.getElementById(
-    "cgpscOptions"
-  ).style.display = "grid";
+    batchOptions.style.display =
+    "none";
 
-  document.getElementById(
-    "vyapamOptions"
-  ).style.display = "none";
-}
+    document.getElementById(
+      "cgpscOptions"
+    ).style.display = "none";
 
-function showVYAPAM(){
+    document.getElementById(
+      "vyapamOptions"
+    ).style.display = "none";
 
-  document.getElementById(
-    "vyapamOptions"
-  ).style.display = "grid";
+  } else {
 
-  document.getElementById(
-    "cgpscOptions"
-  ).style.display = "none";
+    batchOptions.style.display =
+    "grid";
+  }
 }
 
 function showTable(id){
