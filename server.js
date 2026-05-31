@@ -30,6 +30,9 @@ import syllabusRoutes from "./routes/syllabus.js";
 import achievementRoutes from "./routes/achievementRoutes.js";
 import dashboardRoutes from "./routes/dashboardstats.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
+import manageAnalytics
+from "./routes/manageAnalytics.js";
+
 const app = express();
 const upload = multer({ dest: "uploads/" });
 
@@ -120,6 +123,7 @@ app.use("/admin", syllabusRoutes);
 app.use("/admin", dashboardRoutes);
 app.use("/achievement", achievementRoutes);
 app.use("/analytics", analyticsRoutes);
+app.use("/manageAalytics", manageAnalytics);
 app.put("/api/students/:id/tests", async (req, res) => {
   
   try {

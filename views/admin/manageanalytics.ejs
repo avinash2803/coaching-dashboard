@@ -1,0 +1,86 @@
+<h1>
+  Manage Analytics
+</h1>
+
+<form
+  action="/manageanalytics"
+  method="POST"
+>
+
+  <label>
+    Academic Year
+  </label>
+
+  <select name="year">
+
+    <option value="2025-26">
+      2025-26
+    </option>
+
+    <option value="2026-27">
+      2026-27
+    </option>
+
+    <option value="2027-28">
+      2027-28
+    </option>
+
+  </select>
+
+  <br><br>
+
+  <label>
+    Total Students
+  </label>
+
+  <input
+    type="number"
+    name="totalStudents"
+    required
+  >
+
+  <br><br>
+
+  <label>
+    Active Students
+  </label>
+
+  <input
+    type="number"
+    name="activeStudents"
+    required
+  >
+
+  <br><br>
+
+  <label>
+    Dropout Students
+  </label>
+
+  <input
+    type="number"
+    name="dropoutStudents"
+    required
+  >
+
+  <br><br>
+
+  <label>
+    Students Employed
+  </label>
+
+  <input
+    type="number"
+    name="employedStudents"
+    required
+  >
+
+  <br><br>
+
+  <button type="submit">
+
+    Save Analytics
+
+  </button>
+
+</form>

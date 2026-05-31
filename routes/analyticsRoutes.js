@@ -216,6 +216,22 @@ generateTestAnalytics(students, "mockTests");
 const mainsTestAnalytics =
 generateTestAnalytics(students, "mainsTests");
 
+
+const totalClassTests =
+classTestAnalytics.length;
+
+const totalMockTests =
+mockTestAnalytics.length;
+
+const totalMainsTests =
+mainsTestAnalytics.length;
+
+const totalTests =
+
+totalClassTests +
+totalMockTests +
+totalMainsTests;
+
 res.render("analytics", {
 
   cgpscAttendance,
@@ -227,6 +243,15 @@ res.render("analytics", {
   mockTestAnalytics,
 
   mainsTestAnalytics,
+  
+totalClassTests,
+
+totalMockTests,
+
+totalMainsTests,
+
+totalTests,
+
 
   selectedYear
 });
