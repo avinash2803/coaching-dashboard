@@ -26,29 +26,37 @@
         performance across all batches.
       </p>
 
-      <div class="analytics-filter">
+<div class="analytics-filter">
 
-        <label>
-          Academic Year
-        </label>
+  <label>
+    Academic Year
+  </label>
 
-        <select>
+  <select id="yearFilter">
 
-          <option>
-            All Years
-          </option>
+    <option value="all">
+      All Years
+    </option>
 
-          <option>
-            2025-26
-          </option>
+    <option value="2025-26">
+      2025-26 (Year 1)
+    </option>
 
-          <option>
-            2026-27
-          </option>
+    <option value="2026-27">
+      2026-27 (Year 2)
+    </option>
 
-        </select>
+    <option value="2027-28">
+      2027-28 (Year 3)
+    </option>
 
-      </div>
+    <option value="2028-29">
+      2028-29 (Year 4)
+    </option>
+
+  </select>
+
+</div>
 
     </div>
 
@@ -219,5 +227,33 @@
 </script>
 
 <script src="/js/analytics.js"></script>
+
+<script>
+
+const yearFilter =
+document.getElementById("yearFilter");
+
+yearFilter.addEventListener(
+  "change",
+  function(){
+
+    const selectedYear =
+    this.value;
+
+    if(selectedYear === "all"){
+
+      window.location.href =
+      "/analytics";
+
+    } else {
+
+      window.location.href =
+      "/analytics?year=" +
+      selectedYear;
+    }
+  }
+);
+
+</script>
 
 <%- include("partials/footer") %>

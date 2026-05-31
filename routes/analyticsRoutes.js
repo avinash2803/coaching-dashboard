@@ -26,11 +26,26 @@ router.get("/", async (req, res) => {
 
     async function getBatchAttendance(courseName) {
 
-      const students =
-      await Student.find({
+const selectedYear =
+req.query.year;
 
-        course: courseName
-      });
+let filter = {
+
+  course: courseName
+};
+
+if(
+  selectedYear &&
+  selectedYear !== "all"
+){
+
+  filter.year =
+  selectedYear;
+}
+
+const students =
+await Student.find(filter);
+
 
       const monthlyAverage = [];
 
