@@ -1,3 +1,4 @@
+```javascript
 import express from "express";
 
 import Student from "../models/student.js";
@@ -35,7 +36,7 @@ router.get("/", async (req, res) => {
 
       for (const month of months) {
 
-        let total = 0;
+        let totalPercentage = 0;
 
         let count = 0;
 
@@ -45,26 +46,37 @@ router.get("/", async (req, res) => {
           student.attendance?.[month];
 
           if (
+
             attendance &&
-            attendance.percentage !==
-            undefined
+            attendance.total > 0
+
           ) {
 
-            total +=
-            attendance.percentage;
+            const percentage =
+
+            (
+              attendance.present /
+              attendance.total
+            ) * 100;
+
+            totalPercentage +=
+            percentage;
 
             count++;
           }
         });
 
         const average =
-        count > 0
-        ? total / count
-        : 0;
+
+          count > 0
+          ? totalPercentage / count
+          : 0;
 
         monthlyAverage.push(
 
-          Number(average.toFixed(1))
+          Number(
+            average.toFixed(1)
+          )
         );
       }
 
@@ -72,10 +84,16 @@ router.get("/", async (req, res) => {
     }
 
     const cgpscAttendance =
-    await getBatchAttendance("CGPSC");
+
+    await getBatchAttendance(
+      "CGPSC"
+    );
 
     const vyapamAttendance =
-    await getBatchAttendance("VYAPAM");
+
+    await getBatchAttendance(
+      "VYAPAM"
+    );
 
     res.render("analytics", {
 
@@ -93,3 +111,4 @@ router.get("/", async (req, res) => {
 });
 
 export default router;
+```
