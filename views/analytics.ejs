@@ -8,7 +8,7 @@
 
     <div class="analytics-header">
 
-      <span class="analytics-badge">
+      <span class="page-badge">
         Program Analytics
       </span>
 
@@ -50,7 +50,7 @@
 
     <div class="analytics-cards">
 
-      <div class="analytics-card">
+      <div class="module-card analytics-card">
 
         <h3>🎓 250</h3>
 
@@ -58,7 +58,7 @@
 
       </div>
 
-      <div class="analytics-card">
+      <div class="module-card analytics-card">
 
         <h3>✅ 214</h3>
 
@@ -66,7 +66,7 @@
 
       </div>
 
-      <div class="analytics-card">
+      <div class="module-card analytics-card">
 
         <h3>⚠️ 36</h3>
 
@@ -74,7 +74,7 @@
 
       </div>
 
-      <div class="analytics-card">
+      <div class="module-card analytics-card">
 
         <h3>📊 78%</h3>
 
@@ -82,7 +82,7 @@
 
       </div>
 
-      <div class="analytics-card">
+      <div class="module-card analytics-card">
 
         <h3>📝 42</h3>
 
@@ -90,7 +90,7 @@
 
       </div>
 
-      <div class="analytics-card">
+      <div class="module-card analytics-card">
 
         <h3>💼 12</h3>
 
@@ -104,4 +104,67 @@
 
 </div>
 
+<!-- =========================================
+     ATTENDANCE ANALYTICS
+========================================= -->
+
+<section class="attendance-section">
+
+  <div class="analytics-header">
+
+    <span class="page-badge">
+      Attendance Analytics
+    </span>
+
+    <h2>
+      Batch-wise Attendance Overview
+    </h2>
+
+    <p>
+      Monthly attendance comparison across
+      CGPSC and VYAPAM coaching batches.
+    </p>
+
+  </div>
+
+  <div class="analytics-grid">
+
+    <!-- CGPSC -->
+
+    <div class="dashboard-card analytics-card">
+
+      <h3>
+        📘 CGPSC Batch
+      </h3>
+
+      <div class="chart-container">
+
+        <canvas id="cgpscChart"></canvas>
+
+      </div>
+
+    </div>
+
+    <!-- VYAPAM -->
+
+    <div class="dashboard-card analytics-card">
+
+      <h3>
+        📗 VYAPAM Batch
+      </h3>
+
+      <div class="chart-container">
+
+        <canvas id="vyapamChart"></canvas>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/analytics.js"></script>
 <%- include("partials/footer") %>

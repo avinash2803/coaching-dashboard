@@ -26,14 +26,19 @@ new Chart(cgpscCtx, {
 
       data: [72,78,80,76,84,82],
 
-      borderColor: "#0072ce",
+      borderColor: "#0072CE",
 
       backgroundColor:
-        "rgba(0,114,206,0.10)",
+      "rgba(0,114,206,0.10)",
 
       fill: true,
 
-      tension: 0.4
+      tension: 0.4,
+
+      pointBackgroundColor:
+      "#0072CE",
+
+      pointRadius: 4
     }]
   },
 
@@ -74,14 +79,19 @@ new Chart(vyapamCtx, {
 
       data: [65,70,74,72,76,74],
 
-      borderColor: "#00a651",
+      borderColor: "#00A651",
 
       backgroundColor:
-        "rgba(0,166,81,0.10)",
+      "rgba(0,166,81,0.10)",
 
       fill: true,
 
-      tension: 0.4
+      tension: 0.4,
+
+      pointBackgroundColor:
+      "#00A651",
+
+      pointRadius: 4
     }]
   },
 

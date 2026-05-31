@@ -338,3 +338,51 @@ rgba(255,255,255,0.96);
 
 
 
+/* =========================================
+   REUSABLE DASHBOARD CARD
+========================================= */
+
+.dashboard-card {
+
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 32px;
+
+  box-shadow: var(--shadow);
+
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+
+  transform: translateY(-4px);
+
+  box-shadow:
+  0 14px 30px rgba(0,114,206,0.12);
+}
+
+/* BADGE */
+
+.page-badge {
+
+  display: inline-block;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background:
+  linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--primary-green)
+  );
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
