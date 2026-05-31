@@ -7,6 +7,10 @@ const router = express.Router();
 router.get("/", async (req, res) => {
 
   try {
+    
+    const selectedYear =
+req.query.year;
+
 
     const months = [
         
@@ -26,8 +30,6 @@ router.get("/", async (req, res) => {
 
     async function getBatchAttendance(courseName) {
 
-const selectedYear =
-req.query.year;
 
 let filter = {
 
