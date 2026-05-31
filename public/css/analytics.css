@@ -38,9 +38,11 @@
     #0072CE,
     #00A651
   );
-
+  /* ensure compatibility: define standard property plus webkit prefixed */
+  background-clip: text;
   -webkit-background-clip: text;
 
+  color: transparent;
   -webkit-text-fill-color: transparent;
 }
 

@@ -175,7 +175,7 @@ rgba(0,114,206,0.08);
     var(--primary-blue),
     var(--primary-green)
   );
-
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

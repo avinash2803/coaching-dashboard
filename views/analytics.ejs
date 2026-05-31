@@ -211,10 +211,10 @@
 <script>
 
   window.cgpscAttendance =
-  <%- JSON.stringify(cgpscAttendance || []) %>;
+  JSON.parse('<%- JSON.stringify(cgpscAttendance || []) %>');
 
   window.vyapamAttendance =
-  <%- JSON.stringify(vyapamAttendance || []) %>;
+  JSON.parse('<%- JSON.stringify(vyapamAttendance || []) %>');
 
 </script>
 
