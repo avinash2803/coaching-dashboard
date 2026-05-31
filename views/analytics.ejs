@@ -175,28 +175,42 @@
   style="display:none;"
 >
 
+  <!-- CGPSC -->
+
   <div
     class="module-card analytics-card clickable-card"
     onclick="showCGPSC()"
   >
 
-    <h3>📘 CGPSC</h3>
+    <h3>
+      📘
+      <%= cgpscClassTests.length +
+          cgpscMockTests.length +
+          cgpscMainsTests.length %>
+    </h3>
 
     <p>
-      Open CGPSC Analytics
+      CGPSC Total Tests
     </p>
 
   </div>
+
+
+  <!-- VYAPAM -->
 
   <div
     class="module-card analytics-card clickable-card"
     onclick="showVYAPAM()"
   >
 
-    <h3>📗 VYAPAM</h3>
+    <h3>
+      📗
+      <%= vyapamClassTests.length +
+          vyapamMockTests.length %>
+    </h3>
 
     <p>
-      Open VYAPAM Analytics
+      VYAPAM Total Tests
     </p>
 
   </div>
@@ -639,9 +653,18 @@ function showTable(id){
     }
   });
 
-  document.getElementById(
-    id
-  ).style.display = "block";
+const activeSection =
+document.getElementById(id);
+
+activeSection.style.display =
+"block";
+
+activeSection.scrollIntoView({
+
+  behavior: "smooth",
+
+  block: "start"
+});
 }
 
 </script>
