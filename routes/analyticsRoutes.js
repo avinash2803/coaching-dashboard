@@ -186,8 +186,11 @@ res.render("analytics", {
 
   vyapamAttendance,
 
-  classTestAnalytics
+  classTestAnalytics,
+
+  selectedYear
 });
+
 
 
   } catch (error) {

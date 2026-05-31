@@ -32,34 +32,55 @@
     Academic Year
   </label>
 
-  <select id="yearFilter">
+  <select
+    id="yearFilter"
+  >
 
-    <option value="all">
+    <option
+      value="all"
+      <%= !selectedYear ||
+      selectedYear === "all"
+      ? "selected" : "" %>
+    >
       All Years
     </option>
 
-    <option value="2025-26">
+    <option
+      value="2025-26"
+      <%= selectedYear === "2025-26"
+      ? "selected" : "" %>
+    >
       2025-26 (Year 1)
     </option>
 
-    <option value="2026-27">
+    <option
+      value="2026-27"
+      <%= selectedYear === "2026-27"
+      ? "selected" : "" %>
+    >
       2026-27 (Year 2)
     </option>
 
-    <option value="2027-28">
+    <option
+      value="2027-28"
+      <%= selectedYear === "2027-28"
+      ? "selected" : "" %>
+    >
       2027-28 (Year 3)
     </option>
 
-    <option value="2028-29">
+    <option
+      value="2028-29"
+      <%= selectedYear === "2028-29"
+      ? "selected" : "" %>
+    >
       2028-29 (Year 4)
     </option>
 
   </select>
 
 </div>
-
-    </div>
-
+</div>
 
     <!-- =========================================
          KPI CARDS
