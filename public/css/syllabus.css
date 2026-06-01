@@ -25,9 +25,9 @@
 
     display:flex;
 
-    justify-content:space-between;
+    justify-content:flex-start;
 
-    align-items:flex-start;
+    align-items:center;
 
     width:85%;
 
@@ -101,7 +101,7 @@
 
     width:85%;
 
-    margin:0 auto 25px;
+    margin:10px auto 25px;
 
     background:white;
 
@@ -123,16 +123,16 @@
 
     align-items:center;
 
-    margin-bottom:18px;
+    margin-bottom:8px;
 }
 
 .graph-header h2{
 
     margin:0;
 
-    font-size:30px;
+    font-size:10px;
 
-    font-weight:800;
+    font-weight:400;
 
     color:#111827;
 
