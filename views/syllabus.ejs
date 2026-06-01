@@ -214,6 +214,7 @@ monthOrder.map(month =>
     
     const ctx =
     document.getElementById("syllabusChart");
+    ctx.height = 120;
     Chart.register(ChartDataLabels);
     new Chart(ctx, {
 
@@ -229,7 +230,7 @@ data:{
             label:'CGPSC Batch',
             data:cgpscData,
             borderColor:'#2563eb',
-            backgroundColor:'rgba(37,99,235,0.12)',
+            backgroundColor:'rgba(37,99,235,0.25)',
             borderWidth:3,
             pointRadius:4,
             pointHoverRadius:6,
@@ -242,7 +243,7 @@ data:{
             label:'VYAPAM Batch',
             data:vyapamData,
             borderColor:'#16a34a',
-            backgroundColor:'rgba(22,163,74,0.10)',
+            backgroundColor:'rgba(22,163,74,0.22)',
             borderWidth:3,
             pointRadius:4,
             pointHoverRadius:6,
@@ -268,6 +269,11 @@ layout:{
     }
 },
 maintainAspectRatio:false,
+
+interaction:{
+    mode:'index',
+    intersect:false
+},
     plugins:{
 
         title:{
@@ -284,9 +290,16 @@ maintainAspectRatio:false,
 legend:{
     display:true,
     position:'top',
+    align:'right',
 
     labels:{
+        usePointStyle:true,
+        pointStyle:'line',
+
         color:'#444',
+
+        padding:20,
+
         font:{
             size:14,
             weight:'600'
