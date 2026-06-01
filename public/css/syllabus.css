@@ -136,6 +136,20 @@
 }
 #syllabusChart{
     width:100% !important;
-    margin-top:-5px;
+    margin-top:2px;
 
+
+}
+.graph-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:0;
+}
+
+.graph-header h2{
+    margin:0;
+    font-size:20px;
+    font-weight:700;
+    color:#111;
 }
