@@ -200,7 +200,6 @@ const calculatedPercentage =
 fullMarks > 0
 ? (score / fullMarks) * 100
 : 0;
-
 if(score > 0){
 
   testMap[testName]
@@ -212,21 +211,21 @@ if(score > 0){
     .above60++;
   }
 
-        if(
-          score >
-          testMap[testName]
-          .topScore
-        ){
+  if(
+    score >
+    testMap[testName]
+    .topScore
+  ){
 
-          testMap[testName]
-          .topScore =
-          score;
+    testMap[testName]
+    .topScore =
+    score;
 
-          testMap[testName]
-          .topper =
-          student.name;
-        }
-      }
+    testMap[testName]
+    .topper =
+    student.name;
+  }
+}
     });
   });
 
