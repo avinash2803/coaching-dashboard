@@ -177,28 +177,40 @@ function generateTestAnalytics(
         };
       }
 
-const score =
+const rawScore = testData.score;
 
-isNaN(Number(testData.score))
-? 0
-: Number(testData.score);
+if(
+  rawScore === "AB" ||
+  rawScore === "" ||
+  rawScore === null ||
+  rawScore === undefined
+){
 
-const percent =
+  return;
+}
 
-isNaN(Number(testData.percent))
-? 0
-: Number(testData.percent);
+const score = Number(rawScore);
 
-      if(score > 0){
+const fullMarks = Number(
+  testData.fullMarks || 0
+);
 
-        testMap[testName]
-        .appeared++;
+const calculatedPercentage =
 
-        if(percent >= 60){
+fullMarks > 0
+? (score / fullMarks) * 100
+: 0;
 
-          testMap[testName]
-          .above60++;
-        }
+if(score > 0){
+
+  testMap[testName]
+  .appeared++;
+
+  if(calculatedPercentage >= 60){
+
+    testMap[testName]
+    .above60++;
+  }
 
         if(
           score >
