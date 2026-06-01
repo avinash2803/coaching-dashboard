@@ -289,9 +289,39 @@ await Analytics.findOne({
   year: selectedYear
 }) || {};
 
+let totalDays = 0;
+
+const sampleStudent =
+[
+  ...cgpscStudents,
+  ...vyapamStudents
+].find(student => student.attendance);
+
+if(sampleStudent){
+
+  Object.values(sampleStudent.attendance)
+  .forEach(month => {
+
+    totalDays += month.total || 0;
+
+  });
+
+}
+
+const totalSessions =
+Math.round(totalDays * 2.25);
+
+const totalHours =
+totalSessions * 2;
+
+
 res.render("analytics", {
 
-  
+  totalDays,
+
+totalSessions,
+
+totalHours,
   averageAttendance,
 
   cgpscAttendance,

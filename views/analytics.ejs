@@ -86,6 +86,10 @@
          KPI CARDS
     ========================================= -->
 
+    <h3 class="section-title">
+  📊 Student Impact Metrics
+</h3>
+
 <div class="analytics-cards">
 
   <!-- Total Students -->
@@ -154,215 +158,6 @@
 </div>
 
 
-  <!-- Total Tests -->
-
-<div
-  class="module-card analytics-card clickable-card"
-  onclick="showBatchOptions()"
->
-
-  <h3>
-    📝 <%= totalTests %>
-  </h3>
-
-  <p>
-    Total Tests
-  </p>
-
-</div>
-
-<!-- Batch Selection -->
-
-<div
-  id="batchOptions"
-  style="display:none;"
->
-
-  <!-- CGPSC -->
-
-  <div
-    class="module-card analytics-card clickable-card"
-    onclick="showCGPSC()"
-  >
-
-    <h3>
-      📘
-      <%= cgpscClassTests.length +
-          cgpscMockTests.length +
-          cgpscMainsTests.length %>
-    </h3>
-
-    <p>
-      CGPSC Total Tests
-    </p>
-
-  </div>
-
-
-  <!-- VYAPAM -->
-
-  <div
-    class="module-card analytics-card clickable-card"
-    onclick="showVYAPAM()"
-  >
-
-    <h3>
-      📗
-      <%= vyapamClassTests.length +
-          vyapamMockTests.length %>
-    </h3>
-
-    <p>
-      VYAPAM Total Tests
-    </p>
-
-  </div>
-
-</div>
-<!-- CGPSC Categories -->
-
-<div
-  id="cgpscOptions"
-  class="analytics-cards"
-  style="display:none;"
->
-
-  <div
-    class="module-card analytics-card clickable-card"
-    onclick="showTable('cgpscClass')"
-  >
-
-    <h3>
-      📘 <%= cgpscClassTests.length %>
-    </h3>
-
-    <p>
-      Class Tests
-    </p>
-
-  </div>
-
-
-  <div
-    class="module-card analytics-card clickable-card"
-    onclick="showTable('cgpscMock')"
-  >
-
-    <h3>
-      🎯 <%= cgpscMockTests.length %>
-    </h3>
-
-    <p>
-      Mock Exams
-    </p>
-
-  </div>
-
-
-  <div
-    class="module-card analytics-card clickable-card"
-    onclick="showTable('cgpscMains')"
-  >
-
-    <h3>
-      🏆 <%= cgpscMainsTests.length %>
-    </h3>
-
-    <p>
-      Mains Tests
-    </p>
-
-  </div>
-
-</div>
-
-<!-- VYAPAM Categories -->
-
-<div
-  id="vyapamOptions"
-  class="analytics-cards"
-  style="display:none;"
->
-
-  <div
-    class="module-card analytics-card clickable-card"
-    onclick="showTable('vyapamClass')"
-  >
-
-    <h3>
-      📘 <%= vyapamClassTests.length %>
-    </h3>
-
-    <p>
-      Class Tests
-    </p>
-
-  </div>
-
-
-  <div
-    class="module-card analytics-card clickable-card"
-    onclick="showTable('vyapamMock')"
-  >
-
-    <h3>
-      🎯 <%= vyapamMockTests.length %>
-    </h3>
-
-    <p>
-      Mock Exams
-    </p>
-
-  </div>
-
-</div>
-
-
-  <!-- Class Tests -->
-
-  <div class="module-card analytics-card">
-
-    <h3>
-      📘 <%= totalClassTests %>
-    </h3>
-
-    <p>
-      Class Tests
-    </p>
-
-  </div>
-
-
-  <!-- Mock Exams -->
-
-  <div class="module-card analytics-card">
-
-    <h3>
-      🎯 <%= totalMockTests %>
-    </h3>
-
-    <p>
-      Mock Exams
-    </p>
-
-  </div>
-
-
-  <!-- Mains Tests -->
-
-  <div class="module-card analytics-card">
-
-    <h3>
-      🏆 <%= totalMainsTests %>
-    </h3>
-
-    <p>
-      Mains Tests
-    </p>
-
-  </div>
-
-
   <!-- Students Employed -->
 
   <div class="module-card analytics-card">
@@ -412,9 +207,256 @@
 
 </div> <!-- analytics-cards -->
 
-  </div> <!-- analytics-container -->
+<h3 class="section-title">
+  📝 Assessment & Exam Metrics
+</h3>
 
-</div> <!-- analytics-page -->
+<div class="analytics-cards">
+
+  <!-- Total Tests -->
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showBatchOptions()"
+  >
+
+    <h3>
+      📝 <%= totalTests %>
+    </h3>
+
+    <p>
+      Total Tests
+    </p>
+
+  </div>
+
+  <!-- Class Tests -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      📘 <%= totalClassTests %>
+    </h3>
+
+    <p>
+      Class Tests
+    </p>
+
+  </div>
+
+  <!-- Mock Exams -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      🎯 <%= totalMockTests %>
+    </h3>
+
+    <p>
+      Mock Exams
+    </p>
+
+  </div>
+
+  <!-- Mains Tests -->
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      🏆 <%= totalMainsTests %>
+    </h3>
+
+    <p>
+      Mains Tests
+    </p>
+
+  </div>
+
+</div>
+
+<!-- Batch Selection -->
+
+<div
+  id="batchOptions"
+  class="analytics-cards"
+  style="display:none;"
+>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showCGPSC()"
+  >
+
+    <h3>
+      📘
+      <%= cgpscClassTests.length +
+          cgpscMockTests.length +
+          cgpscMainsTests.length %>
+    </h3>
+
+    <p>
+      CGPSC Total Tests
+    </p>
+
+  </div>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showVYAPAM()"
+  >
+
+    <h3>
+      📗
+      <%= vyapamClassTests.length +
+          vyapamMockTests.length %>
+    </h3>
+
+    <p>
+      VYAPAM Total Tests
+    </p>
+
+  </div>
+
+</div>
+
+<!-- CGPSC Categories -->
+
+<div
+  id="cgpscOptions"
+  class="analytics-cards"
+  style="display:none;"
+>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('cgpscClass')"
+  >
+
+    <h3>
+      📘 <%= cgpscClassTests.length %>
+    </h3>
+
+    <p>
+      Class Tests
+    </p>
+
+  </div>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('cgpscMock')"
+  >
+
+    <h3>
+      🎯 <%= cgpscMockTests.length %>
+    </h3>
+
+    <p>
+      Mock Exams
+    </p>
+
+  </div>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('cgpscMains')"
+  >
+
+    <h3>
+      🏆 <%= cgpscMainsTests.length %>
+    </h3>
+
+    <p>
+      Mains Tests
+    </p>
+
+  </div>
+
+</div>
+
+<!-- VYAPAM Categories -->
+
+<div
+  id="vyapamOptions"
+  class="analytics-cards"
+  style="display:none;"
+>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('vyapamClass')"
+  >
+
+    <h3>
+      📘 <%= vyapamClassTests.length %>
+    </h3>
+
+    <p>
+      Class Tests
+    </p>
+
+  </div>
+
+  <div
+    class="module-card analytics-card clickable-card"
+    onclick="showTable('vyapamMock')"
+  >
+
+    <h3>
+      🎯 <%= vyapamMockTests.length %>
+    </h3>
+
+    <p>
+      Mock Exams
+    </p>
+
+  </div>
+
+</div>
+
+<h3 class="section-title">
+  🎯 Program Delivery Metrics
+</h3>
+
+<div class="analytics-cards">
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      📅 <%= totalDays || 0 %>
+    </h3>
+
+    <p>
+      Total Program Days
+    </p>
+
+  </div>
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      🏫 <%= totalSessions || 0 %>
+    </h3>
+
+    <p>
+      Total Sessions Conducted
+    </p>
+
+  </div>
+
+  <div class="module-card analytics-card">
+
+    <h3>
+      ⏱ <%= totalHours || 0 %>
+    </h3>
+
+    <p>
+      Total Learning Hours
+    </p>
+
+  </div>
+
+</div>
 
 
 <!-- =========================================
