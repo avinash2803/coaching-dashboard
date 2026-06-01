@@ -32,6 +32,8 @@
     justify-content:space-between;
 
     align-items:flex-start;
+
+    gap:40px;
 }
 
 .title{
@@ -101,7 +103,7 @@
 
     width:85%;
 
-    margin:10px auto 25px;
+    margin:5px auto 25px;
 
     background:white;
 
@@ -166,11 +168,13 @@
 
     display:flex;
 
-    justify-content:center;
+    flex-direction:row;
 
-    gap:35px;
+    justify-content:flex-end;
 
-    margin:35px 0 15px;
+    align-items:center;
+
+    gap:18px;
 
     flex-wrap:wrap;
 }
@@ -183,14 +187,14 @@
 
     gap:14px;
 
-    padding:18px 22px;
+    padding:16px 20px;
 
     border-radius:18px;
 
     box-shadow:
     0 8px 24px rgba(0,0,0,0.08);
 
-    min-width:320px;
+    min-width:280px;
 
     cursor:pointer;
 
@@ -426,5 +430,5 @@
 }
 
 .title-content{
-    max-width:850px;
+    max-width:550px;
 }
