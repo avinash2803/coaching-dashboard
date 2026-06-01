@@ -309,7 +309,7 @@ if(sampleStudent){
 }
 
 const totalSessions =
-Math.round(totalDays * 2.25);
+Math.round(totalDays * 4.5);
 
 const totalHours =
 totalSessions * 2;

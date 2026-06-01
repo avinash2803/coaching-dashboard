@@ -356,3 +356,16 @@
     padding:24px;
   }
 }
+
+.section-title{
+
+  margin-top: 60px;
+
+  margin-bottom: 25px;
+
+  font-size: 32px;
+
+  font-weight: 800;
+
+  color: #111827;
+}
