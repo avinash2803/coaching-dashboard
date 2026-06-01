@@ -4,7 +4,16 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <div class="page-content">
 <div class="title-row">
+  <div>
+
   <h1 class="title">Syllabus Status</h1>
+
+  <p class="page-subtitle">
+    Here are the syllabus completion status along with
+    month-wise progress chart and subject-wise completion table.
+  </p>
+
+</div>
 
   <select onchange="window.location.href='/admin/syllabus?year=' + this.value">
   <option value="2025-26" <%= year === '2025-26' ? 'selected' : '' %>>2025-26</option>
