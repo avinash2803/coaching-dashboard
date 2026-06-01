@@ -229,26 +229,26 @@ data:{
             label:'CGPSC Batch',
             data:cgpscData,
             borderColor:'#2563eb',
-            backgroundColor:'#2563eb',
+            backgroundColor:'rgba(37,99,235,0.12)',
             borderWidth:3,
             pointRadius:4,
             pointHoverRadius:6,
             pointBackgroundColor:'#2563eb',
-            fill:false,
-            tension:0
+           fill:true,
+           tension:0.4
         },
 
         {
             label:'VYAPAM Batch',
             data:vyapamData,
             borderColor:'#16a34a',
-            backgroundColor:'#16a34a',
+            backgroundColor:'rgba(22,163,74,0.10)',
             borderWidth:3,
             pointRadius:4,
             pointHoverRadius:6,
             pointBackgroundColor:'#16a34a',
-            fill:false,
-            tension:0
+            fill:true,
+            tension:0.4
         }
 
     ]
@@ -282,7 +282,16 @@ maintainAspectRatio:false,
         },
 
 legend:{
-    display:false
+    display:true,
+    position:'top',
+
+    labels:{
+        color:'#444',
+        font:{
+            size:14,
+            weight:'600'
+        }
+    }
 },
 
         datalabels:{
