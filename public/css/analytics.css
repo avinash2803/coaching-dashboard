@@ -155,11 +155,13 @@
   display: grid;
 
   grid-template-columns:
-  repeat(2, 1fr);
+  repeat(2, minmax(0, 650px));
+
+  justify-content: center;
 
   gap: 30px;
 
-  margin-top: 40px;
+  margin-top: 35px;
 }
 
 .chart-container{
