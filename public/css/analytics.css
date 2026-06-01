@@ -1,6 +1,4 @@
-.analytics-page,
-.attendance-section,
-.test-section{
+.analytics-page{
 
   padding: 35px 5%;
 
@@ -10,6 +8,14 @@
     #f5fbff,
     #ffffff
   );
+}
+
+.attendance-section,
+.test-section{
+
+  padding: 35px 0;
+
+  background: transparent;
 }
 
 .analytics-container{
