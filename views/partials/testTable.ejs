@@ -1,48 +1,50 @@
 <section class="test-section">
 
-  <div class="analytics-header">
+  <div class="analytics-container">
 
-    <span class="page-badge">
-      <%= badge %>
-    </span>
+    <div class="analytics-header">
 
-    <h2>
-      <%= title %>
-    </h2>
+      <span class="page-badge">
+        <%= badge %>
+      </span>
 
-    <p>
-      <%= subtitle %>
-    </p>
+      <h2>
+        <%= title %>
+      </h2>
 
-  </div>
+      <p>
+        <%= subtitle %>
+      </p>
 
-  <div class="table-container">
+    </div>
 
-    <table class="analytics-table">
+    <div class="table-container">
 
-      <thead>
+      <table class="analytics-table">
 
-        <tr>
+        <thead>
 
-          <th>Test Name</th>
+          <tr>
 
-          <th>Subject</th>
+            <th>Test Name</th>
 
-          <th>Appeared</th>
+            <th>Subject</th>
 
-          <th>Above 60%</th>
+            <th>Appeared</th>
 
-          <th>Topper</th>
+            <th>Above 60%</th>
 
-          <th>Top Score</th>
+            <th>Topper</th>
 
-          <th>Full Marks</th>
+            <th>Top Score</th>
 
-        </tr>
+            <th>Full Marks</th>
 
-      </thead>
+          </tr>
 
-      <tbody>
+        </thead>
+
+        <tbody>
 
 <% if(tests.length === 0){ %>
 
@@ -56,45 +58,33 @@
 
 <% } %>
 
-        <% tests.forEach(test => { %>
+<% tests.forEach(test => { %>
 
-          <tr>
+<tr>
 
-            <td>
-              <%= test.testName %>
-            </td>
+  <td><%= test.testName %></td>
 
-            <td>
-              <%= test.subject %>
-            </td>
+  <td><%= test.subject %></td>
 
-            <td>
-              <%= test.appeared %>
-            </td>
+  <td><%= test.appeared %></td>
 
-            <td>
-              <%= test.above50 %>
-            </td>
+  <td><%= test.above50 %></td>
 
-            <td>
-              <%= test.topper %>
-            </td>
+  <td><%= test.topper %></td>
 
-            <td>
-              <%= test.topScore %>
-            </td>
+  <td><%= test.topScore %></td>
 
-            <td>
-              <%= test.fullMarks %>
-            </td>
+  <td><%= test.fullMarks %></td>
 
-          </tr>
+</tr>
 
-        <% }) %>
+<% }) %>
 
-      </tbody>
+        </tbody>
 
-    </table>
+      </table>
+
+    </div>
 
   </div>
 

@@ -416,57 +416,59 @@
 <!-- =========================================
      ATTENDANCE ANALYTICS
 ========================================= -->
-
 <section class="attendance-section">
 
-  <div class="analytics-header">
+  <div class="analytics-container">
 
-    <span class="page-badge">
-      Attendance Analytics
-    </span>
+    <div class="analytics-header">
 
-    <h2>
-      Batch-wise Attendance Overview
-    </h2>
+      <span class="page-badge">
+        Attendance Analytics
+      </span>
 
-    <p>
-      Monthly attendance comparison across
-      CGPSC and VYAPAM coaching batches.
-    </p>
+      <h2>
+        Batch-wise Attendance Overview
+      </h2>
 
-  </div>
-
-
-  <div class="analytics-grid">
-
-    <!-- CGPSC -->
-
-    <div class="module-card analytics-card">
-
-      <h3>
-        📘 CGPSC Batch
-      </h3>
-
-      <div class="chart-container">
-
-        <canvas id="cgpscChart"></canvas>
-
-      </div>
+      <p>
+        Monthly attendance comparison across
+        CGPSC and VYAPAM coaching batches.
+      </p>
 
     </div>
 
+    <div class="analytics-grid">
 
-    <!-- VYAPAM -->
+      <!-- CGPSC -->
 
-    <div class="module-card analytics-card">
+      <div class="module-card analytics-card">
 
-      <h3>
-        📗 VYAPAM Batch
-      </h3>
+        <h3>
+          📘 CGPSC Batch
+        </h3>
 
-      <div class="chart-container">
+        <div class="chart-container">
 
-        <canvas id="vyapamChart"></canvas>
+          <canvas id="cgpscChart"></canvas>
+
+        </div>
+
+      </div>
+
+
+      <!-- VYAPAM -->
+
+      <div class="module-card analytics-card">
+
+        <h3>
+          📗 VYAPAM Batch
+        </h3>
+
+        <div class="chart-container">
+
+          <canvas id="vyapamChart"></canvas>
+
+        </div>
 
       </div>
 
@@ -475,7 +477,6 @@
   </div>
 
 </section>
-
 
 <!-- =========================================
      CHART JS

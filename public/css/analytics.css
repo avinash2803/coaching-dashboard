@@ -1,6 +1,6 @@
 .analytics-page {
 
-  padding: 40px 5%;
+  padding: 35px 5%;
 
   background:
   linear-gradient(
@@ -19,12 +19,12 @@
 
 .analytics-header {
 
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 }
 
 .analytics-header h1 {
 
-  font-size: 48px;
+  font-size: 45px;
 
   font-weight: 800;
 
@@ -48,9 +48,9 @@
 
 .analytics-header h2 {
 
-  font-size: 44px;
+  font-size: 40px;
 
-  font-weight: 800;
+  font-weight: 700;
 
   margin: 18px 0;
 
@@ -146,7 +146,7 @@
 
 .attendance-section {
 
-  padding: 80px 5%;
+  padding: 40px 5%;
 
   background:
   linear-gradient(
@@ -205,7 +205,7 @@
 
 .test-section{
 
-  padding: 80px 5%;
+  padding: 40px 5%;
 
   background:
   linear-gradient(
