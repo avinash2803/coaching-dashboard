@@ -1,155 +1,392 @@
-/* 🔥 SYLLABUS TABLE */
+/* =========================
+   PAGE LAYOUT
+========================= */
 
-.syllabus-table {
-  width: 90%;
-  border-collapse: collapse;
-  margin: 20px auto;
-}
+.page-content{
 
-.syllabus-table th,
-.syllabus-table td {
-  padding: 8px 10px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
+    padding:35px 5%;
 
-.syllabus-table th {
-  background: #3b1f16;
-  color: #fff;
+    background:
+    linear-gradient(
+        to bottom,
+        #f5fbff,
+        #ffffff
+    );
+
+    min-height:100vh;
 }
 
-.syllabus-table tr:nth-child(even) {
-  background: #f9f9f9;
+
+/* =========================
+   TITLE SECTION
+========================= */
+
+.title-row{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:24px;
+
+    margin-top:25px;
+
+    margin-bottom:45px;
 }
 
-.syllabus-table tr:hover {
-  background: #f1f1f1;
+.title{
+
+    font-size:52px;
+
+    font-weight:800;
+
+    line-height:1.2;
+
+    margin:0;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0072CE,
+        #00A651
+    );
+
+    background-clip:text;
+    -webkit-background-clip:text;
+
+    color:transparent;
+    -webkit-text-fill-color:transparent;
 }
 
-/* 🔥 STATUS */
-.status {
-  font-weight: bold;
+.year-dropdown,
+.title-row select{
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    border:1px solid #D1D5DB;
+
+    background:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    outline:none;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,0.04);
 }
 
-.completed {
-  color: green;
-}
 
-.ongoing {
-  color: orange;
-}
-
-/* 🔥 TITLE */
-.title {
-  text-align: center;
-  font-size: 32px;
-  font-weight: bold;
-}
-
-/* 🔥 TABLE HIDE */
-.table-box {
-  display: none;
-}
-.title-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-.year-dropdown {
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-weight: 600;
-  border: 1px solid #ccc;
-}
+/* =========================
+   GRAPH BOX
+========================= */
 
 .graph-box{
-    width: 68%;
-    margin:15px auto 10px auto;
-    background: white;
-    padding: 8px 12px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-    height: 500px;
+
+    width:85%;
+
+    margin:20px auto;
+
+    background:white;
+
+    padding:28px;
+
+    border-radius:28px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.08);
+
+    height:560px;
 }
-/* 🔥 Progress Cards */
+
+.graph-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:10px;
+}
+
+.graph-header h2{
+
+    margin:0;
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#111827;
+
+    line-height:1.2;
+}
+
+.graph-subtitle{
+
+    margin-top:8px;
+
+    color:#6B7280;
+
+    font-size:16px;
+
+    line-height:1.6;
+}
+
+#syllabusChart{
+
+    width:100% !important;
+
+    margin-top:10px;
+}
+
+
+/* =========================
+   PROGRESS CARDS
+========================= */
 
 .progress-cards{
+
     display:flex;
+
     justify-content:center;
+
     gap:35px;
-    margin:20px 0 6px;
+
+    margin:35px 0 10px;
+
     flex-wrap:wrap;
 }
 
 .progress-card{
+
     display:flex;
+
     align-items:center;
-    gap:8px;
-    padding:12px 18px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.08);
-    min-width:280px;
+
+    gap:18px;
+
+    padding:22px 24px;
+
+    border-radius:22px;
+
+    box-shadow:
+    0 8px 24px rgba(0,0,0,0.08);
+
+    min-width:320px;
+
     cursor:pointer;
+
+    transition:0.3s ease;
+}
+
+.progress-card:hover{
+
+    transform:translateY(-5px);
 }
 
 .cgpsc-card{
+
     background:#eef4ff;
 }
 
 .vyapam-card{
+
     background:#eef9ee;
 }
 
 .progress-circle{
-    width: 72px;
-    height:72px;
+
+    width:82px;
+
+    height:82px;
+
     border-radius:50%;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    font-weight:bold;
-    font-size:15px;
+
+    font-weight:800;
+
+    font-size:18px;
+
     background:white;
 }
 
 .blue{
-    border:6px solid #2563eb;
+
+    border:7px solid #2563eb;
+
     color:#2563eb;
 }
 
 .green{
-    border:6px solid #16a34a;
+
+    border:7px solid #16a34a;
+
     color:#16a34a;
 }
 
 .progress-card h2{
+
     margin:0;
-    margin-bottom:4px;
-    font-size:20px;
+
+    margin-bottom:6px;
+
+    font-size:26px;
+
+    font-weight:800;
+
+    color:#111827;
 }
 
 .progress-card p{
-    margin-top:4px;
-    color:#555;
-}
-#syllabusChart{
-    width:100% !important;
-    margin-top:2px;
 
-
-}
-.graph-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:0;
-}
-
-.graph-header h2{
     margin:0;
-    font-size:20px;
+
+    color:#6B7280;
+
+    font-size:17px;
+}
+
+
+/* =========================
+   TABLE SECTION
+========================= */
+
+.table-box{
+
+    margin-top:40px;
+
+    overflow-x:auto;
+
+    border-radius:24px;
+
+    background:white;
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,0.08);
+
+    padding:10px;
+}
+
+.syllabus-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:1100px;
+}
+
+.syllabus-table thead{
+
+    background:
+    linear-gradient(
+        135deg,
+        #0072CE,
+        #00A651
+    );
+
+    color:white;
+}
+
+.syllabus-table th{
+
+    padding:18px 20px;
+
+    text-align:center;
+
+    font-size:15px;
+
     font-weight:700;
-    color:#111;
+}
+
+.syllabus-table td{
+
+    padding:18px 20px;
+
+    text-align:center;
+
+    font-size:15px;
+
+    color:#374151;
+
+    border-bottom:
+    1px solid #E5E7EB;
+}
+
+.syllabus-table tbody tr:nth-child(even){
+
+    background:#F9FAFB;
+}
+
+.syllabus-table tbody tr:hover{
+
+    background:#EEF6FF;
+}
+
+
+/* =========================
+   STATUS COLORS
+========================= */
+
+.completed{
+
+    color:#16a34a;
+
+    font-weight:700;
+}
+
+.ongoing{
+
+    color:#f59e0b;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    .title{
+
+        font-size:38px;
+    }
+
+    .graph-box{
+
+        width:100%;
+
+        padding:18px;
+
+        height:480px;
+    }
+
+    .graph-header h2{
+
+        font-size:24px;
+    }
+
+    .progress-card{
+
+        min-width:100%;
+    }
+
+    .title-row{
+
+        flex-direction:column;
+    }
 }
