@@ -312,7 +312,7 @@ const totalSessions =
 Math.round(totalDays * 4.5);
 
 const totalHours =
-totalSessions * 1.9;
+totalSessions * 2;
 
 
 res.render("analytics", {
