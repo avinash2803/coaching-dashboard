@@ -25,15 +25,15 @@
 
     width:85%;
 
-    margin:0 auto 15px;
+    margin:0 auto 25px;
 
     display:flex;
 
-    align-items:center;
+    justify-content:space-between;
+
+    align-items:flex-start;
 
     gap:25px;
-
-    flex-wrap:wrap;
 }
 .title-top{
 
@@ -47,7 +47,7 @@
 }
 .title-left{
 
-    width:100%;
+    max-width:700px;
 
     text-align:left;
 }
@@ -462,5 +462,5 @@ max-width:1300px;
 }
 .dropdown-row{
 
-    margin-top:20px;
+    margin-top:12px;
 }
