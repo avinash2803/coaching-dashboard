@@ -32,40 +32,7 @@
 
     </div>
 
-    <div class="progress-cards">
-
-        <div class="progress-card cgpsc-card"
-        onclick="showTab('CGpsc')">
-
-            <div class="progress-circle blue">
-                <span><%= CGpscProgress %>%</span>
-            </div>
-
-            <div>
-                <h2>CGPSC - <%= CGpscProgress %>%</h2>
-                <p>Syllabus Completed</p>
-            </div>
-
-        </div>
-
-        <div class="progress-card vyapam-card"
-        onclick="showTab('vyapam')">
-
-            <div class="progress-circle green">
-                <span><%= vyapamProgress %>%</span>
-            </div>
-
-            <div>
-                <h2>VYAPAM - <%= vyapamProgress %>%</h2>
-                <p>Syllabus Completed</p>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
+    
 <div class="graph-box">
 
   <div class="graph-header">
@@ -116,6 +83,42 @@
       <td colspan="8">No data found</td>
     </tr>
   <% } %>
+
+  <div class="progress-cards">
+
+        <div class="progress-card cgpsc-card"
+        onclick="showTab('CGpsc')">
+
+            <div class="progress-circle blue">
+                <span><%= CGpscProgress %>%</span>
+            </div>
+
+            <div>
+                <h2>CGPSC - <%= CGpscProgress %>%</h2>
+                <p>Syllabus Completed</p>
+            </div>
+
+        </div>
+
+        <div class="progress-card vyapam-card"
+        onclick="showTab('vyapam')">
+
+            <div class="progress-circle green">
+                <span><%= vyapamProgress %>%</span>
+            </div>
+
+            <div>
+                <h2>VYAPAM - <%= vyapamProgress %>%</h2>
+                <p>Syllabus Completed</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 </tbody>
   </table>
 </div>
