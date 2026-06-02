@@ -206,7 +206,7 @@ border:1px solid rgba(0,114,206,0.12);
 
     width:85%;
 
-    margin:5px auto 2px;
+    margin:2px auto 2px;
 
     display:flex;
 
@@ -225,9 +225,9 @@ border:1px solid rgba(0,114,206,0.12);
 
     gap:14px;
 
-    padding:16px 20px;
+    padding:10px 20px;
 
-    border-radius:18px;
+    border-radius:16px;
 
     box-shadow:
     0 8px 24px rgba(0,0,0,0.08);
@@ -246,12 +246,26 @@ border:1px solid rgba(0,114,206,0.12);
 
 .cgpsc-card{
 
-    background:#eef4ff;
+    background:
+    linear-gradient(
+        135deg,
+        rgba(0,114,206,0.12),
+        rgba(0,114,206,0.04)
+    );
+
+    border:1px solid rgba(0,114,206,0.18);
 }
 
 .vyapam-card{
 
-    background:#eef9ee;
+    background:
+    linear-gradient(
+        135deg,
+        rgba(0,166,81,0.12),
+        rgba(0,166,81,0.04)
+    );
+
+    border:1px solid rgba(0,166,81,0.18);
 }
 
 .progress-circle{
@@ -459,6 +473,7 @@ border:1px solid rgba(0,114,206,0.12);
     .progress-card{
 
         min-width:100%;
+        backdrop-filter:blur(8px);
     }
 
     .table-box{
