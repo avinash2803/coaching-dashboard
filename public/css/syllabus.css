@@ -23,15 +23,13 @@
 
 .title-row{
 
-    width:100%;
+    width:85%;
 
-    max-width:1400px;
-
-    margin:0 auto 30px;
+    margin:0 auto 15px;
 
     display:flex;
 
-    justify-content:flex-start;
+    flex-direction:column;
 
     align-items:flex-start;
 }
@@ -41,10 +39,13 @@
 
     align-items:center;
 
-    gap:20px;
+    gap:22px;
 
     flex-wrap:wrap;
+
+    margin-bottom:10px;
 }
+
 .title-left{
 
     width:100%;
@@ -82,7 +83,7 @@
 
 .page-subtitle{
 
-    margin-top:6px;
+    margin-top:0;
 
     color:#6B7280;
 
@@ -129,7 +130,7 @@
 
     width:85%;
 
-    margin:0 auto 18px;
+    margin:0 auto 10px;
 
     font-size:34px;
 
@@ -145,18 +146,18 @@
 
 max-width:1300px;
 
-    margin:0 auto 25px;
+    margin:0 auto 15px;
 
     background:white;
 
-    padding:28px;
+    padding:15px 20px;
 
     border-radius:28px;
 
     box-shadow:
     0 10px 30px rgba(0,0,0,0.08);
 
-    height:560px;
+    height:540px;
 }
 
 .graph-header{
@@ -198,9 +199,14 @@ max-width:1300px;
 
     width:100% !important;
 
-    margin-top:0;
+    margin-top:1px;
 }
+.chart-container{
 
+    position:relative;
+
+    top:-12px;
+}
 
 /* =========================
    PROGRESS CARDS
@@ -210,7 +216,7 @@ max-width:1300px;
 
     width:85%;
 
-    margin:18px auto 10px;
+    margin:10px auto 2px;
 
     display:flex;
 
