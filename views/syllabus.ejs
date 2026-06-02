@@ -220,7 +220,7 @@ function changeYear(year){
 
 async function loadGraph(){
 
-    const year = "<%= year %>";
+    const year = "<%= selectedYear %>";
 
     const response = await fetch(`/admin/api/monthly-progress/${year}`);
 
@@ -424,5 +424,5 @@ legend:{
 loadGraph();
 
 </script>
-
+</div>
 <%- include("partials/footer") %>
