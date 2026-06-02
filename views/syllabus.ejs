@@ -3,35 +3,59 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <div class="page-content">
+<div class="title-section">
+
 <div class="title-row">
 
-    <div class="title-left">
+   <div class="title-left">
+
+    <div class="title-top">
 
         <h1 class="title">Syllabus Status</h1>
 
-        <p class="page-subtitle">
+        <select
+        class="year-dropdown"
+        onchange="window.location.href='/admin/syllabus?year=' + this.value">
+
+            <option
+            value="2025-26"
+            <%= selectedYear === "2025-26"
+            ? "selected" : "" %>>
+                2025-26 (Year 1)
+            </option>
+
+            <option
+            value="2026-27"
+            <%= selectedYear === "2026-27"
+            ? "selected" : "" %>>
+                2026-27 (Year 2)
+            </option>
+
+            <option
+            value="2027-28"
+            <%= selectedYear === "2027-28"
+            ? "selected" : "" %>>
+                2027-28 (Year 3)
+            </option>
+
+            <option
+            value="2028-29"
+            <%= selectedYear === "2028-29"
+            ? "selected" : "" %>>
+                2028-29 (Year 4)
+            </option>
+
+        </select>
+
+    </div>
+</div>
+
+<p class="page-subtitle">
             Here are the syllabus completion status along with
             month-wise progress chart and subject-wise completion table.
         </p>
-
-        <div class="dropdown-row">
-
-            <select onchange="window.location.href='/admin/syllabus?year=' + this.value">
-
-                <option value="2025-26" <%= year === '2025-26' ? 'selected' : '' %>>
-                    2025-26
-                </option>
-
-                <option value="2026-27" <%= year === '2026-27' ? 'selected' : '' %>>
-                    2026-27
-                </option>
-
-            </select>
-
         </div>
-
-    </div>
-
+</div>
     
 <div class="graph-box">
 
@@ -45,7 +69,37 @@
 
 <div class="divider"></div>
 
-  
+   <div class="progress-cards">
+
+        <div class="progress-card cgpsc-card"
+        onclick="showTab('CGpsc')">
+
+            <div class="progress-circle blue">
+                <span><%= CGpscProgress %>%</span>
+            </div>
+
+            <div>
+                <h2>CGPSC - <%= CGpscProgress %>%</h2>
+                <p>Syllabus Completed</p>
+            </div>
+
+        </div>
+
+        <div class="progress-card vyapam-card"
+        onclick="showTab('vyapam')">
+
+            <div class="progress-circle green">
+                <span><%= vyapamProgress %>%</span>
+            </div>
+
+            <div>
+                <h2>VYAPAM - <%= vyapamProgress %>%</h2>
+                <p>Syllabus Completed</p>
+            </div>
+
+        </div>
+
+    </div>
   
   <!-- 👇 IMPORTANT: table div ke andar -->
 <div id="CGpscTable" class="table-box">
@@ -83,41 +137,6 @@
       <td colspan="8">No data found</td>
     </tr>
   <% } %>
-
-  <div class="progress-cards">
-
-        <div class="progress-card cgpsc-card"
-        onclick="showTab('CGpsc')">
-
-            <div class="progress-circle blue">
-                <span><%= CGpscProgress %>%</span>
-            </div>
-
-            <div>
-                <h2>CGPSC - <%= CGpscProgress %>%</h2>
-                <p>Syllabus Completed</p>
-            </div>
-
-        </div>
-
-        <div class="progress-card vyapam-card"
-        onclick="showTab('vyapam')">
-
-            <div class="progress-circle green">
-                <span><%= vyapamProgress %>%</span>
-            </div>
-
-            <div>
-                <h2>VYAPAM - <%= vyapamProgress %>%</h2>
-                <p>Syllabus Completed</p>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
 
 </tbody>
   </table>
@@ -161,7 +180,11 @@
   </table>
 </div>
 
+
+
 <!-- table ke baad -->
+
+
 <script>
 
 function showTab(tab) {
