@@ -182,13 +182,13 @@
 
     width:100% !important;
 
-    margin-top:10px;
+    margin-top:0;
 }
 .chart-container{
 
     position:relative;
 
-    top:-20px;
+    top:0;
 }
 
 /* =========================
