@@ -136,8 +136,6 @@
 
     margin:0 auto 6px;
 
-    padding-left:18px;
-
     font-size:34px;
 
     font-weight:800;
@@ -146,17 +144,29 @@
 
     line-height:1.2;
 }
+.graph-title{
+
+    margin:0 0 2px 8px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#111827;
+}
 .graph-box{
 
     width:85%;
 
-max-width:1300px;
+    max-width:1300px;
 
     margin:0 auto 15px;
 
     background:white;
 
-    padding:5px 10px;
+    padding:18px 18px 8px;
+
+    border-radius:28px;
 
     border-radius:28px;
 
@@ -166,40 +176,7 @@ max-width:1300px;
     height:540px;
 }
 
-.graph-header{
 
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:8px;
-}
-
-.graph-header h2{
-
-    margin:0;
-
-    font-size:18px;
-
-    font-weight:500;
-
-    color:#111827;
-
-    line-height:1.2;
-}
-
-.graph-subtitle{
-
-    margin-top:8px;
-
-    color:#6B7280;
-
-    font-size:15px;
-
-    line-height:1.6;
-}
 
 #syllabusChart{
 
