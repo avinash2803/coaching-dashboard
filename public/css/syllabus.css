@@ -162,12 +162,7 @@
 
     margin:0 auto 15px;
 
-    background:
-linear-gradient(
-    135deg,
-    rgba(0,114,206,0.08),
-    rgba(0,166,81,0.05)
-);
+    background:white;
 
 border:1px solid rgba(0,114,206,0.12);
 
