@@ -180,11 +180,15 @@ const cgProgress = cg?.progress || 0;
 const vyapamProgress = vy?.progress || 0;
 
 res.render("syllabus", {
-  year, // ✅ ADD THIS
+
+  selectedYear: year,
+
   CGpscData,
   vyapamData,
+
   CGpscProgress: cgProgress,
   vyapamProgress: vyapamProgress
+
 });
 });
 
