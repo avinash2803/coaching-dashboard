@@ -4,53 +4,65 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <div class="page-content">
 <div class="title-row">
- <div class="title-content">
 
-  <h1 class="title">Syllabus Status</h1>
+    <div class="title-left">
 
-  <p class="page-subtitle">
-    Here are the syllabus completion status along with
-    month-wise progress chart and subject-wise completion table.
-  </p>
+        <h1 class="title">Syllabus Status</h1>
 
-</div>
+        <p class="page-subtitle">
+            Here are the syllabus completion status along with
+            month-wise progress chart and subject-wise completion table.
+        </p>
 
-  <select onchange="window.location.href='/admin/syllabus?year=' + this.value">
-  <option value="2025-26" <%= year === '2025-26' ? 'selected' : '' %>>2025-26</option>
-  <option value="2026-27" <%= year === '2026-27' ? 'selected' : '' %>>2026-27</option>
-</select>
-</div>
+        <div class="dropdown-row">
 
-<!-- ✅ YAHAN ADD KARNA HAI -->
-  <div class="progress-cards">
+            <select onchange="window.location.href='/admin/syllabus?year=' + this.value">
 
-  <div class="progress-card cgpsc-card"
-onclick="showTab('CGpsc')">
+                <option value="2025-26" <%= year === '2025-26' ? 'selected' : '' %>>
+                    2025-26
+                </option>
 
-    <div class="progress-circle blue">
-      <span><%= CGpscProgress %>%</span>
+                <option value="2026-27" <%= year === '2026-27' ? 'selected' : '' %>>
+                    2026-27
+                </option>
+
+            </select>
+
+        </div>
+
     </div>
 
-    <div>
-      <h2>CGPSC - <%= CGpscProgress %>%</h2>
-      <p>Syllabus Completed</p>
+    <div class="progress-cards">
+
+        <div class="progress-card cgpsc-card"
+        onclick="showTab('CGpsc')">
+
+            <div class="progress-circle blue">
+                <span><%= CGpscProgress %>%</span>
+            </div>
+
+            <div>
+                <h2>CGPSC - <%= CGpscProgress %>%</h2>
+                <p>Syllabus Completed</p>
+            </div>
+
+        </div>
+
+        <div class="progress-card vyapam-card"
+        onclick="showTab('vyapam')">
+
+            <div class="progress-circle green">
+                <span><%= vyapamProgress %>%</span>
+            </div>
+
+            <div>
+                <h2>VYAPAM - <%= vyapamProgress %>%</h2>
+                <p>Syllabus Completed</p>
+            </div>
+
+        </div>
+
     </div>
-
-  </div>
-
-  <div class="progress-card vyapam-card"
-onclick="showTab('vyapam')">
-
-    <div class="progress-circle green">
-      <span><%= vyapamProgress %>%</span>
-    </div>
-
-    <div>
-      <h2>VYAPAM - <%= vyapamProgress %>%</h2>
-      <p>Syllabus Completed</p>
-    </div>
-
-  </div>
 
 </div>
 
