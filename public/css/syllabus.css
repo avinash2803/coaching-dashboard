@@ -364,18 +364,20 @@ border:1px solid rgba(0,114,206,0.12);
 
 .syllabus-table th{
 
-    padding:18px 20px;
+    padding:18px 24px;
 
     text-align:center;
 
     font-size:15px;
 
     font-weight:700;
+
+    white-space:nowrap;
 }
 
 .syllabus-table td{
 
-    padding:18px 20px;
+    padding:18px 24px;
 
     text-align:center;
 
@@ -385,8 +387,38 @@ border:1px solid rgba(0,114,206,0.12);
 
     border-bottom:
     1px solid #E5E7EB;
+
+    white-space:nowrap;
+}
+.syllabus-table th:nth-child(2),
+.syllabus-table td:nth-child(2){
+
+    text-align:left;
+
+    min-width:300px;
+}
+.syllabus-table th:nth-child(4),
+.syllabus-table td:nth-child(4),
+
+.syllabus-table th:nth-child(5),
+.syllabus-table td:nth-child(5){
+
+    min-width:160px;
 }
 
+.syllabus-table th:nth-child(6),
+.syllabus-table td:nth-child(6),
+
+.syllabus-table th:nth-child(7),
+.syllabus-table td:nth-child(7){
+
+    min-width:110px;
+}
+.syllabus-table th:nth-child(3),
+.syllabus-table td:nth-child(3){
+
+    text-align:left;
+}
 .syllabus-table tbody tr:nth-child(even){
 
     background:#F9FAFB;
