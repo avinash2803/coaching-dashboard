@@ -71,7 +71,7 @@ margin-bottom:30px;
 /* STORY CARD */
 
 .story-card{
-width:170px;
+width:190px;
 
 background:
 linear-gradient(180deg,#ffffff,#f8fbff);
@@ -102,7 +102,7 @@ display:flex;
 flex-direction:column;
 align-items:center;
 
-min-height:220px;
+min-height:230px;
 }
 
 
@@ -143,14 +143,14 @@ transform:scale(1.1);
 /* CARD TEXT */
 
 .story-card h3{
-font-size:16px;
+font-size:17px;
 font-weight:700;
 
 line-height:1.4;
 
 margin:12px 0 6px;
 
-color:#0072ce;
+color:#005fa3;
 }
 
 .story-card p{
@@ -301,10 +301,12 @@ grid-column: 1 / -1;
 
 /* TAGLINE */
 .tagline{
-font-size:12px;
-line-height:1.6;
+font-size:13px;
+line-height:1.7;
 
-color:#475569;
+color:#334155;
+
+font-weight:500;
 
 margin-bottom:10px;
 
