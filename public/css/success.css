@@ -5,9 +5,9 @@ padding-top:20px;
 .container{
 max-width:1280px;
 
-padding:45px 30px 40px;
+padding:30px 10px 40px;
 
-margin-top:10;
+margin-top:20px;
 }
 /* SUCCESS HEADER */
 
@@ -23,8 +23,9 @@ padding-left:-5px;
 
 .success-header-left{
 max-width:700px;
-}
 
+margin-left:-15px;
+}
 .success-title{
 font-size:48px;
 font-weight:800;
