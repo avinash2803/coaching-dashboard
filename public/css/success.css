@@ -80,11 +80,17 @@ border-radius:22px;
 
 padding:16px 12px;
 
-border:
-1px solid rgba(0,114,206,0.08);
+border:2px solid transparent;
+
+background-image:
+linear-gradient(#ffffff,#f8fbff),
+linear-gradient(135deg,#0072ce,#00a651);
+
+background-origin:border-box;
+background-clip:padding-box,border-box;
 
 box-shadow:
-0 6px 20px rgba(0,114,206,0.06);
+0 8px 24px rgba(0,114,206,0.08);
 
 transition:all .3s ease;
 
@@ -103,13 +109,14 @@ min-height:220px;
 /* HOVER EFFECT */
 
 .story-card:hover{
-transform:translateY(-6px);
+transform:translateY(-8px);
 
 box-shadow:
-0 14px 30px rgba(0,114,206,0.14);
+0 18px 34px rgba(0,114,206,0.14);
 
-border-color:
-rgba(0,166,81,0.2);
+background-image:
+linear-gradient(#ffffff,#ffffff),
+linear-gradient(135deg,#00a651,#0072ce);
 }
 
 /* CARD IMAGE */
