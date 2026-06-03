@@ -168,9 +168,7 @@ border:1px solid rgba(0,114,206,0.12);
 
     padding:12px 18px 15px;
 
-    border-radius:28px;
-
-    border-radius:28px;
+    border-radius:20px;
 
     box-shadow:
     0 10px 30px rgba(0,0,0,0.08);
@@ -325,7 +323,7 @@ border:1px solid rgba(0,114,206,0.12);
 
 .table-box{
 
-    width:90%;
+    width:95%;
 
     margin:40px auto 0;
 
@@ -347,7 +345,7 @@ border:1px solid rgba(0,114,206,0.12);
 
     border-collapse:collapse;
 
-    min-width:1000px;
+    min-width:1050px;
 }
 
 .syllabus-table thead{
@@ -478,7 +476,7 @@ border:1px solid rgba(0,114,206,0.12);
 
         width:100%;
 
-        padding:18px;
+        padding:8px;
 
         height:480px;
     }
