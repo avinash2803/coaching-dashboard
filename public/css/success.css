@@ -2,14 +2,22 @@
 body{
 padding-top:20px;
 }
+.container{
+max-width:1280px;
 
+padding:20px 40px 40px;
+
+margin-top:0;
+}
 /* SUCCESS HEADER */
 
 .success-header{
 display:flex;
 justify-content:space-between;
-align-items:center;
-margin-bottom:30px;
+align-items:flex-start;
+
+margin-bottom:20px;
+
 padding:0;
 }
 
@@ -143,7 +151,7 @@ transform:scale(1.1);
 /* CARD TEXT */
 
 .story-card h3{
-font-size:17px;
+font-size:20px;
 font-weight:700;
 
 line-height:1.4;
@@ -301,7 +309,7 @@ grid-column: 1 / -1;
 
 /* TAGLINE */
 .tagline{
-font-size:13px;
+font-size:17px;
 line-height:1.7;
 
 color:#334155;
@@ -320,7 +328,7 @@ linear-gradient(90deg,#0072ce,#00a651);
 
 color:white;
 
-font-size:11px;
+font-size:14px;
 font-weight:700;
 
 padding:7px 12px;
