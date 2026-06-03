@@ -39,7 +39,7 @@ let filter = {
 
 if(
   selectedYear &&
-  selectedYear !== "all"
+selectedYear.toLowerCase() !== "all"
 ){
 
   filter.year =
@@ -298,7 +298,8 @@ totalMainsTests;
 let analyticsData = {};
 
 if(
-  selectedYear === "all"
+  !selectedYear ||
+  selectedYear.toLowerCase() === "all"
 ){
 
   const allAnalytics =
