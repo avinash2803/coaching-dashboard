@@ -1,7 +1,8 @@
 <%- include("partials/header") %>
 
 <link rel="stylesheet" href="/css/success.css">
-
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <div class="container mt-5 pt-5">
 
 <div class="success-header">
@@ -23,8 +24,8 @@
     </div>
 
     <div class="success-trophy">
-        🏆
-    </div>
+   <i class="fas fa-trophy"></i>
+</div>
 
 </div>
 
@@ -46,7 +47,6 @@ data-story="<%- story.story %>"
 onclick="openStory(this)"
 >
 
-<div class="story-image">
 
 <div class="story-image">
 
@@ -54,7 +54,6 @@ onclick="openStory(this)"
 
 </div>
 
-</div>
 
 <h3><%= story.name %></h3>
 
@@ -115,6 +114,13 @@ const story = card.dataset.story;
 const layout = document.getElementById("storyDetail");
 
 layout.style.display="flex";
+
+setTimeout(()=>{
+layout.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+},200);
 
 setTimeout(()=>{
 layout.style.opacity="1";
