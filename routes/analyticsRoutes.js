@@ -295,10 +295,53 @@ totalClassTests +
 totalMockTests +
 totalMainsTests;
 
-const analyticsData =
-await Analytics.findOne({
-  year: selectedYear
-}) || {};
+let analyticsData = {};
+
+if(
+  selectedYear === "all"
+){
+
+  const allAnalytics =
+  await Analytics.find();
+
+  analyticsData = {
+
+    totalStudents:
+    allAnalytics.reduce(
+      (sum, item) =>
+      sum + (item.totalStudents || 0),
+      0
+    ),
+
+    activeStudents:
+    allAnalytics.reduce(
+      (sum, item) =>
+      sum + (item.activeStudents || 0),
+      0
+    ),
+
+    dropoutStudents:
+    allAnalytics.reduce(
+      (sum, item) =>
+      sum + (item.dropoutStudents || 0),
+      0
+    ),
+
+    employedStudents:
+    allAnalytics.reduce(
+      (sum, item) =>
+      sum + (item.employedStudents || 0),
+      0
+    )
+  };
+
+}else{
+
+  analyticsData =
+  await Analytics.findOne({
+    year: selectedYear
+  }) || {};
+}
 
 let totalDays = 0;
 
