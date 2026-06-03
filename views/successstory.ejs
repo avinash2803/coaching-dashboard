@@ -4,7 +4,29 @@
 
 <div class="container mt-5 pt-5">
 
-<h1 class="text-center mb-4">Success Stories</h1>
+<div class="success-header">
+
+    <div class="success-header-left">
+
+        <h1 class="success-title">
+            Success Stories
+        </h1>
+
+        <div class="success-line"></div>
+
+        <p class="success-subtitle">
+            Real journeys of determination, guidance and hard work.
+            <br>
+            Our students, our pride.
+        </p>
+
+    </div>
+
+    <div class="success-trophy">
+        🏆
+    </div>
+
+</div>
 
 <!-- STORY CARDS -->
 
@@ -24,7 +46,15 @@ data-story="<%- story.story %>"
 onclick="openStory(this)"
 >
 
-<img src="<%= photoUrl %>" alt="<%= story.name %>">
+<div class="story-image">
+
+<div class="story-image">
+
+   <img src="<%= photoUrl %>" alt="<%= story.name %>">
+
+</div>
+
+</div>
 
 <h3><%= story.name %></h3>
 
