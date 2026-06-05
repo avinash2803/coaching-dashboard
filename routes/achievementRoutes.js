@@ -137,7 +137,13 @@ if (year === "all") {
 // 👉 SAVE DASHBOARD STATS
 router.post("/admin/save-dashboard-stats", async (req, res) => {
   try {
-    const { year, students, qualified, employment } = req.body;
+    const {
+  year,
+  students,
+  qualified,
+  employment,
+  achievementNote
+} = req.body;
 
 // ✅ SAVE DIRECTLY (same format as frontend)
 await Dashboardstats.findOneAndUpdate(
@@ -149,7 +155,8 @@ await Dashboardstats.findOneAndUpdate(
       girls: Number(students?.girls) || 0
     },
     qualified: qualified || [],
-    employment: employment || []
+employment: employment || [],
+achievementNote: achievementNote || ""
   },
   { upsert: true }
 );

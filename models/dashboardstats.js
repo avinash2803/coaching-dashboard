@@ -23,7 +23,12 @@ qualified: [
     boys: Number,
     girls: Number
   }
-]
+],
+
+achievementNote: {
+  type: String,
+  default: ""
+}
 
 }, { timestamps: true });
 

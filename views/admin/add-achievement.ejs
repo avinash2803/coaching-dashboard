@@ -113,6 +113,14 @@
 <input type="number" id="boysCount" placeholder="Boys">
 <input type="number" id="girlsCount" placeholder="Girls">
 
+<h4>Achievement Note</h4>
+
+<textarea
+id="achievementNote"
+rows="4"
+placeholder="Enter qualification/employment note..."
+style="width:100%;padding:10px;"></textarea>
+
 <h4>Qualified Exams</h4>
 
 <div id="examContainer"></div>
@@ -185,13 +193,19 @@ document.querySelectorAll("#employment-container > div").forEach(row => {
 // 👉 STEP B: data object banana
 const data = {
   year,
+
   students: {
     total: +document.getElementById("totalStudents").value || 0,
     boys: +document.getElementById("boysCount").value || 0,
     girls: +document.getElementById("girlsCount").value || 0
   },
+
   qualified: exams,
-  employment   // ✅ bas ye likhna hai
+
+  employment,
+
+  achievementNote:
+    document.getElementById("achievementNote").value
 };
 
 await fetch("/admin/save-dashboard-stats", {
@@ -218,7 +232,8 @@ async function loadDashboardStats() {
 document.getElementById("totalStudents").value = data.students?.total || "";
 document.getElementById("boysCount").value = data.students?.boys || "";
 document.getElementById("girlsCount").value = data.students?.girls || "";
-
+document.getElementById("achievementNote").value =
+data.achievementNote || "";
 // employment
 document.getElementById("employment-container").innerHTML = "";
 

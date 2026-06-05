@@ -138,11 +138,25 @@ unique students.
         </span>
 
       </div>
+      
 
     <% }) %>
 
-  </div>
+    <% if(stats?.achievementNote){ %>
 
+    <div class="qualification-note-box">
+
+      <h4>📝 Insights</h4>
+
+      <p>
+        <%= stats.achievementNote %>
+      </p>
+
+    </div>
+
+    <% } %>
+
+  </div>
 
   <!-- Employment -->
 

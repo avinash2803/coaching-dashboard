@@ -7,7 +7,13 @@ const router = express.Router();
 // ✅ SAVE (Create ya Update)
 router.post("/save-dashboard-stats", async (req, res) => {
   try {
-    const { year, students, qualified, employment } = req.body;
+    const {
+  year,
+  students,
+  qualified,
+  employment,
+  achievementNote
+} = req.body;
 
     if (!year) {
       return res.status(400).json({ error: "Year is required" });
@@ -20,16 +26,18 @@ router.post("/save-dashboard-stats", async (req, res) => {
       existing.students = students;
       existing.qualified = qualified;
       existing.employment = employment;
+      existing.achievementNote = achievementNote;
 
       await existing.save();
     } else {
       // create new
       await Dashboardstats.create({
-        year,
-        students,
-        qualified,
-        employment
-      });
+  year,
+  students,
+  qualified,
+  employment,
+  achievementNote
+});
     }
 
     res.json({ success: true, message: "Dashboard data saved" });
