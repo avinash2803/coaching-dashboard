@@ -105,33 +105,39 @@ unique students.
 
   <!-- Qualification -->
 
- <div class="summary-item">
+  <div class="summary-panel">
 
-  <div>
+    <h2>🎯 Qualification Summary</h2>
 
-    <div class="summary-name">
-      <%= exam.name %>
-    </div>
+    <% stats?.qualified?.forEach(exam => { %>
 
-    <div class="summary-breakup">
+      <div class="summary-item">
 
-      <span class="boys-tag">
-        👨‍🎓 Boys: <%= exam.boys || 0 %>
-      </span>
+        <div>
 
-      <span class="girls-tag">
-        👩‍🎓 Girls: <%= exam.girls || 0 %>
-      </span>
+          <div class="summary-name">
+            <%= exam.name %>
+          </div>
 
-    </div>
+          <div class="summary-breakup">
 
-  </div>
+            <span class="boys-tag">
+              👨‍🎓 Boys: <%= exam.boys || 0 %>
+            </span>
 
-  <span class="summary-total">
-    <%= (exam.boys || 0) + (exam.girls || 0) %>
-  </span>
+            <span class="girls-tag">
+              👩‍🎓 Girls: <%= exam.girls || 0 %>
+            </span>
 
-</div>
+          </div>
+
+        </div>
+
+        <span class="summary-total">
+          <%= (exam.boys || 0) + (exam.girls || 0) %>
+        </span>
+
+      </div>
 
     <% }) %>
 
@@ -140,33 +146,39 @@ unique students.
 
   <!-- Employment -->
 
-  <div class="summary-item">
+  <div class="summary-panel">
 
-  <div>
+    <h2>💼 Employment Summary</h2>
 
-    <div class="summary-name">
-      <%= emp.name %>
-    </div>
+    <% stats?.employment?.forEach(emp => { %>
 
-    <div class="summary-breakup">
+      <div class="summary-item">
 
-      <span class="boys-tag">
-        👨‍🎓 Boys: <%= emp.boys || 0 %>
-      </span>
+        <div>
 
-      <span class="girls-tag">
-        👩‍🎓 Girls: <%= emp.girls || 0 %>
-      </span>
+          <div class="summary-name">
+            <%= emp.name %>
+          </div>
 
-    </div>
+          <div class="summary-breakup">
 
-  </div>
+            <span class="boys-tag">
+              👨‍🎓 Boys: <%= emp.boys || 0 %>
+            </span>
 
-  <span class="summary-total">
-    <%= (emp.boys || 0) + (emp.girls || 0) %>
-  </span>
+            <span class="girls-tag">
+              👩‍🎓 Girls: <%= emp.girls || 0 %>
+            </span>
 
-</div>
+          </div>
+
+        </div>
+
+        <span class="summary-total">
+          <%= (emp.boys || 0) + (emp.girls || 0) %>
+        </span>
+
+      </div>
 
     <% }) %>
 
@@ -174,7 +186,7 @@ unique students.
 
 </div>
 
-  <div class="achievement-content-full">
+<div class="achievement-content-full">
 
     <div class="achievement-grid">
 
