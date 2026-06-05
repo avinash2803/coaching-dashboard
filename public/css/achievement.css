@@ -238,9 +238,9 @@ margin:auto;
 /* ===== NEW ACHIEVEMENT DESIGN ===== */
 
 .achievement-page{
-max-width:1280px;
+max-width:1400px;
 margin:auto;
-padding:25px;
+padding:20px 12px;
 }
 
 .achievement-hero{
@@ -525,9 +525,17 @@ margin:25px 0;
 
 .overview-title h2{
 margin:0;
+padding-bottom:4px;
+line-height:1.2;
 font-size:30px;
 font-weight:700;
-background:linear-gradient(90deg,#0d6efd,#12b886);
+
+background:linear-gradient(
+90deg,
+#0d6efd,
+#12b886
+);
+
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
@@ -586,13 +594,22 @@ margin:35px 0 25px;
 margin:0;
 font-size:32px;
 font-weight:700;
-background:linear-gradient(90deg,#0d6efd,#12b886);
+display:inline-block;
+
+background:linear-gradient(
+90deg,
+#0d6efd,
+#12b886
+);
+
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
+background-clip:text;
 }
 
 .achievement-section-header p{
 margin-top:8px;
 font-size:15px;
-color:#64748b;
+color:#000;
+font-weight:500;
 }
