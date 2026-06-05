@@ -101,6 +101,71 @@ Therefore achievement totals may exceed the number of
 unique students.
 
 </div>
+<!-- Qualification Summary -->
+
+<div class="summary-section">
+
+  <h2>🎯 Qualification Summary</h2>
+
+  <div class="summary-grid">
+
+    <% stats?.qualified?.forEach(exam => { %>
+
+      <div class="summary-card">
+
+        <h3><%= exam.name %></h3>
+
+        <div class="summary-count">
+          <%= (exam.boys || 0) + (exam.girls || 0) %>
+        </div>
+
+        <div class="summary-gender">
+          👦 <%= exam.boys || 0 %>
+          &nbsp;&nbsp;
+          👧 <%= exam.girls || 0 %>
+        </div>
+
+      </div>
+
+    <% }) %>
+
+  </div>
+
+</div>
+
+
+<!-- Employment Summary -->
+
+<div class="summary-section">
+
+  <h2>💼 Employment Summary</h2>
+
+  <div class="summary-grid">
+
+    <% stats?.employment?.forEach(emp => { %>
+
+      <div class="summary-card">
+
+        <h3><%= emp.name %></h3>
+
+        <div class="summary-count">
+          <%= (emp.boys || 0) + (emp.girls || 0) %>
+        </div>
+
+        <div class="summary-gender">
+          👦 <%= emp.boys || 0 %>
+          &nbsp;&nbsp;
+          👧 <%= emp.girls || 0 %>
+        </div>
+
+      </div>
+
+    <% }) %>
+
+  </div>
+
+</div>
+
   <div class="achievement-content-full">
 
     <div class="achievement-grid">
