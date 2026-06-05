@@ -6,7 +6,7 @@
 
   <div class="hero-content">
 
-    <h1>🏆 Achievements</h1>
+    <h1>🏆Achievements</h1>
 
     <p class="hero-subtitle">
       Celebrating Student Success & Milestones
@@ -25,44 +25,65 @@
 
 </div>
 
-<div class="year-filter-bar">
+<div class="overview-header">
 
-<select onchange="window.location='?year='+this.value">
+  <div class="overview-title">
+    <h2>Program Achievement Overview</h2>
+  </div>
 
-<option value="all" <%= (year === "all") ? "selected" : "" %>>
-All Years
-</option>
+  <div class="achievement-filter-section">
 
-<option value="2025-26" <%= (year === "2025-26") ? "selected" : "" %>>
-2025-26
-</option>
+  <span class="filter-label">
+    Academic Year
+  </span>
 
-<option value="2026-27" <%= (year === "2026-27") ? "selected" : "" %>>
-2026-27
-</option>
+  <select onchange="window.location='?year='+this.value">
 
-<option value="2027-28" <%= (year === "2027-28") ? "selected" : "" %>>
-2027-28
-</option>
+      <option value="all" <%= year==="all" ? "selected" : "" %>>
+        All Years
+      </option>
 
-<option value="2028-29" <%= (year === "2028-29") ? "selected" : "" %>>
-2028-29
-</option>
+      <option value="2025-26" <%= year==="2025-26" ? "selected" : "" %>>
+        2025-26 (Year 1)
+      </option>
 
-</select>
+      <option value="2026-27" <%= year==="2026-27" ? "selected" : "" %>>
+        2026-27 (Year 2)
+      </option>
+
+      <option value="2027-28" <%= year==="2027-28" ? "selected" : "" %>>
+        2027-28 (Year 3)
+      </option>
+
+      <option value="2028-29" <%= year==="2028-29" ? "selected" : "" %>>
+        2028-29 (Year 4)
+      </option>
+
+    </select>
+
+  </div>
 
 </div>
 
 <%
 let totalQualified = 0;
-stats?.qualified?.forEach(q=>{
-totalQualified += (q.boys||0)+(q.girls||0);
+stats?.qualified?.forEach(q => {
+  totalQualified += (q.boys || 0) + (q.girls || 0);
 });
 
 let totalEmployment = 0;
-stats?.employment?.forEach(e=>{
-totalEmployment += (e.boys||0)+(e.girls||0);
+stats?.employment?.forEach(e => {
+  totalEmployment += (e.boys || 0) + (e.girls || 0);
 });
+
+let selectionRate = 0;
+
+if ((stats?.students?.total || 0) > 0) {
+  selectionRate = Math.round(
+    ((totalQualified + totalEmployment) /
+      stats.students.total) * 100
+  );
+}
 %>
 
 <div class="kpi-grid">
@@ -83,8 +104,8 @@ totalEmployment += (e.boys||0)+(e.girls||0);
 </div>
 
 <div class="kpi-card">
-<h3><%= achievements?.length || 0 %></h3>
-<p>Achievement Records</p>
+<h3><%= selectionRate %>%</h3>
+<p>Selection Rate</p>
 </div>
 
 </div>
