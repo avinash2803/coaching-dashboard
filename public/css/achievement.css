@@ -588,6 +588,16 @@ font-size:24px;
 
 .achievement-section-header{
 margin:35px 0 25px;
+padding:18px 22px;
+
+background:linear-gradient(
+90deg,
+#fffdf5,
+#fff9e6
+);
+
+border-left:5px solid #f4b400;
+border-radius:14px;
 }
 
 .achievement-section-header h2{
@@ -613,3 +623,4 @@ font-size:15px;
 color:#000;
 font-weight:500;
 }
+
