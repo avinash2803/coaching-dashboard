@@ -101,29 +101,25 @@ Therefore achievement totals may exceed the number of
 unique students.
 
 </div>
-<!-- Qualification Summary -->
+<div class="summary-row">
 
-<div class="summary-section">
+  <!-- Qualification -->
 
-  <h2>🎯 Qualification Summary</h2>
+  <div class="summary-panel">
 
-  <div class="summary-grid">
+    <h2>🎯 Qualification Summary</h2>
 
     <% stats?.qualified?.forEach(exam => { %>
 
-      <div class="summary-card">
+      <div class="summary-item">
 
-        <h3><%= exam.name %></h3>
+        <span class="summary-name">
+          <%= exam.name %>
+        </span>
 
-        <div class="summary-count">
+        <span class="summary-total">
           <%= (exam.boys || 0) + (exam.girls || 0) %>
-        </div>
-
-        <div class="summary-gender">
-          👦 <%= exam.boys || 0 %>
-          &nbsp;&nbsp;
-          👧 <%= exam.girls || 0 %>
-        </div>
+        </span>
 
       </div>
 
@@ -131,32 +127,24 @@ unique students.
 
   </div>
 
-</div>
 
+  <!-- Employment -->
 
-<!-- Employment Summary -->
+  <div class="summary-panel">
 
-<div class="summary-section">
-
-  <h2>💼 Employment Summary</h2>
-
-  <div class="summary-grid">
+    <h2>💼 Employment Summary</h2>
 
     <% stats?.employment?.forEach(emp => { %>
 
-      <div class="summary-card">
+      <div class="summary-item">
 
-        <h3><%= emp.name %></h3>
+        <span class="summary-name">
+          <%= emp.name %>
+        </span>
 
-        <div class="summary-count">
+        <span class="summary-total">
           <%= (emp.boys || 0) + (emp.girls || 0) %>
-        </div>
-
-        <div class="summary-gender">
-          👦 <%= emp.boys || 0 %>
-          &nbsp;&nbsp;
-          👧 <%= emp.girls || 0 %>
-        </div>
+        </span>
 
       </div>
 
