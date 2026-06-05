@@ -105,23 +105,33 @@ unique students.
 
   <!-- Qualification -->
 
-  <div class="summary-panel">
+ <div class="summary-item">
 
-    <h2>🎯 Qualification Summary</h2>
+  <div>
 
-    <% stats?.qualified?.forEach(exam => { %>
+    <div class="summary-name">
+      <%= exam.name %>
+    </div>
 
-      <div class="summary-item">
+    <div class="summary-breakup">
 
-        <span class="summary-name">
-          <%= exam.name %>
-        </span>
+      <span class="boys-tag">
+        👨‍🎓 Boys: <%= exam.boys || 0 %>
+      </span>
 
-        <span class="summary-total">
-          <%= (exam.boys || 0) + (exam.girls || 0) %>
-        </span>
+      <span class="girls-tag">
+        👩‍🎓 Girls: <%= exam.girls || 0 %>
+      </span>
 
-      </div>
+    </div>
+
+  </div>
+
+  <span class="summary-total">
+    <%= (exam.boys || 0) + (exam.girls || 0) %>
+  </span>
+
+</div>
 
     <% }) %>
 
@@ -130,23 +140,33 @@ unique students.
 
   <!-- Employment -->
 
-  <div class="summary-panel">
+  <div class="summary-item">
 
-    <h2>💼 Employment Summary</h2>
+  <div>
 
-    <% stats?.employment?.forEach(emp => { %>
+    <div class="summary-name">
+      <%= emp.name %>
+    </div>
 
-      <div class="summary-item">
+    <div class="summary-breakup">
 
-        <span class="summary-name">
-          <%= emp.name %>
-        </span>
+      <span class="boys-tag">
+        👨‍🎓 Boys: <%= emp.boys || 0 %>
+      </span>
 
-        <span class="summary-total">
-          <%= (emp.boys || 0) + (emp.girls || 0) %>
-        </span>
+      <span class="girls-tag">
+        👩‍🎓 Girls: <%= emp.girls || 0 %>
+      </span>
 
-      </div>
+    </div>
+
+  </div>
+
+  <span class="summary-total">
+    <%= (emp.boys || 0) + (emp.girls || 0) %>
+  </span>
+
+</div>
 
     <% }) %>
 
@@ -167,20 +187,18 @@ unique students.
 
   <div class="certificate" id="certificate-<%= item._id %>">
 
-    <h3 class="title">Congratulations</h3>
-
+    
     <div class="photo-wrapper">
       <img src="/api/upload/<%= item.studentId?.photoId %>" class="profile" />
     </div>
 
-    <p class="quote">
-      From Classroom Walls <br> to Success Halls
-    </p>
-
     <h2 class="name">
-  <%= item.studentId?.name %> -
-  <span class="course-text"><%= item.studentId?.course %></span>
+  <%= item.studentId?.name %>
 </h2>
+
+<div class="course-text">
+  🎯 <%= item.studentId?.course %> Batch
+</div>
 
     <div class="exam">
       <%= item.examQualified %>
