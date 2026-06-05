@@ -86,33 +86,31 @@ if ((stats?.students?.total || 0) > 0) {
 }
 %>
 
-<div class="kpi-grid">
-
-<div class="kpi-card">
+<div class="kpi-card students-card">
 <h3><%= stats?.students?.total || 0 %></h3>
-<p>Total Students</p>
+<p>🎓 Total Students</p>
 </div>
 
-<div class="kpi-card">
+<div class="kpi-card qualification-card">
 <h3><%= totalQualified %></h3>
-<p>Qualification Achievements</p>
+<p>🏆 Qualification Achievements</p>
 </div>
 
-<div class="kpi-card">
+<div class="kpi-card employment-card">
 <h3><%= totalEmployment %></h3>
-<p>Employment Achievements</p>
+<p>💼 Employment Achievements</p>
 </div>
 
-<div class="kpi-card">
+<div class="kpi-card selection-card">
 <h3><%= selectionRate %>%</h3>
-<p>Selection Rate</p>
+<p>📈 Selection Rate</p>
 </div>
 
 </div>
 
 <div class="achievement-note">
 
-<strong>Note:</strong>
+📋 <strong>Note:</strong>
 
 Achievement counts represent total examination clearances
 and employment selections.

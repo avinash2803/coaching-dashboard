@@ -90,7 +90,7 @@ padding:15px;
 text-align:center;
 background:white;
 border-radius:20px;
-box-shadow:0 8px 25px rgba(0,0,0,.08);
+box-shadow:0 10px 30px rgba(13,110,253,.08);
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -311,8 +311,23 @@ text-align:center;
 
 .kpi-card h3{
 font-size:32px;
-color:#0d6efd;
 margin-bottom:8px;
+}
+
+.students-card h3{
+color:#0d6efd;
+}
+
+.qualification-card h3{
+color:#16a34a;
+}
+
+.employment-card h3{
+color:#7c3aed;
+}
+
+.selection-card h3{
+color:#ea580c;
 }
 
 .kpi-card p{
@@ -526,7 +541,7 @@ margin:25px 0;
 .overview-title h2{
 margin:0;
 padding-bottom:4px;
-line-height:1.2;
+line-height:1.3;
 font-size:30px;
 font-weight:700;
 
