@@ -552,3 +552,20 @@ font-size:24px;
 }
 
 }
+
+.achievement-section-header{
+margin:35px 0 25px;
+}
+
+.achievement-section-header h2{
+margin:0;
+font-size:32px;
+font-weight:700;
+color:#1e293b;
+}
+
+.achievement-section-header p{
+margin-top:8px;
+font-size:15px;
+color:#64748b;
+}
