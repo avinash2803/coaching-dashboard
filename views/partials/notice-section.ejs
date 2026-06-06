@@ -20,7 +20,7 @@
     <!-- LEFT -->
     <div class="updates-card">
 
-      <h3>Latest Updates</h3>
+      <h3>📢 Latest Updates</h3>
 <div class="notice-marquee">
 
   <% if(latestNotices.length > 0){ %>
@@ -29,24 +29,28 @@
 
       <div class="notice-item">
 
-   <% if(n.link){ %>
+   <div class="notice-title-row">
 
-  <a href="<%= n.link %>" target="_blank">
-    <strong>📢 <%= n.title %></strong>
-  </a>
+  <% if(n.link){ %>
 
-<% } else { %>
+    <a href="<%= n.link %>" target="_blank">
+      <strong>📌 <%= n.title %></strong>
+    </a>
 
-  <strong>📢 <%= n.title %></strong>
+  <% } else { %>
 
-<% } %>
+    <strong>📌 <%= n.title %></strong>
 
-<div class="notice-date">
-  📅 <%= new Date(n.createdAt).toLocaleDateString('en-GB',{
-      day:'numeric',
-      month:'short',
-      year:'numeric'
-  }) %>
+  <% } %>
+
+  <span class="notice-date">
+    • <%= new Date(n.createdAt).toLocaleDateString('en-GB',{
+        day:'numeric',
+        month:'short',
+        year:'numeric'
+    }) %>
+  </span>
+
 </div>
 
 <% if(n.description){ %>
@@ -76,7 +80,7 @@
     <!-- RIGHT -->
     <div class="updates-card">
 
-      <h3>Important Events</h3>
+      <h3>🎯 Important Events</h3>
 <div class="notice-marquee">
 
   <% if(events.length > 0){ %>
@@ -85,24 +89,28 @@
 
       <div class="notice-item">
 
-     <% if(n.link){ %>
+    <div class="notice-title-row">
 
-  <a href="<%= n.link %>" target="_blank">
-    <strong>🎯 <%= n.title %></strong>
-  </a>
+  <% if(n.link){ %>
 
-<% } else { %>
+    <a href="<%= n.link %>" target="_blank">
+      <strong>🔹 <%= n.title %></strong>
+    </a>
 
-  <strong>🎯 <%= n.title %></strong>
+  <% } else { %>
 
-<% } %>
+    <strong>🔹 <%= n.title %></strong>
 
-<div class="notice-date">
-  🗓️ <%= new Date(n.createdAt).toLocaleDateString('en-GB',{
-      day:'numeric',
-      month:'short',
-      year:'numeric'
-  }) %>
+  <% } %>
+
+  <span class="notice-date">
+    • <%= new Date(n.createdAt).toLocaleDateString('en-GB',{
+        day:'numeric',
+        month:'short',
+        year:'numeric'
+    }) %>
+  </span>
+
 </div>
 
 <% if(n.description){ %>
