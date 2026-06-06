@@ -410,11 +410,16 @@ rgba(255,255,255,0.96);
   font-weight:700;
   margin-bottom:18px;
 }
-.partner-list a{
-  color: var(--primary-blue);
+.partner-list a,
+.partner-list a:visited,
+.info-box p a,
+.info-box p a:visited{
+  color: var(--primary-blue) !important;
   font-weight: 600;
+  text-decoration: none;
 }
 
-.partner-list a:hover{
-  color: var(--primary-green);
+.partner-list a:hover,
+.info-box p a:hover{
+  color: var(--primary-green) !important;
 }
