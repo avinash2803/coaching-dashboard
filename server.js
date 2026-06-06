@@ -1,7 +1,7 @@
 /*
 Student Performance Portal
 Developed by: Avinash
-Copyright © 2026
+Copyright © 2025
 All Rights Reserved
 */
 import dotenv from "dotenv";
@@ -18,13 +18,14 @@ import XLSX from "xlsx";
 import multer from "multer";
 import session from "express-session";        // ✅ ADD THIS
 import MongoStore from "connect-mongo";       // ✅ ADD THIS
-
+import noticeRoutes from "./routes/notices.js";
 import excelUpload from "./routes/excelUpload.js";
 import studentsRoutes from "./routes/student.js";
 import uploadRoutes from "./routes/upload.js"; // ✅ IMPORTANT
 import Student from "./models/student.js";
 import User from "./models/user.js";
 import Success from "./models/success.js";
+import Notice from "./models/Notice.js";
 import successRoutes from "./routes/success.js";
 import syllabusRoutes from "./routes/syllabus.js";
 import achievementRoutes from "./routes/achievementRoutes.js";
@@ -121,6 +122,7 @@ app.use("/api/excel", excelUpload);
 app.use("/", successRoutes);
 app.use("/admin", syllabusRoutes);
 app.use("/admin", dashboardRoutes);
+app.use("/admin", noticeRoutes);
 app.use("/achievement", achievementRoutes);
 app.use("/analytics", analyticsRoutes);
 app.use("/manageanalytics", manageAnalytics);
@@ -152,8 +154,15 @@ app.put("/api/students/:id/tests", async (req, res) => {
 });
 
 /* Home */
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+
+  const notices = await Notice.find()
+    .sort({ createdAt: -1 });
+
+  res.render("index", {
+    notices
+  });
+
 });
 
 app.get("/student", (req,res)=>{

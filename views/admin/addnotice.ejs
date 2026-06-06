@@ -1,0 +1,47 @@
+<h2>Add Notice / Event</h2>
+
+<form action="/admin/add-notice" method="POST">
+
+  <input
+    type="text"
+    name="title"
+    placeholder="Title"
+    required
+  >
+
+  <br><br>
+
+  <textarea
+    name="description"
+    placeholder="Description"
+  ></textarea>
+
+  <br><br>
+
+  <select name="type">
+
+    <option value="Notice">
+      Notice
+    </option>
+
+    <option value="Event">
+      Event
+    </option>
+
+  </select>
+
+  <br><br>
+
+  <input
+    type="text"
+    name="link"
+    placeholder="PDF / URL Link"
+  >
+
+  <br><br>
+
+  <button type="submit">
+    Save
+  </button>
+
+</form>

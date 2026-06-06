@@ -1,0 +1,51 @@
+
+<link rel="stylesheet" href="/css/notice.css">
+<section class="updates-section">
+
+  <div class="updates-card">
+
+    <h2>📢 Latest Updates & Events</h2>
+
+    <div class="notice-marquee">
+
+      <% if(notices && notices.length > 0){ %>
+
+        <% notices.forEach(n => { %>
+
+          <div class="notice-item">
+
+            <span class="notice-type <%= n.type.toLowerCase() %>">
+              <%= n.type %>
+            </span>
+
+            <% if(n.link){ %>
+
+              <a href="<%= n.link %>" target="_blank">
+                <%= n.title %>
+              </a>
+
+            <% } else { %>
+
+              <span class="notice-title">
+                <%= n.title %>
+              </span>
+
+            <% } %>
+
+          </div>
+
+        <% }) %>
+
+      <% } else { %>
+
+        <div class="notice-item">
+          No updates available.
+        </div>
+
+      <% } %>
+
+    </div>
+
+  </div>
+
+</section>
