@@ -21,39 +21,47 @@
     <div class="updates-card">
 
       <h3>Latest Updates</h3>
+<div class="notice-marquee">
 
-      <div class="notice-marquee">
+  <% if(latestNotices.length > 0){ %>
 
-        <% if(latestNotices.length > 0){ %>
-<% latestNotices.forEach(n => { %>
+    <% latestNotices.forEach(n => { %>
 
-  <div class="notice-item">
+      <div class="notice-item">
 
-    <% if(n.link && n.link.trim() !== ""){ %>
+        <% if(n.link){ %>
 
-      <a href="<%= n.link %>" target="_blank">
-        <strong><%= n.title %></strong>
-      </a>
+          <a href="<%= n.link %>" target="_blank">
+            <strong><%= n.title %></strong>
+          </a>
 
-    <% } else { %>
+        <% } else { %>
 
-      <strong><%= n.title %></strong>
+          <strong><%= n.title %></strong>
 
-    <% } %>
+        <% } %>
 
-    <% if(n.description){ %>
+        <% if(n.description){ %>
 
-      <p class="notice-desc">
-        <%= n.description %>
-      </p>
+          <p class="notice-desc">
+            <%= n.description %>
+          </p>
 
-    <% } %>
-
-  </div>
-
-<% }) %>
+        <% } %>
 
       </div>
+
+    <% }) %>
+
+  <% } else { %>
+
+    <div class="notice-item">
+      No updates available.
+    </div>
+
+  <% } %>
+
+</div>
 
     </div>
 
@@ -61,40 +69,47 @@
     <div class="updates-card">
 
       <h3>Important Events</h3>
+<div class="notice-marquee">
 
-      <div class="notice-marquee">
+  <% if(events.length > 0){ %>
 
-        <% if(events.length > 0){ %>
+    <% events.forEach(n => { %>
 
-          <% events.forEach(n => { %>
+      <div class="notice-item">
 
-  <div class="notice-item">
+        <% if(n.link){ %>
 
-    <% if(n.link && n.link.trim() !== ""){ %>
+          <a href="<%= n.link %>" target="_blank">
+            <strong><%= n.title %></strong>
+          </a>
 
-      <a href="<%= n.link %>" target="_blank">
-        <strong><%= n.title %></strong>
-      </a>
+        <% } else { %>
 
-    <% } else { %>
+          <strong><%= n.title %></strong>
 
-      <strong><%= n.title %></strong>
+        <% } %>
 
-    <% } %>
+        <% if(n.description){ %>
 
-    <% if(n.description){ %>
+          <p class="notice-desc">
+            <%= n.description %>
+          </p>
 
-      <p class="notice-desc">
-        <%= n.description %>
-      </p>
-
-    <% } %>
-
-  </div>
-
-<% }) %>
+        <% } %>
 
       </div>
+
+    <% }) %>
+
+  <% } else { %>
+
+    <div class="notice-item">
+      No events available.
+    </div>
+
+  <% } %>
+
+</div>
 
     </div>
 
