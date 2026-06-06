@@ -897,10 +897,11 @@ rgba(0,114,206,0.18);
   -webkit-text-fill-color: #ffffff !important;
 }
 
-.program-card p {
-  font-size: 15px;
-  line-height: 1.7;
-  color: #000;
+.program-card p{
+  color:#111827;
+  font-size:15px;
+  line-height:1.7;
+  font-weight:400;
 }
 
 
