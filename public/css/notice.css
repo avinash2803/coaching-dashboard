@@ -131,16 +131,16 @@
 }
 
 .section-line-header{
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
+  display:flex;
+  align-items:center;
+  gap:0;
 }
 
 .section-line-header::after{
-  content: "";
-  flex: 1;
-  height: 2px;
-  background: #dbe7ee;
-  border-radius: 2px;
+  content:"";
+  flex:1;
+  height:3px;
+  background:#6CC24A; 
+  margin-left:15px;
+  border-radius:3px;
 }
