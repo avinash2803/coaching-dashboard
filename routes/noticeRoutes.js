@@ -17,15 +17,10 @@ router.post("/add-notice", adminAuth, async (req,res)=>{
   try{
 
     await Notice.create({
-
   title: req.body.title,
-
   description: req.body.description,
-
-  type: req.body.type,
-
-  link: req.body.link
-
+  link: req.body.link,
+  type: req.body.type
 });
 
     res.redirect("/admin/add-notice");
