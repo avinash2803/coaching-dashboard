@@ -60,3 +60,88 @@
   background:#dcfce7;
   color:#15803d;
 }
+
+.section-title-pill{
+
+  display:inline-block;
+
+  background:linear-gradient(
+    135deg,
+    var(--primary-green),
+    #2ecc71
+  );
+
+  color:#fff;
+
+  padding:18px 34px;
+
+  border-radius:999px;
+
+  font-size:20px;
+
+  font-weight:700;
+
+  margin-bottom:25px;
+
+  box-shadow:0 8px 20px rgba(0,166,81,.25);
+}
+
+.notice-grid{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:25px;
+}
+
+.updates-card{
+
+  background:#fff;
+
+  border-radius:20px;
+
+  padding:25px;
+
+  box-shadow:var(--shadow);
+}
+
+.updates-card h3{
+
+  color:var(--primary-blue);
+
+  margin-bottom:20px;
+
+  border-bottom:2px solid #eee;
+
+  padding-bottom:10px;
+}
+
+.notice-item{
+
+  padding:12px 0;
+
+  border-bottom:1px solid #eee;
+}
+
+.notice-item a{
+
+  text-decoration:none;
+
+  color:#374151;
+
+  font-weight:600;
+}
+
+.notice-item a:hover{
+
+  color:var(--primary-green);
+}
+
+@media(max-width:768px){
+
+  .notice-grid{
+    grid-template-columns:1fr;
+  }
+
+}

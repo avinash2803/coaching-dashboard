@@ -1,48 +1,78 @@
-
 <link rel="stylesheet" href="/css/notice.css">
+
 <section class="updates-section">
 
-  <div class="updates-card">
+  <!-- Green Title -->
+  <div class="section-title-pill">
+    📢 Latest Updates & Events
+  </div>
 
-    <h2>📢 Latest Updates & Events</h2>
+  <%
+  const latestNotices = notices?.filter(n => n.type === "Notice") || [];
+  const events = notices?.filter(n => n.type === "Event") || [];
+  %>
 
-    <div class="notice-marquee">
+  <div class="notice-grid">
 
-      <% if(notices && notices.length > 0){ %>
+    <!-- LEFT -->
+    <div class="updates-card">
 
-        <% notices.forEach(n => { %>
+      <h3>Latest Updates</h3>
 
-          <div class="notice-item">
+      <div class="notice-marquee">
 
-            <span class="notice-type <%= n.type.toLowerCase() %>">
-              <%= n.type %>
-            </span>
+        <% if(latestNotices.length > 0){ %>
 
-            <% if(n.link){ %>
+          <% latestNotices.forEach(n => { %>
 
+            <div class="notice-item">
               <a href="<%= n.link %>" target="_blank">
                 <%= n.title %>
               </a>
+            </div>
 
-            <% } else { %>
+          <% }) %>
 
-              <span class="notice-title">
-                <%= n.title %>
-              </span>
+        <% } else { %>
 
-            <% } %>
-
+          <div class="notice-item">
+            No updates available.
           </div>
 
-        <% }) %>
+        <% } %>
 
-      <% } else { %>
+      </div>
 
-        <div class="notice-item">
-          No updates available.
-        </div>
+    </div>
 
-      <% } %>
+    <!-- RIGHT -->
+    <div class="updates-card">
+
+      <h3>Our Events</h3>
+
+      <div class="notice-marquee">
+
+        <% if(events.length > 0){ %>
+
+          <% events.forEach(n => { %>
+
+            <div class="notice-item">
+              <a href="<%= n.link %>" target="_blank">
+                <%= n.title %>
+              </a>
+            </div>
+
+          <% }) %>
+
+        <% } else { %>
+
+          <div class="notice-item">
+            No events available.
+          </div>
+
+        <% } %>
+
+      </div>
 
     </div>
 
