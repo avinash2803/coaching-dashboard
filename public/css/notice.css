@@ -131,16 +131,26 @@
 }
 
 .section-line-header{
+
   display:flex;
   align-items:center;
-  gap:0;
+
+  position:relative;
+
+  margin-bottom:45px;
 }
 
 .section-line-header::after{
+
   content:"";
+
   flex:1;
+
   height:3px;
-  background:#6CC24A; 
-  margin-left:15px;
-  border-radius:3px;
+
+  margin-left:20px;
+
+  background:#00a651;
+
+  border-radius:999px;
 }

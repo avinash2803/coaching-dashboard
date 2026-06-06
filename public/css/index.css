@@ -1131,14 +1131,12 @@ html {
 
 .section-line-header {
 
-  position: relative;
+  display:flex;
+  align-items:center;
 
-  margin-bottom: 45px;
+  position:relative;
 
-  border-top:
-    2px solid rgba(0,114,206,0.18);
-
-  padding-top: 35px;
+  margin-bottom:45px;
 }
 
 /* BADGE */
