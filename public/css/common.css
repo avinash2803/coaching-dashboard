@@ -447,7 +447,7 @@ rgba(255,255,255,0.96);
 .info-box p,
 .info-box li{
   color:#374151;
-  font-size:17px;
+  font-size:16px;
   font-weight:500;
   line-height:1.9;
 }
@@ -456,8 +456,8 @@ rgba(255,255,255,0.96);
 .partner-list a,
 .contact-info a{
   color:var(--primary-blue) !important;
-  font-size:17px;
-  font-weight:700 !important;
+  font-size:16px;
+  font-weight:600 !important;
   text-decoration:none;
   transition:all .2s ease;
 }
