@@ -426,9 +426,12 @@ margin-bottom:30px;
 
 .summary-panel{
 background:white;
-padding:25px;
+padding:18px;
 border-radius:20px;
 box-shadow:0 4px 15px rgba(0,0,0,.06);
+
+max-height:620px;
+overflow-y:auto;
 }
 
 .summary-panel h2{
