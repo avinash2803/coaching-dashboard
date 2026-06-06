@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Add Notice Page
 router.get("/add-notice", adminAuth, (req,res)=>{
-  res.render("admin/add-notice");
+  res.render("admin/addnotice");
 });
 
 
