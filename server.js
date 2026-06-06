@@ -25,7 +25,7 @@ import uploadRoutes from "./routes/upload.js"; // ✅ IMPORTANT
 import Student from "./models/student.js";
 import User from "./models/user.js";
 import Success from "./models/success.js";
-import Notice from "./models/Notice.js";
+import Notice from "./models/notice.js";
 import successRoutes from "./routes/success.js";
 import syllabusRoutes from "./routes/syllabus.js";
 import achievementRoutes from "./routes/achievementRoutes.js";
