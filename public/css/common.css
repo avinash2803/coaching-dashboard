@@ -407,7 +407,7 @@ rgba(255,255,255,0.96);
 .info-box h3{
   color:#111827;
   font-size:22px;
-  font-weight:700;
+  font-weight:750;
   margin-bottom:18px;
 }
 .partner-list a,
@@ -433,4 +433,37 @@ rgba(255,255,255,0.96);
 
 .info-box p a:hover{
   color: var(--primary-green);
+}
+
+/* ===== Footer Final Typography ===== */
+
+.info-box h3{
+  color:#111827;
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:18px;
+}
+
+.info-box p,
+.info-box li{
+  color:#374151;
+  font-size:17px;
+  font-weight:500;
+  line-height:1.9;
+}
+
+.info-box a,
+.partner-list a,
+.contact-info a{
+  color:var(--primary-blue) !important;
+  font-size:17px;
+  font-weight:700 !important;
+  text-decoration:none;
+  transition:all .2s ease;
+}
+
+.info-box a:hover,
+.partner-list a:hover,
+.contact-info a:hover{
+  color:var(--primary-green) !important;
 }
