@@ -506,7 +506,7 @@ linear-gradient(
 
 .module-card p {
   font-size: 14px;
-  color: #555;
+  color: #000;
 }
 
 .module-card a {
@@ -673,16 +673,11 @@ background: var(--primary-gradient);
 }
 
 .section-subtitle {
-
-  color:
-    #4b5563;
-
+  color: #000;
+  font-weight: 500;
   margin-bottom: 50px;
-
   font-size: 17px;
-
   line-height: 1.8;
-
   max-width: 950px;
 }
 
@@ -905,7 +900,7 @@ rgba(0,114,206,0.18);
 .program-card p {
   font-size: 15px;
   line-height: 1.7;
-  color: #5a4a42;
+  color: #000;
 }
 
 
