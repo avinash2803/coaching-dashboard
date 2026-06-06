@@ -392,10 +392,9 @@ rgba(255,255,255,0.96);
   line-height: 1.9;
 }
 .footer-column a{
-  color: var(--primary-blue);
+  color: var(--primary-blue) !important;
   text-decoration: none;
   font-weight: 600;
-  transition: all .2s ease;
 }
 
 .footer-column a:hover{
