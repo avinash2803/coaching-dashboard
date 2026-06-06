@@ -26,16 +26,14 @@
 /* ---------- Body ---------- */
 body {
   margin: 2px;
+  padding-top: 80px;
   font-family: "Segoe UI", Arial, sans-serif;
   background: linear-gradient(
-  180deg,
-  #f7fbff 0%,
-  #eef8f0 100%
-);
+    180deg,
+    #f7fbff 0%,
+    #eef8f0 100%
+  );
   color: #222;
-}
-body {
-  padding-top: 80px;  /* header height ke equal */
 }
 
 /* =========================================
@@ -240,7 +238,7 @@ rgba(0,114,206,0.08);
 }
 
 .btn-primary:hover {
-  background: #c8d9b0;
+  opacity: .95;
 }
 
 /* =========================================
@@ -385,4 +383,29 @@ rgba(255,255,255,0.96);
   font-size: 14px;
 
   font-weight: 600;
+}
+
+.footer-column p,
+.footer-column li {
+  color: #374151;
+  font-weight: 400;
+  line-height: 1.9;
+}
+.footer-column a{
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all .2s ease;
+}
+
+.footer-column a:hover{
+  color: var(--primary-green);
+  padding-left: 4px;
+}
+
+.footer-column h3{
+  color:#111827;
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:18px;
 }
