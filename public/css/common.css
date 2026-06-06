@@ -385,26 +385,36 @@ rgba(255,255,255,0.96);
   font-weight: 600;
 }
 
-.footer-column p,
-.footer-column li {
+.info-box p,
+.info-box li {
   color: #374151;
   font-weight: 400;
   line-height: 1.9;
 }
-.footer-column a{
-  color: var(--primary-blue) !important;
+
+.info-box a{
+  color: var(--primary-blue);
   text-decoration: none;
   font-weight: 600;
+  transition: all .2s ease;
 }
 
-.footer-column a:hover{
+.info-box a:hover{
   color: var(--primary-green);
   padding-left: 4px;
 }
 
-.footer-column h3{
+.info-box h3{
   color:#111827;
   font-size:22px;
   font-weight:700;
   margin-bottom:18px;
+}
+.partner-list a{
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+.partner-list a:hover{
+  color: var(--primary-green);
 }
