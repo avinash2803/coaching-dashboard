@@ -29,25 +29,33 @@
 
       <div class="notice-item">
 
-        <% if(n.link){ %>
+   <% if(n.link){ %>
 
-          <a href="<%= n.link %>" target="_blank">
-            <strong><%= n.title %></strong>
-          </a>
+  <a href="<%= n.link %>" target="_blank">
+    <strong>📢 <%= n.title %></strong>
+  </a>
 
-        <% } else { %>
+<% } else { %>
 
-          <strong><%= n.title %></strong>
+  <strong>📢 <%= n.title %></strong>
 
-        <% } %>
+<% } %>
 
-        <% if(n.description){ %>
+<div class="notice-date">
+  📅 <%= new Date(n.createdAt).toLocaleDateString('en-GB',{
+      day:'numeric',
+      month:'short',
+      year:'numeric'
+  }) %>
+</div>
 
-          <p class="notice-desc">
-            <%= n.description %>
-          </p>
+<% if(n.description){ %>
 
-        <% } %>
+  <p class="notice-desc">
+    <%= n.description %>
+  </p>
+
+<% } %>
 
       </div>
 
@@ -77,25 +85,33 @@
 
       <div class="notice-item">
 
-        <% if(n.link){ %>
+     <% if(n.link){ %>
 
-          <a href="<%= n.link %>" target="_blank">
-            <strong><%= n.title %></strong>
-          </a>
+  <a href="<%= n.link %>" target="_blank">
+    <strong>🎯 <%= n.title %></strong>
+  </a>
 
-        <% } else { %>
+<% } else { %>
 
-          <strong><%= n.title %></strong>
+  <strong>🎯 <%= n.title %></strong>
 
-        <% } %>
+<% } %>
 
-        <% if(n.description){ %>
+<div class="notice-date">
+  🗓️ <%= new Date(n.createdAt).toLocaleDateString('en-GB',{
+      day:'numeric',
+      month:'short',
+      year:'numeric'
+  }) %>
+</div>
 
-          <p class="notice-desc">
-            <%= n.description %>
-          </p>
+<% if(n.description){ %>
 
-        <% } %>
+  <p class="notice-desc">
+    <%= n.description %>
+  </p>
+
+<% } %>
 
       </div>
 
