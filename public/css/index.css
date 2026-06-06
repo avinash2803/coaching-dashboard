@@ -899,9 +899,9 @@ rgba(0,114,206,0.18);
 
 .program-card p{
   color:#111827;
-  font-size:15px;
+  font-size:16px;
   line-height:1.7;
-  font-weight:400;
+  font-weight:450;
 }
 
 
@@ -1180,7 +1180,7 @@ html {
 
   font-size: 24px;
 
-  margin-right: 10px;
+  margin-right: 1px;
 
   vertical-align: middle;
 
