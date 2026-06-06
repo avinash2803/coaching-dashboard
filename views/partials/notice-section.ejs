@@ -3,10 +3,13 @@
 <section class="updates-section">
 
   <!-- Green Title -->
-  <div class="section-title-pill">
+  <div class="section-line-header">
+
+  <div class="section-badge">
     📢 Latest Updates & Events
   </div>
 
+</div>
   <%
   const latestNotices = notices?.filter(n => n.type === "Notice") || [];
   const events = notices?.filter(n => n.type === "Event") || [];
