@@ -18,7 +18,7 @@ import XLSX from "xlsx";
 import multer from "multer";
 import session from "express-session";        // ✅ ADD THIS
 import MongoStore from "connect-mongo";       // ✅ ADD THIS
-import noticeRoutes from "./routes/notices.js";
+import noticeRoutes from "./routes/noticeRoutes.js";
 import excelUpload from "./routes/excelUpload.js";
 import studentsRoutes from "./routes/student.js";
 import uploadRoutes from "./routes/upload.js"; // ✅ IMPORTANT
