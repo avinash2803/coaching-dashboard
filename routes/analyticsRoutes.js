@@ -305,36 +305,50 @@ if(
   const allAnalytics =
   await Analytics.find();
 
-  analyticsData = {
+ analyticsData = {
 
-    totalStudents:
+  totalStudents:
     allAnalytics.reduce(
       (sum, item) =>
       sum + (item.totalStudents || 0),
       0
     ),
 
-    activeStudents:
+  activeStudents:
     allAnalytics.reduce(
       (sum, item) =>
       sum + (item.activeStudents || 0),
       0
     ),
 
-    dropoutStudents:
+  dropoutStudents:
     allAnalytics.reduce(
       (sum, item) =>
       sum + (item.dropoutStudents || 0),
       0
     ),
 
-    employedStudents:
+  employedStudents:
     allAnalytics.reduce(
       (sum, item) =>
       sum + (item.employedStudents || 0),
       0
+    ),
+
+  qualifiedStudents:
+    allAnalytics.reduce(
+      (sum, item) =>
+      sum + (item.qualifiedStudents || 0),
+      0
+    ),
+
+  hybridStudents:
+    allAnalytics.reduce(
+      (sum, item) =>
+      sum + (item.hybridStudents || 0),
+      0
     )
-  };
+};
 
 }else{
 
