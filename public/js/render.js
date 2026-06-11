@@ -400,8 +400,18 @@ months = [...new Set(months)];
 
   // sort months properly
   const monthOrder = [
-  "June","May","April","March","February","January",
-  "December","November","October","September","August","July"
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May"
 ];
 
   months.sort((a,b) => monthOrder.indexOf(a) - monthOrder.indexOf(b));
