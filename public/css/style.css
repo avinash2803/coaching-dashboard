@@ -345,3 +345,47 @@ z-index:10;
 #pagination{
 margin-top:20px;
 }
+
+/* ===== Attendance Table ===== */
+
+.attendance-table{
+    width:100%;
+    table-layout:fixed;
+}
+
+.attendance-table th,
+.attendance-table td{
+    text-align:center;
+    vertical-align:middle;
+    padding:8px;
+}
+
+.attendance-table th:nth-child(1),
+.attendance-table td:nth-child(1){
+    width:18%;
+}
+
+.attendance-table th:nth-child(2),
+.attendance-table td:nth-child(2){
+    width:20%;
+}
+
+.attendance-table th:nth-child(3),
+.attendance-table td:nth-child(3){
+    width:18%;
+}
+
+.attendance-table th:nth-child(4),
+.attendance-table td:nth-child(4){
+    width:18%;
+}
+
+.attendance-table th:nth-child(5),
+.attendance-table td:nth-child(5){
+    width:26%;
+}
+
+.attendance-table input{
+    min-width:70px;
+    text-align:center;
+}

@@ -400,21 +400,21 @@ months = [...new Set(months)];
 
   // sort months properly
   const monthOrder = [
-    "July","August","September","October","November","December",
-    "January","February","March","April","May","June"
-  ];
+  "June","May","April","March","February","January",
+  "December","November","October","September","August","July"
+];
 
   months.sort((a,b) => monthOrder.indexOf(a) - monthOrder.indexOf(b));
 
   return `
-    <table class="table table-bordered table-sm text-center align-middle">
+    <table class="table table-bordered table-sm text-center align-middle attendance-table">
       <thead class="table-dark">
         <tr>
           <th>Month</th>
           <th>Total Class</th>
           <th>Present</th>
           <th>Absent</th>
-          <th>%</th>
+          <th>Attendance Percentage</th>
         </tr>
       </thead>
       <tbody>
