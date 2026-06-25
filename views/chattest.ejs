@@ -27,12 +27,15 @@
 }
 
         .chat-header {
-            background: #b71c1c;
-            color: white;
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-        }
+    background: #b71c1c;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
         .chat-body {
             flex: 1;
@@ -113,23 +116,40 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 65px;
-    height: 65px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     background: #b71c1c;
     color: white;
-    font-size: 30px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     z-index: 10000;
+    text-align: center;
+}
+
+.launcher-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.bccp {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.1;
+}
+
+.ai {
+    font-size: 12px;
+    letter-spacing: 2px;
 }
 
 .close-btn {
-    float: right;
     cursor: pointer;
+    font-size: 20px;
 }
 
     </style>
@@ -137,7 +157,16 @@
 
 <body>
 <div id="chat-launcher">
-    💬
+
+    <div class="launcher-icon">
+        🤖
+    </div>
+
+    <div class="launcher-text">
+        <div class="bccp">BCCP</div>
+        <div class="ai">— AI —</div>
+    </div>
+
 </div>
 <div class="chat-container">
 
@@ -294,6 +323,10 @@ document
     document
     .querySelector(".chat-container")
     .style.display = "flex";
+
+    document
+    .getElementById("message")
+    .focus();
 };
 
 document
