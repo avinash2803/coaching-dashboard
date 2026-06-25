@@ -83,19 +83,21 @@ const vyapamProgress =
     year
 });
 
-            if (
+if (
     message.includes("student") ||
-    message.includes("enrolled")
+    message.includes("students") ||
+    message.includes("enrollment") ||
+    message.includes("enroll") ||
+    message.includes("total student") ||
+    message.includes("total students") ||
+    message.includes("total enrollment")
 ) {
 
-    const total =
-    await Student.countDocuments({
-        year
-    });
+    const total = await Student.countDocuments({ year });
 
     return res.json({
         reply:
-        `Currently ${total} students are enrolled in ${year}.`
+        `Total Enrollment for ${year} is ${total} students. This includes both active and dropout students.`
     });
 
 }
@@ -291,16 +293,16 @@ const syllabus =
     .find({ year })
     .toArray();
 
-const subject =
-    syllabus.find(
-        s =>
-            message.includes(
-                s.subject.toLowerCase()
-            ) ||
-            message.includes(
-                s.faculty.toLowerCase()
-            )
+const subject = syllabus.find(s => {
+
+    if (!s.subject || !s.faculty) return false;
+
+    return (
+        message.includes(s.subject.toLowerCase()) ||
+        message.includes(s.faculty.toLowerCase())
     );
+
+});
 
 if (subject) {
 
@@ -386,7 +388,11 @@ if (
                 content: `
 
 You are the official AI Assistant of the Bhoramdev Vidyapeeth Coaching Program (BCCP).
+In this program, "Total Students" and "Total Enrollment" mean the same thing.
 
+Whenever a user asks about enrollment, enrolled students, total students, student strength, or total enrollment, treat them as the total number of students enrolled in the academic year (including active and dropout students unless specified otherwise).
+
+If the user asks for active students, dropout students, or selected students, answer those separately.
 Selected Academic Year:
 ${year}
 Always answer according to the selected academic year.
