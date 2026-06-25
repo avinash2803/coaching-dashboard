@@ -35,6 +35,8 @@ const knowledge =
         knowledgePath,
         "utf8"
     );
+
+    console.log("API Key:", process.env.OPENAI_API_KEY);
     const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
