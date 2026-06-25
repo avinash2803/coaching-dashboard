@@ -164,6 +164,27 @@
     font-size: 20px;
 }
 
+.header-icons{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.header-icons span{
+    cursor:pointer;
+    font-size:18px;
+    transition:.25s;
+}
+
+#resetChat:hover{
+    transform:rotate(180deg);
+    color:#ffe082;
+}
+
+#closeChat:hover{
+    color:#ffe082;
+}
+
     </style>
 </head>
 
@@ -183,8 +204,12 @@
 <div class="chat-container">
 
     <div class="chat-header">
-    🤖 BCCP AI Assistant
-    <span class="close-btn" id="closeChat">✖</span>
+    <span>🤖 BCCP AI Assistant</span>
+
+    <div class="header-icons">
+        <span id="resetChat" title="New Chat">🔄</span>
+        <span class="close-btn" id="closeChat">✖</span>
+    </div>
 </div>
 
     <div class="chat-body" id="chatBody">
@@ -246,6 +271,12 @@
 
 <script>
 
+let defaultWelcome;
+
+window.onload = function () {
+    defaultWelcome = document.getElementById("chatBody").innerHTML;
+};
+
 function addMessage(message, type) {
 
     const chatBody =
@@ -259,7 +290,11 @@ function addMessage(message, type) {
         ? "user-message"
         : "bot-message";
 
+    if (type === "user") {
+    div.textContent = message;
+} else {
     div.innerHTML = message;
+}
 
     chatBody.appendChild(div);
 
@@ -294,39 +329,52 @@ async function sendMessage(text = null) {
 
     input.value = "";
 
-    const response =
-        await fetch("/api/chat", {
+    try {
+
+    const response = await fetch("/api/chat", {
 
         method: "POST",
 
         headers: {
-            "Content-Type":
-            "application/json"
+            "Content-Type": "application/json"
         },
 
         body: JSON.stringify({
-            message: message
+            message
         })
+
     });
 
-    const data =
-        await response.json();
+    const data = await response.json();
 
     let reply = data.reply;
 
-if (
-    message.toLowerCase().includes("enrollment") ||
-    message.toLowerCase().includes("student")
-) {
+    if (
+        message.toLowerCase().includes("enrollment") ||
+        message.toLowerCase().includes("student")
+    ) {
 
-    reply +=
-    "<br><br>" +
-    "<button onclick=\"sendQuick('Active students')\">📈 Active</button> " +
-    "<button onclick=\"sendQuick('Dropout')\">📉 Dropout</button> " +
-    "<button onclick=\"sendQuick('Selection rate')\">🏆 Selection</button>";
+        reply +=
+        "<br><br>" +
+        "<button onclick=\"sendQuick('Active students')\">📈 Active</button> " +
+        "<button onclick=\"sendQuick('Dropout')\">📉 Dropout</button> " +
+        "<button onclick=\"sendQuick('Selection rate')\">🏆 Selection</button>";
+    }
+
+    addMessage(reply, "bot");
+
+} catch (err) {
+
+    console.error(err);
+
+    addMessage(
+        "⚠ Unable to connect to AI Assistant.",
+        "bot"
+    );
+
 }
 
-addMessage(reply, "bot");
+
 }
 document
 .getElementById("chat-launcher")
@@ -348,6 +396,17 @@ document
     document
     .querySelector(".chat-container")
     .style.display = "none";
+};
+
+document.getElementById("resetChat").onclick = function () {
+
+    document.getElementById("chatBody").innerHTML = defaultWelcome;
+
+    document.getElementById("message").value = "";
+
+
+    document.getElementById("message").focus();
+
 };
 </script>
 
