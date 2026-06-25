@@ -12,10 +12,10 @@
         }
 
         .chat-container {
-    width: 380px;
-    height: 600px;
+    width: 360px;
+    height: 540px;
     position: fixed;
-    bottom: 90px;
+    bottom: 110px;
     right: 20px;
     background: white;
     border-radius: 15px;
@@ -29,8 +29,8 @@
         .chat-header {
     background: #b71c1c;
     color: white;
-    padding: 15px;
-    font-size: 18px;
+    padding: 8px;
+    font-size: 14px;
     font-weight: bold;
     display: flex;
     justify-content: space-between;
@@ -46,7 +46,7 @@
 
         .welcome-box {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .welcome-box h3 {
@@ -62,19 +62,31 @@
             margin-top: 15px;
         }
 
-        .quick-actions button {
-            border: none;
-            background: #eeeeee;
-            border-radius: 20px;
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+        .quick-actions button{
 
-        .quick-actions button:hover {
-            background: #b71c1c;
-            color: white;
-        }
+    width:145px;
+    height:46px;
+
+    border:none;
+    background:#f3f3f3;
+
+    border-radius:25px;
+
+    font-size:16px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.quick-actions button:hover{
+
+    background:#b71c1c;
+    color:white;
+    transform:translateY(-2px);
+
+}
 
         .bot-message {
             background: #f1f1f1;
@@ -116,8 +128,8 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 90px;
-    height: 90px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     background: #b71c1c;
     color: white;
@@ -132,7 +144,7 @@
 }
 
 .launcher-icon {
-    font-size: 24px;
+    font-size: 22px;
     line-height: 1;
 }
 
