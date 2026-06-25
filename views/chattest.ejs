@@ -12,18 +12,19 @@
         }
 
         .chat-container {
-            width: 380px;
-            height: 600px;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+    width: 380px;
+    height: 600px;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    z-index: 9999;
+}
 
         .chat-header {
             background: #b71c1c;
@@ -108,16 +109,42 @@
             cursor: pointer;
         }
 
+        #chat-launcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #b71c1c;
+    color: white;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 10000;
+}
+
+.close-btn {
+    float: right;
+    cursor: pointer;
+}
+
     </style>
 </head>
 
 <body>
-
+<div id="chat-launcher">
+    💬
+</div>
 <div class="chat-container">
 
     <div class="chat-header">
-        🤖 BCCP AI Assistant
-    </div>
+    🤖 BCCP AI Assistant
+    <span class="close-btn" id="closeChat">✖</span>
+</div>
 
     <div class="chat-body" id="chatBody">
 
@@ -246,18 +273,37 @@ async function sendMessage(text = null) {
 
     let reply = data.reply;
 
-if (message.toLowerCase().includes("enrollment")) {
+if (
+    message.toLowerCase().includes("enrollment") ||
+    message.toLowerCase().includes("student")
+) {
 
     reply +=
     "<br><br>" +
-    "<button onclick=\"sendQuick('Active students')\">Active</button> " +
-    "<button onclick=\"sendQuick('Dropout')\">Dropout</button>";
-
+    "<button onclick=\"sendQuick('Active students')\">📈 Active</button> " +
+    "<button onclick=\"sendQuick('Dropout')\">📉 Dropout</button> " +
+    "<button onclick=\"sendQuick('Selection rate')\">🏆 Selection</button>";
 }
 
 addMessage(reply, "bot");
 }
+document
+.getElementById("chat-launcher")
+.onclick = function () {
 
+    document
+    .querySelector(".chat-container")
+    .style.display = "flex";
+};
+
+document
+.getElementById("closeChat")
+.onclick = function () {
+
+    document
+    .querySelector(".chat-container")
+    .style.display = "none";
+};
 </script>
 
 </body>
