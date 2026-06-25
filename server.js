@@ -6,7 +6,6 @@ All Rights Reserved
 */
 import dotenv from "dotenv";
 dotenv.config();
-
 import authRoutes from "./routes/auth.js";
 import adminAuth from "./middleware/adminAuth.js";
 import express from "express";
@@ -31,8 +30,9 @@ import syllabusRoutes from "./routes/syllabus.js";
 import achievementRoutes from "./routes/achievementRoutes.js";
 import dashboardRoutes from "./routes/dashboardstats.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
-import manageAnalytics
-from "./routes/manageAnalytics.js";
+import manageAnalytics from "./routes/manageAnalytics.js";
+import chatRoutes from "./routes/chatRoutes.js";
+
 
 const app = express();
 const upload = multer({ dest: "uploads/" });
@@ -117,6 +117,7 @@ mongoose.connect(process.env.MONGO_URI)
 /* Routes */
 app.use("/api/upload", uploadRoutes);  // ✅ MUST be BEFORE app.listen
 app.use("/api/students", studentsRoutes);
+app.use("/api/chat", chatRoutes);
 app.use("/", authRoutes);
 app.use("/api/excel", excelUpload);
 app.use("/", successRoutes);
@@ -234,6 +235,10 @@ res.render("admin/managesuccess",{stories});
 });
 app.get("/admin/add-success", adminAuth, (req,res)=>{
 res.render("admin/addsuccess");
+});
+
+app.get("/chat-test", (req, res) => {
+    res.render("chattest");
 });
 
 /* Start Server */

@@ -1,0 +1,34 @@
+[
+  {
+    "keywords": ["admission", "apply", "enrollment"],
+    "answer": "Admissions are conducted according to the program guidelines."
+  },
+  {
+    "keywords": ["course", "courses"],
+    "answer": "CGPSC and Vyapam coaching programs are available."
+  },
+  {
+    "keywords": ["library", "books"],
+    "answer": "Library facilities are available."
+  },
+  {
+    "keywords": ["cgpsc"],
+    "answer": "CGPSC coaching classes are available."
+  },
+  {
+    "keywords": ["vyapam"],
+    "answer": "Vyapam coaching classes are available."
+  },
+  {
+    "keywords": ["fees", "fee"],
+    "answer": "The coaching program is supported by BALCO CSR."
+  },
+  {
+    "keywords": ["test", "exam"],
+    "answer": "Regular class tests are conducted."
+  },
+  {
+    "keywords": ["contact", "phone"],
+    "answer": "Please contact the coaching office for more information."
+  }
+]

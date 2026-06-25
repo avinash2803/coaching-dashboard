@@ -1,0 +1,118 @@
+<!-- Chat Button -->
+<div id="chat-button">💬</div>
+
+<!-- Chat Window -->
+<div id="chat-window">
+    <div id="chat-header">
+        BCCP AI Assistant
+        <span onclick="closeChat()">✖</span>
+    </div>
+
+    <div id="chat-messages"></div>
+
+    <div id="chat-input">
+        <input type="text" id="message"
+               placeholder="Ask something...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<style>
+#chat-button{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#0d6efd;
+    color:white;
+    font-size:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:9999;
+}
+
+#chat-window{
+    position:fixed;
+    bottom:90px;
+    right:20px;
+    width:350px;
+    height:450px;
+    background:white;
+    border:1px solid #ddd;
+    display:none;
+    flex-direction:column;
+    z-index:9999;
+}
+
+#chat-header{
+    background:#0d6efd;
+    color:white;
+    padding:10px;
+}
+
+#chat-messages{
+    flex:1;
+    padding:10px;
+    overflow-y:auto;
+}
+
+#chat-input{
+    display:flex;
+}
+
+#chat-input input{
+    flex:1;
+    padding:10px;
+}
+</style>
+
+<script>
+document.getElementById("chat-button")
+.onclick = function(){
+    document.getElementById("chat-window")
+    .style.display="flex";
+}
+
+function closeChat(){
+    document.getElementById("chat-window")
+    .style.display="none";
+}
+
+async function sendMessage(){
+
+    const input =
+    document.getElementById("message");
+
+    const message = input.value;
+
+    const messages =
+    document.getElementById("chat-messages");
+
+    messages.innerHTML +=
+    "<p><b>You:</b> "+message+"</p>";
+
+    input.value="";
+
+    const response = await fetch("/api/chat",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            message
+        })
+    });
+
+    const data = await response.json();
+
+    messages.innerHTML +=
+    "<p><b>Bot:</b> "+data.reply+"</p>";
+
+    messages.scrollTop =
+    messages.scrollHeight;
+}
+</script>
