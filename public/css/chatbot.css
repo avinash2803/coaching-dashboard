@@ -1,0 +1,541 @@
+/* ===============================
+   BCCP AI Assistant
+   Premium Chatbot CSS v2
+==================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/*=============================
+Launcher
+==============================*/
+
+#chat-launcher{
+
+    position:fixed;
+
+    right:22px;
+    bottom:22px;
+
+    width:78px;
+    height:78px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#0B5ED7,#0072BC);
+
+    border:5px solid #8BC53F;
+
+    color:#fff;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+
+    box-shadow:
+    0 12px 35px rgba(0,0,0,.25);
+
+    transition:.25s;
+
+    z-index:99999;
+
+}
+
+#chat-launcher:hover{
+
+    transform:translateY(-4px) scale(1.03);
+
+}
+
+.launcher-icon{
+
+    font-size:24px;
+
+    line-height:1;
+
+}
+
+.launcher-text{
+
+    margin-top:3px;
+
+    text-align:center;
+
+}
+
+.bccp{
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+.ai{
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+}
+
+
+/*=============================
+Container
+==============================*/
+
+.chat-container{
+
+    width:400px;
+
+    height:670px;
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:115px;
+
+    background:#f7f9fd;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    display:none;
+
+    flex-direction:column;
+
+    box-shadow:
+    0 25px 70px rgba(0,0,0,.22);
+
+    animation:popup .25s ease;
+
+    z-index:99998;
+
+}
+
+@keyframes popup{
+
+from{
+
+transform:translateY(25px) scale(.95);
+
+opacity:0;
+
+}
+
+to{
+
+transform:translateY(0) scale(1);
+
+opacity:1;
+
+}
+
+}
+
+/*=============================
+Header
+==============================*/
+
+.chat-header{
+
+    background:
+    linear-gradient(90deg,#0066CC,#0B5ED7);
+
+    color:white;
+
+    padding:16px 18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.chat-brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.chat-logo{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:50%;
+
+    background:#8BC53F;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:24px;
+
+}
+
+.chat-title{
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.chat-subtitle{
+
+    font-size:12px;
+
+    opacity:.9;
+
+}
+
+.header-icons{
+
+    display:flex;
+
+    gap:15px;
+
+    font-size:20px;
+
+}
+
+.header-icons span{
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.header-icons span:hover{
+
+    color:#ffe082;
+
+}
+
+/*=============================
+Body
+==============================*/
+
+.chat-body{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:20px;
+
+    background:#f7f9fd;
+
+}
+
+/* Scroll */
+
+.chat-body::-webkit-scrollbar{
+
+    width:5px;
+
+}
+
+.chat-body::-webkit-scrollbar-thumb{
+
+    background:#c9c9c9;
+
+    border-radius:20px;
+
+}
+
+/*=============================
+Welcome Card
+==============================*/
+
+.welcome-card{
+
+    background:white;
+
+    padding:24px;
+
+    border-radius:20px;
+
+    box-shadow:
+
+    0 10px 25px rgba(0,0,0,.07);
+
+    margin-bottom:25px;
+
+}
+
+.welcome-card h2{
+
+    font-size:25px;
+
+    line-height:1.35;
+
+    background:
+    linear-gradient(90deg,#0072BC,#00A651);
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    margin-bottom:18px;
+
+}
+
+.welcome-card p{
+
+    color:#666;
+
+    font-size:15px;
+
+    line-height:1.7;
+
+}
+
+/*=============================
+Quick Buttons
+==============================*/
+
+.quick-actions{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:20px;
+
+}
+
+.quick-actions button{
+
+    width:165px;
+
+    height:54px;
+
+    border-radius:28px;
+
+    border:2px solid #8BC53F;
+
+    background:white;
+
+    color:#333;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.quick-actions button:hover{
+
+    background:#8BC53F;
+
+    color:white;
+
+    transform:translateY(-2px);
+
+}
+
+/*=============================
+Messages
+==============================*/
+
+.bot-message{
+
+    background:white;
+
+    padding:15px 18px;
+
+    border-radius:18px;
+
+    margin-bottom:16px;
+
+    box-shadow:
+    0 5px 14px rgba(0,0,0,.06);
+
+    line-height:1.7;
+
+    color:#444;
+
+}
+
+.user-message{
+
+    background:#0B5ED7;
+
+    color:white;
+
+    padding:15px 18px;
+
+    border-radius:18px;
+
+    margin-bottom:16px;
+
+    margin-left:55px;
+
+    line-height:1.6;
+
+}
+
+/*=============================
+Footer
+==============================*/
+
+.chat-footer{
+
+    background:white;
+
+    border-top:1px solid #ececec;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:15px;
+
+}
+
+.chat-footer input{
+
+    flex:1;
+
+    height:52px;
+
+    border-radius:30px;
+
+    border:1px solid #ddd;
+
+    padding:0 18px;
+
+    outline:none;
+
+    font-size:15px;
+
+}
+
+.chat-footer input:focus{
+
+    border-color:#0B5ED7;
+
+}
+
+.chat-footer button{
+
+    width:52px;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#0B5ED7;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.chat-footer button:hover{
+
+    background:#084fae;
+
+}
+
+/*=============================
+Suggestion Buttons
+==============================*/
+
+.bot-message button{
+
+    margin-top:12px;
+
+    margin-right:8px;
+
+    border:none;
+
+    border-radius:20px;
+
+    padding:8px 15px;
+
+    background:#8BC53F;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.bot-message button:hover{
+
+    opacity:.9;
+
+}
+
+/*=============================
+Responsive
+==============================*/
+
+@media(max-width:500px){
+
+.chat-container{
+
+width:100%;
+
+height:100%;
+
+right:0;
+
+bottom:0;
+
+border-radius:0;
+
+}
+
+#chat-launcher{
+
+right:15px;
+
+bottom:15px;
+
+}
+
+}

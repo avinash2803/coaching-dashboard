@@ -2,18 +2,28 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import mongoose from "mongoose";
+import OpenAI from "openai";
+
 import Student from "../models/student.js";
 import Success from "../models/success.js";
 import Notice from "../models/notice.js";
 import Achievement from "../models/achievement.js";
-import OpenAI from "openai";
 import Analytics from "../models/analytics.js";
 import Dashboardstats from "../models/dashboardstats.js";
-import mongoose from "mongoose";
+
 const router = express.Router();
+
+/* ===================================================
+   PATHS
+=================================================== */
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+/* ===================================================
+   FAQ DATA
+=================================================== */
 
 const faqPath = path.join(
     __dirname,
@@ -24,209 +34,598 @@ const faqs = JSON.parse(
     fs.readFileSync(faqPath, "utf8")
 );
 
-const knowledgePath =
-    path.join(
-        __dirname,
-        "../data/knowledge.txt"
-    );
+/* ===================================================
+   KNOWLEDGE BASE
+=================================================== */
 
-const knowledge =
-    fs.readFileSync(
-        knowledgePath,
-        "utf8"
-    );
+const knowledgePath = path.join(
+    __dirname,
+    "../data/knowledge.txt"
+);
 
-    console.log("API Key:", process.env.OPENAI_API_KEY);
-    const client = new OpenAI({
+const knowledge = fs.readFileSync(
+    knowledgePath,
+    "utf8"
+);
+
+/* ===================================================
+   OPENAI
+=================================================== */
+
+const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
 
+/* ===================================================
+   CHAT API
+=================================================== */
+
 router.post("/", async (req, res) => {
 
-    try {
+try {
 
-        const message =
-    (req.body.message || "")
-    .toLowerCase()
-    .trim();
+    /* ============================
+       USER MESSAGE
+    ============================ */
+
+    const message = (
+        req.body.message || ""
+    )
+    .trim()
+    .toLowerCase();
+
+    /* ============================
+       YEAR DETECTION
+    ============================ */
+
     const yearMatch =
-    message.match(/\d{4}-\d{2}/);
+        message.match(/\d{4}-\d{2}/);
 
-const year =
-    yearMatch
-        ? yearMatch[0]
-        : "2025-26";
+    let year;
 
+    if (yearMatch) {
+
+        year = yearMatch[0];
+
+    } else {
+
+        const latest =
+            await Analytics
+            .findOne({})
+            .sort({ year: -1 })
+            .select("year");
+
+        year =
+            latest?.year || "2025-26";
+
+    }
+
+    /* ============================
+       DATABASE
+    ============================ */
 
     const analytics =
-    await Analytics.findOne({
-        year
-    }) || {};
+        await Analytics.findOne({
+            year
+        }) || {};
 
-const dashboard =
-    await Dashboardstats.findOne({
-        year
-    }) || {};
+    const dashboard =
+        await Dashboardstats.findOne({
+            year
+        }) || {};
+
     const cgpscProgress =
-    await mongoose.connection
-    .collection("progress")
-    .findOne({
-    course: "CGPSC",
-    year
-});
+        await mongoose.connection
+        .collection("progress")
+        .findOne({
+            course: "CGPSC",
+            year
+        });
 
-const vyapamProgress =
-    await mongoose.connection
-    .collection("progress")
-    .findOne({
-    course: "VYAPAM",
-    year
-});
+    const vyapamProgress =
+        await mongoose.connection
+        .collection("progress")
+        .findOne({
+            course: "VYAPAM",
+            year
+        });
+
+    const syllabus =
+        await mongoose.connection
+        .collection("syllabus")
+        .find({
+            year
+        })
+        .toArray();
+
+/* ===================================================
+   TOTAL ENROLLMENT
+=================================================== */
 
 if (
-    message.includes("student") ||
-    message.includes("students") ||
-    message.includes("enrollment") ||
-    message.includes("enroll") ||
-    message.includes("total student") ||
-    message.includes("total students") ||
-    message.includes("total enrollment")
+    [
+        "student",
+        "students",
+        "enrollment",
+        "enrolled",
+        "admission",
+        "total strength",
+        "total enrollment"
+    ].some(word => message.includes(word))
 ) {
 
     const total = await Student.countDocuments({ year });
 
     return res.json({
         reply:
-        `Total Enrollment for ${year} is ${total} students. This includes both active and dropout students.`
+`👨‍🎓 Total Enrollment
+
+${total} students are enrolled in the academic year ${year}.`
     });
 
 }
 
-if (
-    message.includes("notice")
-) {
 
-    const latest =
-    await Notice.findOne({
-        year
-    })
-    .sort({ createdAt: -1 });
+/* ===================================================
+   ATTENDANCE
+=================================================== */
 
-    if (latest) {
-
-        return res.json({
-            reply:
-            latest.title ||
-            latest.notice ||
-            latest.message
-        });
-
-    }
-}
-
-if (
-    message.includes("attendance")
-) {
+if (message.includes("attendance")) {
 
     return res.json({
+
         reply:
-        `Average attendance in ${year} is ${analytics.averageAttendance || "Not Available"}%.`
+`📊 Average Attendance
+
+${analytics.averageAttendance || "Not Available"}%
+
+Academic Year : ${year}`
+
     });
 
 }
 
-if (
-    message.includes("active")
-) {
+
+/* ===================================================
+   ACTIVE STUDENTS
+=================================================== */
+
+if (message.includes("active")) {
 
     return res.json({
+
         reply:
-        `${analytics.activeStudents || 0} students are currently active in ${year}.`
+`📈 Active Students
+
+${analytics.activeStudents || 0}
+
+Academic Year : ${year}`
+
     });
 
 }
-if (
-    message.includes("dropout")
-) {
+
+
+/* ===================================================
+   DROPOUT
+=================================================== */
+
+if (message.includes("dropout")) {
 
     return res.json({
+
         reply:
-        `${analytics.dropoutStudents || 0} students have dropped out in ${year}.`
+`📉 Dropout Students
+
+${analytics.dropoutStudents || 0}
+
+Academic Year : ${year}`
+
     });
 
 }
-if (
-    message.includes("selection rate")
-) {
+
+
+/* ===================================================
+   SELECTION RATE
+=================================================== */
+
+if (message.includes("selection rate")) {
 
     return res.json({
+
         reply:
-        `The selection rate in ${year} is ${analytics.selectionRate || "Not Available"}%.`
+`🏆 Selection Rate
+
+${analytics.selectionRate || "Not Available"}%
+
+Academic Year : ${year}`
+
     });
 
 }
 
+
+/* ===================================================
+   QUALIFIED
+=================================================== */
+
+if (message.includes("qualified")) {
+
+    return res.json({
+
+        reply:
+`🎯 Qualified Students
+
+${analytics.qualifiedStudents || 0}
+
+Academic Year : ${year}`
+
+    });
+
+}
+
+
+/* ===================================================
+   TOTAL SELECTED
+=================================================== */
 
 if (
     message.includes("selected") ||
     message.includes("selection")
 ) {
 
-    const selected =
-    await Success.countDocuments({
-        year
-    });
+    const total =
+        await Success.countDocuments({
+            year
+        });
 
     return res.json({
+
         reply:
-        `${selected} students have been selected in ${year}.`
+`🏆 Total Selected Students
+
+${total}
+
+Academic Year : ${year}`
+
     });
 
 }
 
+
+/* ===================================================
+   ACHIEVEMENTS
+=================================================== */
 
 if (
     message.includes("achievement") ||
     message.includes("achievements")
 ) {
 
-    const achievementCount =
-    await Achievement.countDocuments({
-        year
-    });
+    const total =
+        await Achievement.countDocuments({
+            year
+        });
 
     return res.json({
+
         reply:
-        `${achievementCount} achievements have been recorded in the coaching program.`
+`🏅 Total Achievements
+
+${total}
+
+Academic Year : ${year}`
+
     });
 
 }
 
-const searchWords =
-    message
-        .split(" ")
-        .filter(
-            word =>
-                word.length > 2
-        );
 
-if (searchWords.length > 0) {
+/* ===================================================
+   LATEST NOTICE
+=================================================== */
 
-    const achievement =
-        await Achievement.find({
-            year,
-            examQualified: {
-                $regex:
-                    searchWords.join("|"),
-                $options: "i"
-            }
-        });
+if (
+    message.includes("notice") ||
+    message.includes("announcement")
+) {
 
-    if (achievement.length > 0) {
+    const latest =
+        await Notice.findOne({ year })
+        .sort({ createdAt: -1 });
+
+    if (latest) {
 
         return res.json({
+
             reply:
-            `${achievement.length} students have qualified ${achievement[0].examQualified} in ${year}.`
+`📢 Latest Notice
+
+${latest.title || latest.notice || latest.message}`
+
+        });
+
+    }
+
+}
+
+/* ===================================================
+   EXAM WISE QUALIFIED
+=================================================== */
+
+const exam = dashboard?.qualified?.find(q =>
+    message.includes(q.name.toLowerCase())
+);
+
+if (exam) {
+
+    return res.json({
+
+        reply:
+
+`🏆 ${exam.name}
+
+Qualified Students : ${exam.boys + exam.girls}
+
+Academic Year : ${year}`
+
+    });
+
+}
+
+
+/* ===================================================
+   EMPLOYMENT
+=================================================== */
+
+const employment = dashboard?.employment?.find(e =>
+    message.includes(e.name.toLowerCase())
+);
+
+if (
+
+    employment ||
+
+    message.includes("employment") ||
+
+    message.includes("employed") ||
+
+    message.includes("job") ||
+
+    message.includes("placed")
+
+) {
+
+    if (employment) {
+
+        return res.json({
+
+            reply:
+
+`💼 ${employment.name}
+
+Total Employed : ${employment.boys + employment.girls}
+
+Academic Year : ${year}`
+
+        });
+
+    }
+
+    return res.json({
+
+        reply:
+
+`💼 Employment Information
+
+Ask like:
+
+• Teacher
+
+• Police
+
+• Army
+
+• Clerk
+
+• Banking
+
+• Private Job`
+
+    });
+
+}
+
+
+/* ===================================================
+   SYLLABUS STATUS
+=================================================== */
+
+if (
+
+    message.includes("syllabus") ||
+
+    message.includes("progress")
+
+) {
+
+    return res.json({
+
+        reply:
+
+`📚 Syllabus Progress
+
+CGPSC : ${cgpscProgress?.progress || 0}%
+
+VYAPAM : ${vyapamProgress?.progress || 0}%
+
+Academic Year : ${year}`
+
+    });
+
+}
+
+
+/* ===================================================
+   SUBJECT WISE SEARCH
+=================================================== */
+
+const subject = syllabus.find(s =>
+
+    message.includes(s.subject.toLowerCase()) ||
+
+    message.includes(s.faculty.toLowerCase())
+
+);
+
+if (subject) {
+
+    return res.json({
+
+        reply:
+
+`📖 ${subject.subject}
+
+👨‍🏫 Faculty : ${subject.faculty}
+
+📅 Status : ${subject.status}
+
+📘 Classes :
+
+${subject.executed} / ${subject.planned}`
+
+    });
+
+}
+
+
+/* ===================================================
+   FACULTY LIST
+=================================================== */
+
+if (
+
+    message.includes("faculty") ||
+
+    message.includes("teacher")
+
+) {
+
+    const faculty = [
+
+        ...new Set(
+
+            syllabus.map(
+
+                s => s.faculty
+
+            )
+
+        )
+
+    ];
+
+    return res.json({
+
+        reply:
+
+`👨‍🏫 Faculty Members
+
+${faculty.join("\n")}`
+
+    });
+
+}
+
+
+/* ===================================================
+   SUBJECT LIST
+=================================================== */
+
+if (
+
+    message.includes("subject") ||
+
+    message.includes("subjects")
+
+) {
+
+    const subjects = syllabus.map(
+
+        s => s.subject
+
+    );
+
+    return res.json({
+
+        reply:
+
+`📚 Subjects
+
+${subjects.join("\n")}`
+
+    });
+
+}
+
+
+/* ===================================================
+   EXAM SEARCH FROM ACHIEVEMENTS
+=================================================== */
+
+const words = message
+.split(" ")
+.filter(w => w.length > 2);
+
+if (words.length) {
+
+    const achievements = await Achievement.find({
+
+        year,
+
+        examQualified: {
+
+            $regex: words.join("|"),
+
+            $options: "i"
+
+        }
+
+    });
+
+    if (achievements.length) {
+
+        return res.json({
+
+            reply:
+
+`🏅 ${achievements.length} students qualified
+
+${achievements[0].examQualified}
+
+Academic Year : ${year}`
+
+        });
+
+    }
+
+}
+
+/* ===================================================
+   FAQ SEARCH
+=================================================== */
+
+for (const faq of faqs) {
+
+    const found = faq.keywords.some(keyword =>
+        message.includes(keyword.toLowerCase())
+    );
+
+    if (found) {
+
+        return res.json({
+            reply: faq.answer
         });
 
     }
@@ -234,146 +633,25 @@ if (searchWords.length > 0) {
 }
 
 
-if (
-    message.includes("qualified")
-) {
+/* ===================================================
+   OPENAI FALLBACK
+=================================================== */
 
-    return res.json({
-        reply:
-        `${analytics.qualifiedStudents || 0} students have qualified various examinations in ${year}.`
-    });
+const syllabusSummary = syllabus
+.map(s =>
+`${s.subject}
+Faculty : ${s.faculty}
+Status : ${s.status}
+Classes : ${s.executed}/${s.planned}`
+)
+.join("\n\n");
 
-}
-const exam =
-    dashboard?.qualified?.find(
-        q =>
-        message.includes(
-            q.name.toLowerCase()
-        )
-    );
-
-if (exam) {
-
-    return res.json({
-    reply:
-    `${exam.boys + exam.girls} students qualified ${exam.name} in ${year}.`
-});
-
-}
-
-const employment =
-    dashboard?.employment?.find(
-        e =>
-            message.includes(
-                e.name.toLowerCase()
-            )
-    );
-
-if (employment) {
-
-    return res.json({
-    reply:
-    `${employment.boys + employment.girls} students are employed as ${employment.name} in ${year}.`
-});
-
-}
-if (
-    message.includes("syllabus")
-) {
-
-    return res.json({
-    reply:
-    `CGPSC syllabus completion in ${year} is ${cgpscProgress?.progress || 0}% and VYAPAM syllabus completion is ${vyapamProgress?.progress || 0}%.`
-});
-
-}
-const syllabus =
-    await mongoose.connection
-    .collection("syllabus")
-    .find({ year })
-    .toArray();
-
-const subject = syllabus.find(s => {
-
-    if (!s.subject || !s.faculty) return false;
-
-    return (
-        message.includes(s.subject.toLowerCase()) ||
-        message.includes(s.faculty.toLowerCase())
-    );
-
-});
-
-if (subject) {
-
-    return res.json({
-        reply:
-        `${subject.subject} is taught by ${subject.faculty}. Status: ${subject.status}. ${subject.executed} classes have been executed out of ${subject.planned} planned classes.`
-    });
-
-}
 
 if (
-    message.includes("faculty")
-) {
 
-    const facultyList =
-        [...new Set(
-            syllabus.map(
-                s => s.faculty
-            )
-        )];
-
-    return res.json({
-        reply:
-        `Faculty members are: ${facultyList.join(", ")}`
-    });
-
-}
-if (
-    message.includes("subject")
-) {
-
-    const subjects =
-        syllabus.map(
-            s => s.subject
-        );
-
-    return res.json({
-        reply:
-        subjects.join(", ")
-    });
-
-}
-
-
-
-
-        for (const faq of faqs) {
-
-            for (const keyword of faq.keywords) {
-
-                if (message.includes(keyword)) {
-
-                    return res.json({
-                        reply: faq.answer
-                    });
-
-                }
-            }
-        }
-
-        const syllabusSummary =
-    syllabus
-    .map(
-        s =>
-        `${s.subject} - ${s.faculty} - ${s.status}`
-    )
-    .join("\n");
-
-if (
     process.env.OPENAI_API_KEY &&
     process.env.OPENAI_API_KEY.startsWith("sk-")
+
 ) {
 
     const completion =
@@ -384,72 +662,140 @@ if (
         messages: [
 
             {
+
                 role: "system",
+
                 content: `
 
-You are the official AI Assistant of the Bhoramdev Vidyapeeth Coaching Program (BCCP).
-In this program, "Total Students" and "Total Enrollment" mean the same thing.
+You are the official AI Assistant of the
+Bhoramdev Vidyapeeth Coaching Program (BCCP).
 
-Whenever a user asks about enrollment, enrolled students, total students, student strength, or total enrollment, treat them as the total number of students enrolled in the academic year (including active and dropout students unless specified otherwise).
+Always answer politely.
 
-If the user asks for active students, dropout students, or selected students, answer those separately.
-Selected Academic Year:
+The current academic year is:
+
 ${year}
-Always answer according to the selected academic year.
-When answering statistics or reports, always mention the academic year.
-If the user does not mention a year, assume ${year}.
-Program Information:
+
+If the user asks without mentioning a year,
+always answer using the current academic year.
+
+If the user explicitly mentions an academic year,
+answer only for that year.
+
+Never invent data.
+
+Use ONLY the information below.
+
+--------------------------------------------------
+
+PROGRAM INFORMATION
+
 ${knowledge}
 
-Total Students:
-${analytics?.totalStudents}
+--------------------------------------------------
 
-Active Students:
-${analytics?.activeStudents}
+ACADEMIC YEAR
 
-Dropout Students:
-${analytics?.dropoutStudents}
+${year}
 
-Qualified Students:
-${analytics?.qualifiedStudents}
+--------------------------------------------------
 
-Average Attendance:
-${analytics?.averageAttendance || "Not Available"}%
+TOTAL STUDENTS
 
-Selection Rate:
-${analytics?.selectionRate || "Not Available"}%
+${analytics.totalStudents || 0}
 
-CGPSC Syllabus:
+--------------------------------------------------
+
+ACTIVE STUDENTS
+
+${analytics.activeStudents || 0}
+
+--------------------------------------------------
+
+DROPOUT STUDENTS
+
+${analytics.dropoutStudents || 0}
+
+--------------------------------------------------
+
+QUALIFIED STUDENTS
+
+${analytics.qualifiedStudents || 0}
+
+--------------------------------------------------
+
+AVERAGE ATTENDANCE
+
+${analytics.averageAttendance || "Not Available"}%
+
+--------------------------------------------------
+
+SELECTION RATE
+
+${analytics.selectionRate || "Not Available"}%
+
+--------------------------------------------------
+
+CGPSC SYLLABUS
+
 ${cgpscProgress?.progress || 0}%
 
-VYAPAM Syllabus:
+--------------------------------------------------
+
+VYAPAM SYLLABUS
+
 ${vyapamProgress?.progress || 0}%
 
-Syllabus Information:
+--------------------------------------------------
+
+SUBJECT DETAILS
+
 ${syllabusSummary}
 
-Answer only questions related to:
-- BCCP
-- Students
-- Faculty
-- Attendance
-- Syllabus
-- Results
-- Achievements
-- Examinations
-- Coaching facilities
+--------------------------------------------------
 
-Use the provided data whenever possible.
+Answer ONLY questions related to:
 
-If information is unavailable, politely state that the information is not available.
+• Students
 
-Do not answer unrelated questions.
+• Enrollment
+
+• Attendance
+
+• Faculty
+
+• Subjects
+
+• Syllabus
+
+• Achievements
+
+• Qualified Students
+
+• Employment
+
+• Notices
+
+• Library
+
+• Coaching Centre
+
+• BCCP
+
+If information is unavailable simply reply:
+
+"Sorry, this information is currently unavailable."
+
 `
+
             },
 
             {
+
                 role: "user",
+
                 content: message
+
             }
 
         ]
@@ -457,36 +803,77 @@ Do not answer unrelated questions.
     });
 
     return res.json({
+
         reply:
-        completion.choices[0].message.content
+        completion
+        .choices[0]
+        .message
+        .content
+
     });
 
 }
 
+
+/* ===================================================
+   DEFAULT RESPONSE
+=================================================== */
+
 return res.json({
+
     reply:
-    "I couldn't find information related to your question."
+
+`Sorry, I couldn't understand your question.
+
+You can ask me about:
+
+👨‍🎓 Enrollment
+
+📊 Attendance
+
+📚 Syllabus
+
+👨‍🏫 Faculty
+
+🏆 Achievements
+
+💼 Employment
+
+📢 Latest Notice
+
+📖 Subjects`
+
 });
 
-} catch (error) {
+}
+catch (error) {
 
     console.error(error);
 
     if (
+
         error.code === "insufficient_quota" ||
+
         error.status === 429
+
     ) {
 
         return res.json({
+
             reply:
-            "AI service quota exceeded. Please contact the coaching office for assistance."
+
+"AI service quota exceeded. Please contact the coaching office."
+
         });
 
     }
 
     return res.json({
+
         reply:
-        "Sorry, something went wrong."
+
+"Sorry, something went wrong while processing your request."
+
     });
 
 }

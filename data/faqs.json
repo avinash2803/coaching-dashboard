@@ -1,34 +1,50 @@
 [
   {
-    "keywords": ["admission", "apply", "enrollment"],
-    "answer": "Admissions are conducted according to the program guidelines."
+    "keywords": ["admission", "admissions", "apply", "application", "enrollment", "register"],
+    "answer": "Admissions are conducted according to the Bhoramdev Vidyapeeth Coaching Program guidelines. Please contact the coaching office for the latest admission schedule."
   },
   {
-    "keywords": ["course", "courses"],
-    "answer": "CGPSC and Vyapam coaching programs are available."
-  },
-  {
-    "keywords": ["library", "books"],
-    "answer": "Library facilities are available."
+    "keywords": ["course", "courses", "program", "coaching"],
+    "answer": "The coaching centre offers preparation for CGPSC and CG Vyapam competitive examinations."
   },
   {
     "keywords": ["cgpsc"],
-    "answer": "CGPSC coaching classes are available."
+    "answer": "Comprehensive coaching for CGPSC Preliminary and Main examinations is available."
   },
   {
-    "keywords": ["vyapam"],
-    "answer": "Vyapam coaching classes are available."
+    "keywords": ["vyapam", "cg vyapam"],
+    "answer": "Coaching is available for various CG Vyapam recruitment examinations."
   },
   {
-    "keywords": ["fees", "fee"],
-    "answer": "The coaching program is supported by BALCO CSR."
+    "keywords": ["library", "books", "reading room"],
+    "answer": "Library and reading room facilities are available for enrolled students."
   },
   {
-    "keywords": ["test", "exam"],
-    "answer": "Regular class tests are conducted."
+    "keywords": ["fee", "fees", "cost", "payment"],
+    "answer": "The coaching program is supported by BALCO CSR. Please contact the office for detailed eligibility and financial information."
   },
   {
-    "keywords": ["contact", "phone"],
-    "answer": "Please contact the coaching office for more information."
+    "keywords": ["test", "tests", "exam", "mock", "assessment"],
+    "answer": "Regular class tests, mock examinations, and performance assessments are conducted throughout the academic session."
+  },
+  {
+    "keywords": ["attendance", "absent"],
+    "answer": "Students are expected to maintain regular attendance. Continuous absence without prior approval may affect enrollment."
+  },
+  {
+    "keywords": ["faculty", "teacher", "teachers"],
+    "answer": "Experienced faculty members from different subjects conduct the classes. You can also ask me about a specific subject to know the faculty."
+  },
+  {
+    "keywords": ["contact", "phone", "office", "help"],
+    "answer": "Please contact the coaching office for official assistance regarding admissions, schedules, or other queries."
+  },
+  {
+    "keywords": ["location", "address", "where"],
+    "answer": "The Bhoramdev Vidyapeeth Coaching Program is located in Kawardha, Chhattisgarh."
+  },
+  {
+    "keywords": ["partner", "partners", "balco", "vidya bhawan", "delhi ias academy"],
+    "answer": "The program is a collaborative initiative of Vidya Bhawan Society, BALCO CSR, and Delhi IAS Academy."
   }
 ]
