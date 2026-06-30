@@ -180,3 +180,32 @@
     </div>
 
 </div>
+
+<script>
+(function () {
+
+    const launcher = document.getElementById("chat-launcher");
+    const chatContainer = document.getElementById("chatContainer");
+    const closeChat = document.getElementById("closeChat");
+
+    console.log("Launcher:", launcher);
+    console.log("Container:", chatContainer);
+
+    if (launcher && chatContainer) {
+
+        launcher.onclick = function () {
+            chatContainer.style.display = "flex";
+        };
+
+    }
+
+    if (closeChat && chatContainer) {
+
+        closeChat.onclick = function () {
+            chatContainer.style.display = "none";
+        };
+
+    }
+
+})();
+</script>
