@@ -143,9 +143,11 @@
 
                 </button>
 
-            </div>
+              </div>
 
         </div>
+
+        <div id="messages"></div>
 
     </div>
 
@@ -187,6 +189,7 @@ const chatContainer = document.getElementById("chatContainer");
 const closeChat = document.getElementById("closeChat");
 const resetChat = document.getElementById("resetChat");
 const chatBody = document.getElementById("chatBody");
+const messages = document.getElementById("messages");
 const message = document.getElementById("message");
 
 // Open
@@ -202,40 +205,11 @@ closeChat.onclick = () => {
 // Reset
 resetChat.onclick = () => {
 
-    chatBody.innerHTML = `
-        <div class="welcome-box" id="welcomeBox">
-
-            <div class="welcome-logo">🤖</div>
-
-            <h2>
-                Welcome to
-                <br>
-                BALCO Connect
-            </h2>
-
-            <p>Bhoramdev Vidyapeeth Coaching Program</p>
-
-            <div class="welcome-card">
-                I can help you with
-            </div>
-
-            <div class="quick-actions">
-
-                <button onclick="sendQuick('Enrollment')">👨‍🎓 Enrollment</button>
-                <button onclick="sendQuick('Attendance')">📊 Attendance</button>
-                <button onclick="sendQuick('Syllabus status')">📚 Syllabus</button>
-                <button onclick="sendQuick('Achievements')">🏆 Achievements</button>
-                <button onclick="sendQuick('Employment')">💼 Employment</button>
-                <button onclick="sendQuick('Faculty')">👨‍🏫 Faculty</button>
-                <button onclick="sendQuick('Latest Notice')">📢 Notice</button>
-                <button onclick="sendQuick('Library')">📖 Library</button>
-
-            </div>
-
-        </div>
-    `;
+    messages.innerHTML = "";
 
     message.value = "";
+
+    chatBody.scrollTop = 0;
 
 };
 
@@ -245,20 +219,18 @@ async function sendMessage() {
 
     if (!text) return;
 
-   // Hide welcome screen on first message
-const welcomeBox = document.getElementById("welcomeBox");
-if (welcomeBox) {
-    welcomeBox.style.display = "none";
-}
+  // Show user message below quick buttons
 
-// Show user message
-chatBody.innerHTML += `
+messages.innerHTML += `
     <div class="user-message">
         ${text}
     </div>
 `;
 
-chatBody.scrollTop = chatBody.scrollHeight;
+messages.lastElementChild?.scrollIntoView({
+    behavior:"smooth",
+    block:"end"
+});
 
     message.value = "";
 
@@ -271,8 +243,8 @@ loading.className = "bot-message";
 loading.id = "typing";
 loading.innerHTML = "🤖 Thinking...";
 
-chatBody.appendChild(loading);
-chatBody.scrollTop = chatBody.scrollHeight;
+messages.appendChild(loading);
+messages.scrollTop = messages.scrollHeight;
 
 // Call API
 const res = await fetch("/api/chat", {
@@ -294,22 +266,22 @@ const res = await fetch("/api/chat", {
 // Remove loading message
 document.getElementById("typing")?.remove();
 
-        chatBody.innerHTML += `
-            <div class="bot-message">
-                ${data.reply}
-            </div>
-        `;
+        messages.innerHTML += `
+    <div class="bot-message">
+        ${data.reply}
+    </div>
+`;
 
-        chatBody.scrollTop = chatBody.scrollHeight;
+chatBody.scrollTop = chatBody.scrollHeight;
 
     } catch (err) {
         document.getElementById("typing")?.remove();
 
-        chatBody.innerHTML += `
-            <div class="bot-message">
-                ❌ Unable to connect to AI.
-            </div>
-        `;
+        messages.innerHTML += `
+    <div class="bot-message">
+        ❌ Unable to connect to AI.
+    </div>
+`;
 
     }
 
