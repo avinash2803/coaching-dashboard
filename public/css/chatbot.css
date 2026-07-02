@@ -115,15 +115,19 @@ Container
 
 .chat-container{
 
-    width:400px;
+    width:420px;
 
-    height:670px;
+    height:calc(100vh - 120px);
+
+    max-height:700px;
 
     position:fixed;
 
-    right:25px;
+    right:20px;
 
-    bottom:115px;
+    top:95px;
+
+    bottom:auto;
 
     background:#f7f9fd;
 
@@ -135,15 +139,14 @@ Container
 
     flex-direction:column;
 
-    box-shadow:
-    0 25px 70px rgba(0,0,0,.22);
+    box-shadow:0 25px 70px rgba(0,0,0,.22);
 
     animation:popup .25s ease;
 
-    z-index:99998;
-
+    z-index:999999;
 
 }
+
 .chat-container.open{
     display:flex;
 }
@@ -179,7 +182,7 @@ Header
 
     color:white;
 
-    padding:16px 18px;
+    padding:12px 16px;
 
     display:flex;
 
@@ -219,19 +222,23 @@ Header
 
 }
 
-.chat-title{
+.assistant-title{
 
     font-size:18px;
 
     font-weight:700;
 
+    line-height:1.2;
+
 }
 
-.chat-subtitle{
+.assistant-subtitle{
 
     font-size:12px;
 
     opacity:.9;
+
+    margin-top:2px;
 
 }
 
@@ -269,7 +276,7 @@ Body
 
     overflow-y:auto;
 
-    padding:20px;
+    padding:16px;
 
     background:#f7f9fd;
 
@@ -397,11 +404,13 @@ Messages
 
     background:white;
 
-    padding:15px 18px;
+    padding:8px 12px;
 
-    border-radius:18px;
+    border-radius:15px;
 
     margin-bottom:16px;
+    width:fit-content;
+    word-break:break-word;
 
     box-shadow:
     0 5px 14px rgba(0,0,0,.06);
@@ -418,15 +427,16 @@ Messages
 
     color:white;
 
-    padding:15px 18px;
+    padding:8px 12px;
 
-    border-radius:18px;
+    border-radius:15px;
 
-    margin-bottom:16px;
+    margin:10px 0 12px auto;
+    width:fit-content;
+    word-wrap:break-word;
 
-    margin-left:55px;
 
-    line-height:1.6;
+    line-height:1.5;
 
 }
 
@@ -542,23 +552,29 @@ Responsive
 
 .chat-container{
 
-width:100%;
+    width:100%;
 
-height:100%;
+    height:100%;
 
-right:0;
+    top:0;
 
-bottom:0;
+    right:0;
 
-border-radius:0;
+    bottom:0;
+
+    max-height:none;
+
+    border-radius:0;
 
 }
 
 #chat-launcher{
 
+position:fixed;
 right:15px;
 
 bottom:15px;
+z-index:1000000;
 
 }
 
@@ -583,22 +599,25 @@ margin-right:14px;
 
 }
 
-.welcome-message{
+.welcome-box{
 
-background:white;
+    display:flex;
 
-padding:18px;
+    flex-direction:column;
 
-border-radius:18px;
+    align-items:center;
 
-line-height:1.7;
+    text-align:center;
 
-font-size:15px;
+    padding:20px;
 
-box-shadow:
-0 4px 12px rgba(0,0,0,.08);
+}
 
-margin-bottom:20px;
+.welcome-logo{
+
+    font-size:48px;
+
+    margin-bottom:12px;
 
 }
 
