@@ -115,7 +115,7 @@
 
                 <button onclick="sendQuick('Achievements')">
 
-                    🏆 Achievements
+                    🏆Achievements
 
                 </button>
 
@@ -182,30 +182,85 @@
 </div>
 
 <script>
-(function () {
+const launcher = document.getElementById("chat-launcher");
+const chatContainer = document.getElementById("chatContainer");
+const closeChat = document.getElementById("closeChat");
+const resetChat = document.getElementById("resetChat");
+const chatBody = document.getElementById("chatBody");
+const message = document.getElementById("message");
 
-    const launcher = document.getElementById("chat-launcher");
-    const chatContainer = document.getElementById("chatContainer");
-    const closeChat = document.getElementById("closeChat");
+// Open
+launcher.onclick = () => {
+    chatContainer.style.display = "flex";
+};
 
-    console.log("Launcher:", launcher);
-    console.log("Container:", chatContainer);
+// Close
+closeChat.onclick = () => {
+    chatContainer.style.display = "none";
+};
 
-    if (launcher && chatContainer) {
+// Reset
+resetChat.onclick = () => {
+    location.reload();
+};
 
-        launcher.onclick = function () {
-            chatContainer.style.display = "flex";
-        };
+async function sendMessage() {
+
+    const text = message.value.trim();
+
+    if (!text) return;
+
+    // Show user message
+    chatBody.innerHTML += `
+        <div class="user-message">
+            ${text}
+        </div>
+    `;
+
+    message.value = "";
+
+    try {
+
+        const res = await fetch("/api/chat", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                message: text
+            })
+
+        });
+
+        const data = await res.json();
+
+        chatBody.innerHTML += `
+            <div class="bot-message">
+                ${data.reply}
+            </div>
+        `;
+
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+    } catch (err) {
+
+        chatBody.innerHTML += `
+            <div class="bot-message">
+                ❌ Unable to connect to AI.
+            </div>
+        `;
 
     }
 
-    if (closeChat && chatContainer) {
+}
 
-        closeChat.onclick = function () {
-            chatContainer.style.display = "none";
-        };
-
-    }
-
-})();
+// Quick Buttons
+function sendQuick(text){
+    message.value = text;
+    sendMessage();
+}
 </script>
+
