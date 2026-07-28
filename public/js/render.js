@@ -61,6 +61,7 @@ const filterCategory = document.getElementById('filterCategory') || { value: "" 
 const filterGender = document.getElementById('filterGender') || { value: "" };
 const filterCourse = document.getElementById('filterCourse') || { value: "" };
 const filterStatus = document.getElementById('filterStatus') || { value: "" };
+const filterAchievement = document.getElementById('filterAchievement') || { value: "" };
 const sortBy = document.getElementById('sortBy') || { value: "" };
 const toggleDashboardBtn=document.getElementById('toggleDashboard');
 const dashboardArea=document.getElementById('dashboardArea');
@@ -86,12 +87,16 @@ let list = (window.students || []).filter(s => {
   const matchCourse = !filterCourse.value || s.course === filterCourse.value;
   const matchStatus =
 !filterStatus.value || s.status === filterStatus.value;
+const matchAchievement =
+  !filterAchievement.value ||
+  (s.achievements || []).includes(filterAchievement.value);
 
   return matchQ &&
        matchCategory &&
        matchGender &&
        matchCourse &&
-       matchStatus;
+       matchStatus &&
+       matchAchievement;
 
 });
 
@@ -366,17 +371,40 @@ function renderProfileViewHtml(s){
       <div class="col-md-4"><div class="label-sm">Rank</div><div>${escapeHtml(s.rank||'')}</div></div>
       <div class="col-md-4"><div class="label-sm">Blood Group</div><div>${escapeHtml(s.bloodGroup||'')}</div></div>
       <div class="col-md-4"><div class="label-sm">Area</div><div>${escapeHtml(s.area||'')}</div></div>
-      ${s.status === "Dropout" ? `
-<div class="col-md-4">
-    <div class="label-sm">Dropout Date</div>
-    <div>${escapeHtml(s.dropoutDate || "-")}</div>
-</div>
+      <div class="col-12 mt-3">
+    <div class="label-sm mb-2"><strong>Career Status</strong></div>
+    ${
+  s.status === "Dropout"
+    ? `
+      <div class="col-md-6 mt-2">
+        <div class="label-sm">Dropout Date</div>
+        <div>${escapeHtml(s.dropoutDate || "NA")}</div>
+      </div>
 
-<div class="col-md-4">
-    <div class="label-sm">Dropout Reason</div>
-    <div>${escapeHtml(s.dropoutReason || "-")}</div>
+      <div class="col-md-6 mt-2">
+        <div class="label-sm">Dropout Reason</div>
+        <div>${escapeHtml(s.dropoutReason || "NA")}</div>
+      </div>
+    `
+    : ""
+}
+
+    ${
+      s.achievements && s.achievements.length
+        ? s.achievements.map(a => `
+            <span class="badge ${
+              a === "Qualified"
+                ? "bg-warning text-dark"
+                : "bg-primary"
+            } me-2">
+              ${a === "Qualified" ? "🏆 Qualified" : "💼 Employed"}
+            </span>
+          `).join("")
+        : `<span class="text-muted">None</span>`
+    }
+
 </div>
-` : ""}
+      
       <div class="col-md-4"><div class="label-sm">Avg Attendance</div><div>${avgAttendanceFor(s)}%</div></div>
       <div class="col-md-4"><div class="label-sm">Avg Test %</div><div>${avgTestPercentFor(s)}%</div></div>
     </div>
@@ -871,6 +899,11 @@ currentPage = 1;
 renderStudents();
 });
 filterStatus?.addEventListener("change", ()=>{
+currentPage = 1;
+renderStudents();
+});
+
+filterAchievement?.addEventListener("change", ()=>{
 currentPage = 1;
 renderStudents();
 });

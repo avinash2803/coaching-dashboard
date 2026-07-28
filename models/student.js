@@ -32,6 +32,14 @@ dropoutReason: {
   type: String,
   default: ""
 },
+achievements: {
+  type: [{
+    type: String,
+    enum: ["Qualified", "Employed"]
+  }],
+  default: []
+},
+
   photoId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "uploads.files" // GridFS reference
