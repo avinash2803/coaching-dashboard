@@ -142,9 +142,33 @@ function studentCardDom(student, idx){
   wrapper.className = 'card p-3 student-card';
   wrapper.innerHTML = `
     <div class="card-header d-flex justify-content-between align-items-center">
-      <div><strong>${escapeHtml(student.name)}</strong> <small class="help-muted">(Roll: ${student.roll})</small></div>
-      <div><span class="chip">${escapeHtml(student.category||'')}</span></div>
-    </div>
+
+  <div>
+    <strong>${escapeHtml(student.name)}</strong>
+    <small class="help-muted">(Roll: ${student.roll})</small>
+  </div>
+
+  <div class="d-flex align-items-center gap-2">
+
+    <span class="chip">
+      ${escapeHtml(student.category || '')}
+    </span>
+
+    <span class="badge ${
+      student.status === "Dropout"
+        ? "bg-danger"
+        : "bg-success"
+    }">
+      ${
+        student.status === "Dropout"
+          ? "🔴 Dropout"
+          : "🟢 Active"
+      }
+    </span>
+
+  </div>
+
+</div>
   `;
   const body = document.createElement('div'); body.className='card-body'; wrapper.appendChild(body);
 
@@ -320,12 +344,39 @@ function renderProfileViewHtml(s){
       <div class="col-md-6"><div class="label-sm">DOB</div><div>${escapeHtml(s.dob||'')}</div></div>
       <div class="col-md-4"><div class="label-sm">Gender</div><div>${escapeHtml(s.gender||'')}</div></div>
       <div class="col-md-4"><div class="label-sm">Category</div><div>${escapeHtml(s.category||'')}</div></div>
-      <div class="col-md-4"><div class="label-sm">Course</div><div>${escapeHtml(s.course||'')}</div></div>
-      <div class="col-md-4"><div class="label-sm">Admission Date</div><div>${escapeHtml(s.admissionDate||'')}</div></div>
+      <div class="col-md-4">
+    <div class="label-sm">Course</div>
+    <div>${escapeHtml(s.course||'')}</div>
+</div>
+
+<div class="col-md-4">
+    <div class="label-sm">Status</div>
+    <div>
+        <span class="badge ${s.status === "Dropout" ? "bg-danger" : "bg-success"}">
+            ${s.status || "Active"}
+        </span>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="label-sm">Admission Date</div>
+    <div>${escapeHtml(s.admissionDate||'')}</div>
+</div>
       <div class="col-md-4"><div class="label-sm">Aadhaar</div><div>${escapeHtml(s.aadhaar||'')}</div></div>
       <div class="col-md-4"><div class="label-sm">Rank</div><div>${escapeHtml(s.rank||'')}</div></div>
       <div class="col-md-4"><div class="label-sm">Blood Group</div><div>${escapeHtml(s.bloodGroup||'')}</div></div>
       <div class="col-md-4"><div class="label-sm">Area</div><div>${escapeHtml(s.area||'')}</div></div>
+      ${s.status === "Dropout" ? `
+<div class="col-md-4">
+    <div class="label-sm">Dropout Date</div>
+    <div>${escapeHtml(s.dropoutDate || "-")}</div>
+</div>
+
+<div class="col-md-4">
+    <div class="label-sm">Dropout Reason</div>
+    <div>${escapeHtml(s.dropoutReason || "-")}</div>
+</div>
+` : ""}
       <div class="col-md-4"><div class="label-sm">Avg Attendance</div><div>${avgAttendanceFor(s)}%</div></div>
       <div class="col-md-4"><div class="label-sm">Avg Test %</div><div>${avgTestPercentFor(s)}%</div></div>
     </div>
