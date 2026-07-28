@@ -134,15 +134,7 @@ class="form-control">${escapeHtml(s.dropoutReason || "")}</textarea>
 
 </div>
 
-<div class="col-12 text-end mt-3 d-flex justify-content-between">
-
-<button
-id="deleteStudent-${idx}"
-class="btn btn-danger">
-
-Delete Student
-
-</button>
+<div class="col-12 text-end mt-3">
 
 <button
 id="saveProfile-${idx}"
@@ -199,5 +191,65 @@ if (!student) {
 
 document.getElementById("studentProfileContainer").innerHTML =
     renderProfileEditHtml(student, 0);
+
+    document
+    .getElementById("saveProfile-0")
+    .addEventListener("click", () => saveProfile(student._id));
+
+}
+
+async function saveProfile(studentId){
+
+    const data = {
+
+        name: document.getElementById("edit_name_0").value,
+        studentMobile: document.getElementById("edit_studentMobile_0").value,
+        father: document.getElementById("edit_father_0").value,
+        fatherMobile: document.getElementById("edit_fatherMobile_0").value,
+        email: document.getElementById("edit_email_0").value,
+        dob: document.getElementById("edit_dob_0").value,
+
+        gender: document.getElementById("edit_gender_0").value,
+        category: document.getElementById("edit_category_0").value,
+        course: document.getElementById("edit_course_0").value,
+
+        aadhaar: document.getElementById("edit_aadhaar_0").value,
+        rank: document.getElementById("edit_rank_0").value,
+        bloodGroup: document.getElementById("edit_blood_0").value,
+        area: document.getElementById("edit_area_0").value,
+
+        status: document.getElementById("edit_status_0").value,
+
+        dropoutDate: document.getElementById("edit_dropoutDate_0").value,
+        dropoutReason: document.getElementById("edit_dropoutReason_0").value,
+
+        achievements: [
+            ...(document.getElementById("qualified_0").checked ? ["Qualified"] : []),
+            ...(document.getElementById("employed_0").checked ? ["Employed"] : [])
+        ]
+
+    };
+
+    const res = await fetch(`/api/students/${studentId}`,{
+
+        method:"PUT",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body: JSON.stringify(data)
+
+    });
+
+    if(res.ok){
+
+        alert("✅ Student Profile Updated Successfully");
+
+    }else{
+
+        alert("❌ Update Failed");
+
+    }
 
 }
