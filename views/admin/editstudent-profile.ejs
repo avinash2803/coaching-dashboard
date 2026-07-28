@@ -1,0 +1,53 @@
+<%- include("../partials/header") %>
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/admin.css">
+
+<div class="container py-4" style="margin-top:100px;">
+
+<div class="card p-4 shadow-sm">
+
+<h3>Student Profile Manager</h3>
+
+<div class="row">
+
+<div class="col-md-8">
+
+<input
+type="text"
+id="studentSearch"
+class="form-control"
+placeholder="Search by Name or Roll Number">
+
+</div>
+
+<div class="col-md-4">
+
+<button
+id="searchStudentBtn"
+class="btn btn-primary w-100">
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+<hr>
+
+<div id="studentProfileContainer">
+
+<p class="text-muted">
+Search a student to edit profile.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="/js/editProfile.js"></script>
+
+<%- include("../partials/footer") %>

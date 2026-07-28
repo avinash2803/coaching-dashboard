@@ -226,6 +226,9 @@ app.get("/admin/upload-attendance", adminAuth, (req, res) => {
 app.get("/admin/upload-tests", (req, res) => {
   res.render("admin/uploadTests");
 });
+app.get("/admin/editstudent-profile", adminAuth, (req, res) => {
+  res.render("admin/editstudent-profile");
+});
 app.get("/admin/manage-success", adminAuth, async (req,res)=>{
 
 const stories = await Success.find();
