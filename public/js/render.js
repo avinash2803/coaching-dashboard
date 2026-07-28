@@ -53,6 +53,23 @@ function finalColorClass(val){ if(val<40) return 'score-red'; if(val<70) return 
 function attColorClass(pct){ if(pct<75) return 'att-red'; if(pct<90) return 'att-orange'; return 'att-green'; }
 function escapeHtml(s){ if(s===undefined||s===null) return ''; return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
+function displayDate(date){
+
+    if(!date) return "NA";
+
+    if(date.includes("-")){
+
+        const parts = date.split("-");
+
+        if(parts[0].length === 2){
+            return date;
+        }
+
+        return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    }
+
+    return date;
+}
 /* ---------- Render Students ---------- */
 const studentsList = document.getElementById('studentsList');
 
@@ -377,10 +394,10 @@ function renderProfileViewHtml(s){
   s.status === "Dropout"
     ? `
       <div class="col-md-6 mt-2">
-        <div class="label-sm">Dropout Date</div>
-        <div>${escapeHtml(s.dropoutDate || "NA")}</div>
-      </div>
-
+    <div class="label-sm">Dropout Date</div>
+    <div>${displayDate(s.dropoutDate)}</div>
+</div>
+      
       <div class="col-md-6 mt-2">
         <div class="label-sm">Dropout Reason</div>
         <div>${escapeHtml(s.dropoutReason || "NA")}</div>
@@ -411,51 +428,6 @@ function renderProfileViewHtml(s){
   `;
 }
 
-function renderProfileEditHtml(s, idx){
-  return `
-    <div class="row g-2">
-      <div class="col-md-6"><label class="label-sm">Student Name</label><input id="edit_name_${idx}" class="form-control" value="${escapeHtml(s.name)}"></div>
-      <div class="col-md-6"><label class="label-sm">Mobile</label><input id="edit_studentMobile_${idx}" class="form-control" value="${escapeHtml(s.studentMobile||'')}"></div>
-      <div class="col-md-6"><label class="label-sm">Father's Name</label><input id="edit_father_${idx}" class="form-control" value="${escapeHtml(s.father||'')}"></div>
-      <div class="col-md-6"><label class="label-sm">Father's Mobile</label><input id="edit_fatherMobile_${idx}" class="form-control" value="${escapeHtml(s.fatherMobile||'')}"></div>
-      <div class="col-md-6"><label class="label-sm">Email</label><input id="edit_email_${idx}" class="form-control" value="${escapeHtml(s.email||'')}"></div>
-      <div class="col-md-6"><label class="label-sm">DOB</label><input id="edit_dob_${idx}" class="form-control" value="${escapeHtml(s.dob||'')}"></div>
-      <div class="col-md-4"><label class="label-sm">Gender</label>
-        <select id="edit_gender_${idx}" class="form-select">
-          <option ${s.gender==='MALE'?'selected':''}>MALE</option>
-          <option ${s.gender==='FEMALE'?'selected':''}>FEMALE</option>
-          <option ${s.gender==='OTHER'?'selected':''}>OTHER</option>
-        </select>
-      </div>
-      <div class="col-md-4"><label class="label-sm">Category</label>
-        <select id="edit_category_${idx}" class="form-select">
-          <option ${s.category==='SC'?'selected':''}>SC</option>
-          <option ${s.category==='ST'?'selected':''}>ST</option>
-          <option ${s.category==='OBC'?'selected':''}>OBC</option>
-          <option ${s.category==='General'?'selected':''}>General</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-  <label class="label-sm">Course</label>
-  <select id="edit_course_${idx}" class="form-select">
-    <option ${s.course==='CGPSC'?'selected':''}>CGPSC</option>
-    <option ${s.course==='VYAPAM'?'selected':''}>VYAPAM</option>
-  </select>
-</div>
-
-      <div class="col-md-4"><label class="label-sm">Aadhaar</label><input id="edit_aadhaar_${idx}" class="form-control" value="${escapeHtml(s.aadhaar||'')}"></div>
-      <div class="col-md-4"><label class="label-sm">Rank</label><input id="edit_rank_${idx}" class="form-control" value="${escapeHtml(s.rank||'')}"></div>
-<div class="col-md-4">
-  <label class="label-sm">Admission Date</label>
-  <input id="edit_admission_${idx}" type="date" class="form-control"
-         value="${s.admissionDate || new Date().toISOString().split('T')[0]}">
-</div>
-      <div class="col-md-4"><label class="label-sm">Blood Group</label><input id="edit_blood_${idx}" class="form-control" value="${escapeHtml(s.bloodGroup||'')}"></div>
-      <div class="col-md-4"><label class="label-sm">Area</label><input id="edit_area_${idx}" class="form-control" value="${escapeHtml(s.area||'')}"></div>
-      <div class="col-12 text-end mt-2 d-flex justify-content-between"><button id="deleteStudent-${idx}" class="btn btn-sm btn-danger">Delete Student</button><button id="saveProfile-${idx}" class="btn btn-sm btn-success">Save Profile</button></div>
-    </div>
-  `;
-}
 
 /* ---------- Attendance / Tests rendering ---------- */
 function renderAttendanceHtml(attObj){
