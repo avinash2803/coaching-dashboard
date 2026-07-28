@@ -16,7 +16,22 @@ const StudentSchema = new mongoose.Schema({
   rank: String,
   bloodGroup: String,
   area: String,
-year: String,   // ⭐ ADD THIS LINE
+year: String, 
+status: {
+  type: String,
+  enum: ["Active", "Dropout"],
+  default: "Active"
+},
+
+dropoutDate: {
+  type: String,
+  default: ""
+},
+
+dropoutReason: {
+  type: String,
+  default: ""
+},
   photoId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "uploads.files" // GridFS reference
