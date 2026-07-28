@@ -6,9 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const catEl = document.getElementById("filterCategory");
   const genderEl = document.getElementById("filterGender");
   const courseEl = document.getElementById("filterCourse");
-  const sortEl = document.getElementById("sortBy");
+const statusEl = document.getElementById("filterStatus");
+const sortEl = document.getElementById("sortBy");
 
-  [searchEl, catEl, genderEl, courseEl, sortEl]
+  [searchEl, catEl, genderEl, courseEl, statusEl, sortEl]
     .forEach(el => {
       if (el) {
         el.addEventListener("input", renderStudents);

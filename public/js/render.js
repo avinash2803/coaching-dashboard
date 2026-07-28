@@ -60,6 +60,7 @@ const searchBox = document.getElementById('searchBox') || { value: "" };
 const filterCategory = document.getElementById('filterCategory') || { value: "" };
 const filterGender = document.getElementById('filterGender') || { value: "" };
 const filterCourse = document.getElementById('filterCourse') || { value: "" };
+const filterStatus = document.getElementById('filterStatus') || { value: "" };
 const sortBy = document.getElementById('sortBy') || { value: "" };
 const toggleDashboardBtn=document.getElementById('toggleDashboard');
 const dashboardArea=document.getElementById('dashboardArea');
@@ -83,8 +84,14 @@ let list = (window.students || []).filter(s => {
   const matchGender = !gender || s.gender === gender;
 
   const matchCourse = !filterCourse.value || s.course === filterCourse.value;
+  const matchStatus =
+!filterStatus.value || s.status === filterStatus.value;
 
-  return matchQ && matchCategory && matchGender && matchCourse;
+  return matchQ &&
+       matchCategory &&
+       matchGender &&
+       matchCourse &&
+       matchStatus;
 
 });
 
@@ -812,7 +819,10 @@ filterGender?.addEventListener("change", ()=>{
 currentPage = 1;
 renderStudents();
 });
-
+filterStatus?.addEventListener("change", ()=>{
+currentPage = 1;
+renderStudents();
+});
 
 sortBy?.addEventListener("change", ()=>{
 currentPage = 1;
