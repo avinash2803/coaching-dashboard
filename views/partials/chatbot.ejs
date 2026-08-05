@@ -268,7 +268,7 @@ document.getElementById("typing")?.remove();
 
         messages.innerHTML += `
     <div class="bot-message">
-        ${data.reply}
+        ${data.reply.replace(/\n/g, "<br>")}
     </div>
 `;
 

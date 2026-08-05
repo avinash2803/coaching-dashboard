@@ -409,8 +409,14 @@ Messages
     border-radius:15px;
 
     margin-bottom:16px;
+
     width:fit-content;
+
+    max-width:100%;
+
     word-break:break-word;
+
+    white-space:pre-wrap;
 
     box-shadow:
     0 5px 14px rgba(0,0,0,.06);
