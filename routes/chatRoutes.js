@@ -464,29 +464,6 @@ ${latest.title || latest.notice || latest.message}`
 
 }
 
-/* ===================================================
-   EXAM WISE QUALIFIED
-=================================================== */
-
-const exam = dashboard?.qualified?.find(q =>
-    message.includes(q.name.toLowerCase())
-);
-
-if (exam) {
-
-    return res.json({
-
-        reply:
-
-`🏆 ${exam.name}
-
-Qualified Students : ${exam.boys + exam.girls}
-
-Academic Year : ${year}`
-
-    });
-
-}
 
 
 /* ===================================================
@@ -683,48 +660,6 @@ ${subjects.join("\n")}`
 
 }
 
-
-/* ===================================================
-   EXAM SEARCH FROM ACHIEVEMENTS
-=================================================== */
-
-const words = message
-.split(" ")
-.filter(w => w.length > 2);
-
-if (words.length) {
-
-    const achievements = await Achievement.find({
-
-        year,
-
-        examQualified: {
-
-            $regex: words.join("|"),
-
-            $options: "i"
-
-        }
-
-    });
-
-    if (achievements.length) {
-
-        return res.json({
-
-            reply:
-
-`🏅 ${achievements.length} students qualified
-
-${achievements[0].examQualified}
-
-Academic Year : ${year}`
-
-        });
-
-    }
-
-}
 
 /* ===================================================
    FAQ SEARCH
