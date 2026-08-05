@@ -413,27 +413,35 @@ Academic Year : ${year}`
 
     }
 
-    return res.json({
+const totalEmployment = (dashboard?.employment || []).reduce(
+    (sum, item) => sum + (item.boys || 0) + (item.girls || 0),
+    0
+);
 
-        reply:
+let reply = `💼 Employment Summary
 
-`💼 Employment Information
+🎉 Total Employment : ${totalEmployment}
 
-Ask like:
+Category-wise Employment
 
-• Teacher
+`;
+
+(dashboard?.employment || []).forEach(item => {
+    reply += `• ${item.name} : ${(item.boys || 0) + (item.girls || 0)}\n`;
+});
+
+reply += `
+
+You can ask:
 
 • Police
-
-• Army
-
-• Clerk
-
+• Teacher
 • Banking
+• Army
+• Clerk
+• Private Job`;
 
-• Private Job`
-
-    });
+return res.json({ reply });
 
 }
 
