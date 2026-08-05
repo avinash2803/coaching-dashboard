@@ -504,27 +504,30 @@ Academic Year : ${year}`
 
     }
 
-    let reply = `💼 Employment Summary
+  let reply = `💼 Employment Summary
+────────────────────
 
-👨‍🎓 Students Employed : ${employmentSummary.studentsEmployed}
+👨‍🎓 Students Employed
+   • ${employmentSummary.studentsEmployed}
 
-🏅 Employment Achievements : ${employmentSummary.employmentAchievements}
+🏅 Employment Achievements
+   • ${employmentSummary.employmentAchievements}
 
-Department-wise Employment
+📂 Department-wise Employment
 
 `;
 
-    employmentSummary.departments.forEach(dep => {
+employmentSummary.departments.forEach(dep => {
 
-        reply += `• ${dep.name} : ${dep.total}\n`;
+    reply += `   • ${dep.name.padEnd(22, ".")} ${dep.total}\n`;
 
-    });
+});
 
-    reply += `
+reply += `
 
 ℹ️ Some students have secured multiple employment selections.`;
 
-    return res.json({ reply });
+return res.json({ reply });
 
 }
 
