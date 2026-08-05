@@ -59,7 +59,72 @@ const client = new OpenAI({
 /* ===================================================
    CHAT API
 =================================================== */
+function buildEmploymentSummary(achievements){
 
+    const uniqueStudents = new Set();
+
+    const departmentMap = {};
+
+    achievements.forEach(item=>{
+
+        if(item.type!=="EMPLOYMENT") return;
+
+        uniqueStudents.add(item.studentId.toString());
+
+        const category=item.category.trim();
+
+        departmentMap[category]=(departmentMap[category]||0)+1;
+
+    });
+
+    return{
+
+        studentsEmployed:uniqueStudents.size,
+
+        employmentAchievements:Object.values(departmentMap)
+            .reduce((a,b)=>a+b,0),
+
+        departments:Object.entries(departmentMap)
+        .map(([name,total])=>({name,total}))
+        .sort((a,b)=>b.total-a.total)
+
+    };
+
+}
+
+
+function buildQualificationSummary(achievements){
+
+    const uniqueStudents=new Set();
+
+    const examMap={};
+
+    achievements.forEach(item=>{
+
+        if(item.type!=="QUALIFICATION") return;
+
+        uniqueStudents.add(item.studentId.toString());
+
+        const category=item.category.trim();
+
+        examMap[category]=(examMap[category]||0)+1;
+
+    });
+
+    return{
+
+        studentsQualified:uniqueStudents.size,
+
+        qualificationAchievements:Object.values(examMap)
+            .reduce((a,b)=>a+b,0),
+
+        exams:Object.entries(examMap)
+        .map(([name,total])=>({name,total}))
+        .sort((a,b)=>b.total-a.total)
+
+    };
+
+}
 router.post("/", async (req, res) => {
 
 try {
@@ -113,6 +178,12 @@ try {
         await Dashboardstats.findOne({
             year
         }) || {};
+        const achievementData = await Achievement.find({ year });
+        const employmentSummary =
+    buildEmploymentSummary(achievementData);
+
+const qualificationSummary =
+    buildQualificationSummary(achievementData);
 
     const cgpscProgress =
         await mongoose.connection
@@ -247,21 +318,64 @@ Academic Year : ${year}`
 
 
 /* ===================================================
-   QUALIFIED
+   QUALIFICATION
 =================================================== */
 
-if (message.includes("qualified")) {
+const exam = qualificationSummary.exams.find(e =>
+    message.includes(e.name.toLowerCase())
+);
 
-    return res.json({
+if (
 
-        reply:
-`🎯 Qualified Students
+    exam ||
 
-${analytics.qualifiedStudents || 0}
+    message.includes("qualified") ||
+
+    message.includes("qualification") ||
+
+    message.includes("exam") ||
+
+    message.includes("pass")
+
+) {
+
+    if (exam) {
+
+        return res.json({
+
+            reply:
+
+`🎯 ${exam.name}
+
+Qualified Students : ${exam.total}
 
 Academic Year : ${year}`
 
+        });
+
+    }
+
+    let reply = `🎯 Qualification Summary
+
+👨‍🎓 Students Qualified : ${qualificationSummary.studentsQualified}
+
+🏅 Qualification Achievements : ${qualificationSummary.qualificationAchievements}
+
+Exam-wise Qualification
+
+`;
+
+    qualificationSummary.exams.forEach(exam => {
+
+        reply += `• ${exam.name} : ${exam.total}\n`;
+
     });
+
+    reply += `
+
+ℹ️ Some students have qualified multiple examinations.`;
+
+    return res.json({ reply });
 
 }
 
@@ -379,13 +493,13 @@ Academic Year : ${year}`
    EMPLOYMENT
 =================================================== */
 
-const employment = dashboard?.employment?.find(e =>
-    message.includes(e.name.toLowerCase())
+const department = employmentSummary.departments.find(dep =>
+    message.includes(dep.name.toLowerCase())
 );
 
 if (
 
-    employment ||
+    department ||
 
     message.includes("employment") ||
 
@@ -397,15 +511,15 @@ if (
 
 ) {
 
-    if (employment) {
+    if (department) {
 
         return res.json({
 
             reply:
 
-`💼 ${employment.name}
+`💼 ${department.name}
 
-Total Employed : ${employment.boys + employment.girls}
+Total Employment : ${department.total}
 
 Academic Year : ${year}`
 
@@ -413,35 +527,27 @@ Academic Year : ${year}`
 
     }
 
-const totalEmployment = (dashboard?.employment || []).reduce(
-    (sum, item) => sum + (item.boys || 0) + (item.girls || 0),
-    0
-);
+    let reply = `💼 Employment Summary
 
-let reply = `💼 Employment Summary
+👨‍🎓 Students Employed : ${employmentSummary.studentsEmployed}
 
-🎉 Total Employment : ${totalEmployment}
+🏅 Employment Achievements : ${employmentSummary.employmentAchievements}
 
-Category-wise Employment
+Department-wise Employment
 
 `;
 
-(dashboard?.employment || []).forEach(item => {
-    reply += `• ${item.name} : ${(item.boys || 0) + (item.girls || 0)}\n`;
-});
+    employmentSummary.departments.forEach(dep => {
 
-reply += `
+        reply += `• ${dep.name} : ${dep.total}\n`;
 
-You can ask:
+    });
 
-• Police
-• Teacher
-• Banking
-• Army
-• Clerk
-• Private Job`;
+    reply += `
 
-return res.json({ reply });
+ℹ️ Some students have secured multiple employment selections.`;
+
+    return res.json({ reply });
 
 }
 

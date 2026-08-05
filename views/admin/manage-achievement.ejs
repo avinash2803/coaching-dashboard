@@ -66,23 +66,21 @@
 </div>
 
 <%
-let totalQualified = 0;
-stats?.qualified?.forEach(q => {
-  totalQualified += (q.boys || 0) + (q.girls || 0);
-});
+const totalQualified =
+    qualificationSummary.qualificationAchievements;
 
-let totalEmployment = 0;
-stats?.employment?.forEach(e => {
-  totalEmployment += (e.boys || 0) + (e.girls || 0);
-});
+const totalEmployment =
+    employmentSummary.employmentAchievements;
 
 let selectionRate = 0;
 
 if ((stats?.students?.total || 0) > 0) {
-  selectionRate = Math.round(
-    ((totalQualified + totalEmployment) /
-      stats.students.total) * 100
-  );
+
+    selectionRate = Math.round(
+        ((totalQualified + totalEmployment) /
+        stats.students.total) * 100
+    );
+
 }
 %>
 <div class="kpi-grid">
@@ -126,54 +124,53 @@ unique students.
 
   <div class="summary-panel">
 
-    <h2>🎯 Qualification Summary</h2>
+   <h2>🎯 Qualification Summary</h2>
 
-    <% stats?.qualified?.forEach(exam => { %>
+<div class="summary-item">
+    <strong>👨‍🎓 Students Qualified</strong>
 
-      <div class="summary-item">
+    <span class="summary-total">
+        <%= qualificationSummary.studentsQualified %>
+    </span>
+</div>
 
-        <div>
+<div class="summary-item">
+    <strong>🏅 Qualification Achievements</strong>
 
-          <div class="summary-name">
-            <%= exam.name %>
-          </div>
+    <span class="summary-total">
+        <%= qualificationSummary.qualificationAchievements %>
+    </span>
+</div>
 
-          <div class="summary-breakup">
+<hr style="margin:15px 0;">
 
-            <span class="boys-tag">
-              👨‍🎓 Boys: <%= exam.boys || 0 %>
-            </span>
-             <span class="divider">|</span>
-            <span class="girls-tag">
-              👩‍🎓 Girls: <%= exam.girls || 0 %>
-            </span>
+<% qualificationSummary.exams.forEach(exam => { %>
 
-          </div>
+<div class="summary-item">
 
-        </div>
-
-        <span class="summary-total">
-          <%= (exam.boys || 0) + (exam.girls || 0) %>
-        </span>
-
-      </div>
-      
-
-    <% }) %>
-
-    <% if(stats?.achievementNote){ %>
-
-    <div class="qualification-note-box">
-
-      <h4>📝 Insights</h4>
-
-      <p>
-        <%= stats.achievementNote %>
-      </p>
-
+    <div class="summary-name">
+        <%= exam.name %>
     </div>
 
-    <% } %>
+    <span class="summary-total">
+        <%= exam.total %>
+    </span>
+
+</div>
+
+<% }) %>
+
+<% if(stats?.achievementNote){ %>
+
+<div class="qualification-note-box">
+
+    <h4>📝 Insights</h4>
+
+    <p><%= stats.achievementNote %></p>
+
+</div>
+
+<% } %>
 
   </div>
 

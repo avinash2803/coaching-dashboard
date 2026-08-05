@@ -46,7 +46,44 @@ departmentMap[category] =
 }
 
 const router = express.Router();
+function buildQualificationSummary(achievements) {
 
+    const uniqueStudents = new Set();
+
+    const examMap = {};
+
+    achievements.forEach(item => {
+
+        if (item.type !== "QUALIFICATION") return;
+
+        uniqueStudents.add(item.studentId._id.toString());
+
+        const category = item.category.trim();
+
+        examMap[category] =
+            (examMap[category] || 0) + 1;
+
+    });
+
+    const exams = Object.entries(examMap)
+        .map(([name, total]) => ({
+            name,
+            total
+        }))
+        .sort((a, b) => b.total - a.total);
+
+    return {
+
+        studentsQualified: uniqueStudents.size,
+
+        qualificationAchievements:
+            exams.reduce((sum, e) => sum + e.total, 0),
+
+        exams
+
+    };
+
+}
 
 // 👉 SHOW ADD FORM
 router.get("/add", async (req, res) => {
@@ -154,13 +191,16 @@ if (year === "all") {
 // ================= AUTO EMPLOYMENT =================
 
 const employmentSummary = buildEmploymentSummary(rawAchievements);
+const qualificationSummary =
+buildQualificationSummary(rawAchievements);
 
     res.render("admin/manage-achievement", {
       year,
       achievements,
       stats,
-      employmentSummary
-    });
+      employmentSummary,
+      qualificationSummary
+});
 
   } catch (err) {
     console.error("ERROR IN /achievement/manage:", err);
