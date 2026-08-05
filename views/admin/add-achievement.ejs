@@ -1,6 +1,6 @@
 <h2>Add Achievement</h2>
 
-<form>
+<form method="POST" action="/achievement/add">
 
   <!-- 🔹 Filters Row -->
   <div style="display:flex; gap:10px; margin-bottom:15px;">
@@ -51,14 +51,27 @@
 
   <br><br>
 
-  <!-- ✍️ Exam -->
-  <input 
-    type="text" 
-    name="examQualified" 
-    placeholder="Enter Exam (SSC GD / CTET)" 
-    required 
-    style="width:100%; padding:8px;"
-  >
+  <h3>Achievement Type</h3>
+
+<select
+    name="type"
+    required
+    style="width:100%; padding:8px; margin-bottom:10px;">
+
+    <option value="">Select Type</option>
+
+    <option value="EMPLOYMENT">Employment</option>
+
+    <option value="QUALIFICATION">Qualification</option>
+
+</select>
+
+<input
+    type="text"
+    name="category"
+    placeholder="Enter Achievement (CG Police / CGTET / Forest Guard)"
+    required
+    style="width:100%; padding:8px;">
 
   <br><br>
 

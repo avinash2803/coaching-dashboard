@@ -256,7 +256,31 @@ unique students.
 </div>
 
 <div class="exam">
-  🏆 <%= item.examQualified %>
+
+  <% if(item.employment.length){ %>
+
+    <div style="margin-bottom:8px;">
+
+      <strong>💼 Employment</strong><br>
+
+      <%= item.employment.join(", ") %>
+
+    </div>
+
+  <% } %>
+
+  <% if(item.qualification.length){ %>
+
+    <div>
+
+      <strong>🎯 Qualification</strong><br>
+
+      <%= item.qualification.join(", ") %>
+
+    </div>
+
+  <% } %>
+
 </div>
 
 <p class="quote">

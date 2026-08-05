@@ -26,25 +26,14 @@ router.get("/add", async (req, res) => {
 // 👉 SAVE ACHIEVEMENT
 router.post("/add", async (req, res) => {
   try {
-    const { studentId, examQualified, year } = req.body;
+    const { studentId, type, category, year } = req.body;
 
-const existing = await Achievement.findOne({
-  studentId: new mongoose.Types.ObjectId(studentId)
+await Achievement.create({
+    studentId: new mongoose.Types.ObjectId(studentId),
+    type,
+    category,
+    year
 });
-
-if (existing) {
-  // 👉 Update instead of duplicate
-  existing.examQualified = examQualified;
-  existing.year = year;
-  await existing.save();
-} else {
-  // 👉 Create new
-  await Achievement.create({
-  studentId: new mongoose.Types.ObjectId(studentId),
-  examQualified,
-  year
-});
-}
 
     res.redirect("/achievement/manage");
 
@@ -60,18 +49,52 @@ router.get("/manage", async (req, res) => {
   try {
     const year = req.query.year || "2025-26";
 
-// 👉 ACHIEVEMENTS FIX
-let achievements;
+// ================= ACHIEVEMENTS =================
 
-if (year === "all") {
-  achievements = await Achievement.find()
-    .populate("studentId")
-    .lean();
-} else {
-  achievements = await Achievement.find({ year })
-    .populate("studentId")
-    .lean();
-}
+const rawAchievements =
+  year === "all"
+    ? await Achievement.find().populate("studentId").lean()
+    : await Achievement.find({ year }).populate("studentId").lean();
+
+const studentMap = {};
+
+rawAchievements.forEach(item => {
+
+    const id = item.studentId?._id?.toString();
+
+    if (!id) return;
+
+    if (!studentMap[id]) {
+
+        studentMap[id] = {
+
+            _id: id,
+
+            studentId: item.studentId,
+
+            employment: [],
+
+            qualification: []
+
+        };
+
+    }
+
+    if (item.type === "EMPLOYMENT") {
+
+        studentMap[id].employment.push(item.category);
+
+    }
+
+    if (item.type === "QUALIFICATION") {
+
+        studentMap[id].qualification.push(item.category);
+
+    }
+
+});
+
+const achievements = Object.values(studentMap);
 
 // 👉 STATS FIX
 let stats = {};
