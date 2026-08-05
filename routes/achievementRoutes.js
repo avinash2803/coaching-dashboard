@@ -4,6 +4,47 @@ import Achievement from "../models/achievement.js";
 import Student from "../models/student.js";
 import Dashboardstats from "../models/dashboardstats.js";
 
+function buildEmploymentSummary(achievements) {
+
+    const uniqueStudents = new Set();
+
+    const departmentMap = {};
+
+    achievements.forEach(item => {
+
+        if (item.type !== "EMPLOYMENT") return;
+
+        uniqueStudents.add(item.studentId._id.toString());
+
+        const category = item.category.trim();
+
+departmentMap[category] =
+    (departmentMap[category] || 0) + 1;
+
+    });
+
+    const departments = Object.entries(departmentMap)
+        .map(([name, total]) => ({
+            name,
+            total
+        }))
+        .sort((a, b) => b.total - a.total);
+
+    return {
+
+        studentsEmployed: uniqueStudents.size,
+
+        employmentAchievements: departments.reduce(
+            (sum, d) => sum + d.total,
+            0
+        ),
+
+        departments
+
+    };
+
+}
+
 const router = express.Router();
 
 
@@ -96,58 +137,29 @@ rawAchievements.forEach(item => {
 
 const achievements = Object.values(studentMap);
 
-// 👉 STATS FIX
+// ================= DASHBOARD STATS =================
+
 let stats = {};
 
 if (year === "all") {
-  const allStats = await Dashboardstats.find();
 
-  let totalStudents = 0, boys = 0, girls = 0;
-  let qualifiedMap = {};
-  let employmentMap = {};
+    stats = await Dashboardstats.findOne({ year: "2025-26" }) || {};
 
-  allStats.forEach(s => {
-    // ✅ STUDENTS
-    totalStudents += s.students?.total || 0;
-    boys += s.students?.boys || 0;
-    girls += s.students?.girls || 0;
-
-    // ✅ QUALIFIED
-    if (Array.isArray(s.qualified)) {
-      s.qualified.forEach(q => {
-        if (!qualifiedMap[q.name]) {
-          qualifiedMap[q.name] = { name: q.name, boys: 0, girls: 0 };
-        }
-        qualifiedMap[q.name].boys += q.boys || 0;
-        qualifiedMap[q.name].girls += q.girls || 0;
-      });
-    }
-
-    // ✅ EMPLOYMENT
-    if (Array.isArray(s.employment)) {
-      s.employment.forEach(e => {
-        if (!employmentMap[e.name]) {
-          employmentMap[e.name] = { name: e.name, boys: 0, girls: 0 };
-        }
-        employmentMap[e.name].boys += e.boys || 0;
-        employmentMap[e.name].girls += e.girls || 0;
-      });
-    }
-  });
-
-  stats = {
-    students: { total: totalStudents, boys, girls },
-    qualified: Object.values(qualifiedMap),
-    employment: Object.values(employmentMap)
-  };
 } else {
-  stats = await Dashboardstats.findOne({ year }) || {};
+
+    stats = await Dashboardstats.findOne({ year }) || {};
+
 }
+
+// ================= AUTO EMPLOYMENT =================
+
+const employmentSummary = buildEmploymentSummary(rawAchievements);
 
     res.render("admin/manage-achievement", {
       year,
       achievements,
-      stats
+      stats,
+      employmentSummary
     });
 
   } catch (err) {

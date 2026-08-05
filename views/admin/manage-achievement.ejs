@@ -181,39 +181,47 @@ unique students.
 
   <div class="summary-panel">
 
-    <h2>💼 Employment Summary</h2>
+<h2>💼 Employment Summary</h2>
 
-    <% stats?.employment?.forEach(emp => { %>
+<div class="summary-item">
+    <strong>👨‍🎓 Students Employed</strong>
+    <span class="summary-total">
+        <%= employmentSummary.studentsEmployed %>
+    </span>
+</div>
 
-      <div class="summary-item">
+<div class="summary-item">
+    <strong>🏅 Employment Achievements</strong>
+    <span class="summary-total">
+        <%= employmentSummary.employmentAchievements %>
+    </span>
+</div>
 
-        <div>
+<hr style="margin:15px 0;">
 
-          <div class="summary-name">
-            <%= emp.name %>
-          </div>
+<% employmentSummary.departments.forEach(emp => { %>
 
-          <div class="summary-breakup">
+<div class="summary-item">
 
-            <span class="boys-tag">
-              👨‍🎓 Boys: <%= emp.boys || 0 %>
-            </span>
-             <span class="divider">|</span>
-            <span class="girls-tag">
-              👩‍🎓 Girls: <%= emp.girls || 0 %>
-            </span>
+    <div class="summary-name">
 
-          </div>
+        <%= emp.name %>
 
-        </div>
+    </div>
 
-        <span class="summary-total">
-          <%= (emp.boys || 0) + (emp.girls || 0) %>
-        </span>
+    <span class="summary-total">
 
-      </div>
+        <%= emp.total %>
 
-    <% }) %>
+    </span>
+
+</div>
+
+<% }) %>
+
+<div class="achievement-note" style="margin-top:15px;">
+    ℹ️ Some students have secured multiple employment selections.
+</div>
 
   </div>
 
