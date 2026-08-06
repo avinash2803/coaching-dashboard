@@ -211,6 +211,18 @@ const averageAttendance =
 totalEligible
     ? (weightedTotal / totalEligible).toFixed(1)
     : 0;
+    await Analytics.findOneAndUpdate(
+    { year: selectedYear },
+    {
+        $set: {
+            averageAttendance: Number(averageAttendance)
+        }
+    },
+    {
+        upsert: true,
+        new: true
+    }
+);
 
 const testFilter = {};
 

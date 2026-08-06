@@ -173,6 +173,7 @@ try {
         await Analytics.findOne({
             year
         }) || {};
+        
 
     const dashboard =
         await Dashboardstats.findOne({
@@ -310,17 +311,32 @@ return res.json({
    ATTENDANCE
 =================================================== */
 
-if (message.includes("attendance")) {
+if (
+    [
+        "attendance",
+        "present",
+        "attendance report",
+        "average attendance",
+        "attendance percentage"
+    ].some(word => message.includes(word))
+) {
+
+    let reply = `📊 Attendance Summary
+────────────────────
+
+📈 Overall Average Attendance
+• ${analytics.averageAttendance || "Not Available"}%
+
+👨‍🎓 Active Students
+• ${analytics.activeStudents || 0}
+
+📅 Academic Year
+• ${year}
+
+ℹ️ Attendance is calculated using students enrolled for at least 10 days during the respective month.`;
 
     return res.json({
-
-        reply:
-`📊 Average Attendance
-
-${analytics.averageAttendance || "Not Available"}%
-
-Academic Year : ${year}`
-
+        reply
     });
 
 }
@@ -923,7 +939,12 @@ ${analytics.qualifiedStudents || 0}
 
 AVERAGE ATTENDANCE
 
-${analytics.averageAttendance || "Not Available"}%
+${const cgpsc = await getBatchAttendance("CGPSC");
+const vyapam = await getBatchAttendance("VYAPAM");
+
+// same weighted average calculation
+
+averageAttendance || "Not Available"}%
 
 --------------------------------------------------
 
