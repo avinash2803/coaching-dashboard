@@ -225,14 +225,83 @@ if (
     ].some(word => message.includes(word))
 ) {
 
-    const total = await Student.countDocuments({ year });
+   const students = await Student.find({ year });
 
-    return res.json({
-        reply:
-`👨‍🎓 Total Enrollment
+const totalStudents = students.length;
 
-${total} students are enrolled in the academic year ${year}.`
-    });
+const maleStudents = students.filter(
+    s => s.gender?.toUpperCase() === "MALE"
+).length;
+
+const femaleStudents = students.filter(
+    s => s.gender?.toUpperCase() === "FEMALE"
+).length;
+
+const cgpscStudents = students.filter(
+    s => s.course === "CGPSC"
+).length;
+
+const vyapamStudents = students.filter(
+    s => s.course === "VYAPAM"
+).length;
+
+// Category-wise
+const categoryMap = {};
+
+students.forEach(student => {
+
+    const category = student.category || "Unknown";
+
+    categoryMap[category] =
+        (categoryMap[category] || 0) + 1;
+
+});
+
+let reply = `👨‍🎓 Enrollment Summary
+────────────────────
+
+🎓 Total Students
+• ${totalStudents}
+
+👨 Male Students
+• ${maleStudents}
+
+👩 Female Students
+• ${femaleStudents}
+
+📚 Course-wise Enrollment
+
+• CGPSC : ${cgpscStudents}
+• VYAPAM : ${vyapamStudents}
+
+🏷️ Category-wise
+
+`;
+
+Object.entries(categoryMap).forEach(([name,total])=>{
+
+    reply += `• ${name} : ${total}\n`;
+
+});
+
+reply += `
+
+⚠️ Student Status
+
+• Active : ${analytics.activeStudents || 0}
+• Dropout : ${analytics.dropoutStudents || 0}
+
+📅 Academic Year
+• ${year}`;
+
+return res.json({
+    reply,
+    suggestions: [
+        "Attendance",
+        "Dropout",
+        "Achievements"
+    ]
+});
 
 }
 
@@ -341,19 +410,29 @@ if (
 
     if (exam) {
 
-        return res.json({
+    const students = await Achievement.find({
+        year,
+        type: "QUALIFICATION",
+        category: exam.name
+    }).populate("studentId", "name");
 
-            reply:
+    let reply = `🎯 ${exam.name} Qualified Students
+────────────────────
 
-`🎯 ${exam.name}
+`;
 
-Qualified Students : ${exam.total}
+    students.forEach((item, index) => {
+        reply += `${index + 1}. ${item.studentId?.name}\n`;
+    });
 
-Academic Year : ${year}`
+    reply += `
 
-        });
+🏅 Total Qualified
+• ${students.length}`;
 
-    }
+    return res.json({ reply });
+
+}
 
 let reply = `🎯 Qualification Summary
 ────────────────────
