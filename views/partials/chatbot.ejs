@@ -219,35 +219,15 @@ async function sendMessage() {
 
     if (!text) return;
 
-  // Show user message below quick buttons
-
-messages.innerHTML += `
-    <div class="user-message">
-        ${text}
-    </div>
-`;
-
-messages.lastElementChild?.scrollIntoView({
-    behavior:"smooth",
-    block:"end"
-});
+    addUserMessage(text);
 
     message.value = "";
 
     try {
 
-        // Show loading message
-const loading = document.createElement("div");
+        showTyping();
 
-loading.className = "bot-message";
-loading.id = "typing";
-loading.innerHTML = "🤖 Thinking...";
-
-messages.appendChild(loading);
-messages.scrollTop = messages.scrollHeight;
-
-// Call API
-const res = await fetch("/api/chat", {
+        const res = await fetch("/api/chat", {
 
             method: "POST",
 
@@ -263,56 +243,135 @@ const res = await fetch("/api/chat", {
 
         const data = await res.json();
 
-// Remove loading message
-document.getElementById("typing")?.remove();
+        hideTyping();
 
-       messages.innerHTML += `
-<div class="bot-message">
-    ${data.reply.replace(/\n/g,"<br>")}
-</div>
-`;
-
-if(data.suggestions && data.suggestions.length){
-
-    let html = `<div class="chat-suggestions">`;
-
-    data.suggestions.forEach(item=>{
-
-        html += `
-            <button
-                class="chat-chip"
-                onclick="sendQuick('${item}')">
-                ${item}
-            </button>
-        `;
-
-    });
-
-    html += `</div>`;
-
-    messages.innerHTML += html;
-
-}
-
-chatBody.scrollTop = chatBody.scrollHeight;
+        addBotMessage(
+            data.reply,
+            data.suggestions || []
+        );
 
     } catch (err) {
-        document.getElementById("typing")?.remove();
 
-        messages.innerHTML += `
-    <div class="bot-message">
-        ❌ Unable to connect to AI.
-    </div>
-`;
+        hideTyping();
+
+        addBotMessage(
+            "❌ Unable to connect to AI."
+        );
 
     }
 
 }
+function addUserMessage(text){
 
-// Quick Buttons
+    messages.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="user-message">
+            ${text}
+        </div>
+        `
+    );
+
+    scrollBottom();
+
+}
+
+function addBotMessage(reply,suggestions=[]){
+
+    let html=`
+
+    <div class="bot-message">
+
+        ${reply.replace(/\n/g,"<br>")}
+    `;
+
+    if(suggestions.length){
+
+        html+=`
+
+        <div class="chat-suggestions">
+
+        `;
+
+        suggestions.forEach(item=>{
+
+            html+=`
+
+            <button
+                class="chat-chip"
+                onclick="sendQuick('${item}')">
+
+                ${item}
+
+            </button>
+
+            `;
+
+        });
+
+        html+=`
+
+        </div>
+
+        `;
+
+    }
+
+    html+=`
+
+    </div>
+
+    `;
+
+    messages.insertAdjacentHTML(
+        "beforeend",
+        html
+    );
+
+    scrollBottom();
+
+}
+
+function showTyping(){
+
+    messages.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div
+            class="bot-message"
+            id="typing">
+
+            🤖 Thinking...
+
+        </div>
+        `
+    );
+
+    scrollBottom();
+
+}
+
+function hideTyping(){
+
+    document
+    .getElementById("typing")
+    ?.remove();
+
+}
+
+function scrollBottom(){
+
+    chatBody.scrollTop =
+    chatBody.scrollHeight;
+
+}
+
 function sendQuick(text){
-    message.value = text;
+
+    message.value=text;
+
     sendMessage();
+
 }
 </script>
 

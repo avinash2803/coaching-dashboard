@@ -662,17 +662,17 @@ color:white;
 
     gap:8px;
 
-    margin:10px 0 18px;
+    margin-top:12px;
 
 }
 
 .chat-chip{
 
-    border:none;
+    border:1px solid #d7e3ff;
 
-    background:#f1f5ff;
+    background:#f7faff;
 
-    color:#0d47a1;
+    color:#1d4ed8;
 
     padding:8px 14px;
 
@@ -680,18 +680,20 @@ color:white;
 
     cursor:pointer;
 
+    transition:.25s;
+
     font-size:13px;
 
-    font-weight:600;
-
-    transition:.25s;
+    font-weight:500;
 
 }
 
 .chat-chip:hover{
 
-    background:#0d47a1;
+    background:#1d4ed8;
 
     color:#fff;
+
+    transform:translateY(-1px);
 
 }
