@@ -388,7 +388,11 @@ totalMockTests +
 totalMainsTests;
 if (selectedYear && selectedYear.toLowerCase() !== "all") {
 
-    await Analytics.findOneAndUpdate(
+    console.log("===== UPDATE START =====");
+console.log("selectedYear =", selectedYear);
+console.log("averageAttendance =", averageAttendance);
+
+const result = await Analytics.findOneAndUpdate(
         { year: selectedYear },
         {
             $set: {
@@ -431,7 +435,8 @@ if (selectedYear && selectedYear.toLowerCase() !== "all") {
             new: true
         }
     );
-
+console.log("Mongo Result =", result);
+console.log("===== UPDATE END =====");
 }
 
 let analyticsData = {};
