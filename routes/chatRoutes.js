@@ -939,12 +939,7 @@ ${analytics.qualifiedStudents || 0}
 
 AVERAGE ATTENDANCE
 
-${const cgpsc = await getBatchAttendance("CGPSC");
-const vyapam = await getBatchAttendance("VYAPAM");
-
-// same weighted average calculation
-
-averageAttendance || "Not Available"}%
+${analytics.averageAttendance || "Not Available"}%
 
 --------------------------------------------------
 
