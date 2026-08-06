@@ -91,8 +91,15 @@ router.get("/", async (req, res) => {
 
   try {
     
-    const selectedYear =
-req.query.year || "2025-26";
+    const today = new Date();
+
+const currentYear =
+today.getMonth() >= 5
+? `${today.getFullYear()}-${String(today.getFullYear() + 1).slice(-2)}`
+: `${today.getFullYear() - 1}-${String(today.getFullYear()).slice(-2)}`;
+
+const selectedYear =
+req.query.year || currentYear;
 
 
     const months = [
