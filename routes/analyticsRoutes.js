@@ -5,6 +5,88 @@ import Student from "../models/student.js";
 
 const router = express.Router();
 
+function isEligible(student, month) {
+
+    const monthMap = {
+        June: 5,
+        July: 6,
+        August: 7,
+        September: 8,
+        October: 9,
+        November: 10,
+        December: 11,
+        January: 0,
+        February: 1,
+        March: 2,
+        April: 3,
+        May: 4
+    };
+    if(!student.year) return false;
+
+    const startYear = Number(student.year.split("-")[0]);
+
+    const monthIndex = monthMap[month];
+
+    const currentYear =
+        monthIndex <= 4
+            ? startYear + 1
+            : startYear;
+
+    const monthStart = new Date(currentYear, monthIndex, 1);
+    const monthEnd = new Date(currentYear, monthIndex + 1, 0);
+
+    // Admission Date
+    let admission = monthStart;
+
+    if (student.admissionDate) {
+
+        const [d, m, y] =
+            student.admissionDate.split("-");
+
+        admission = new Date(y, m - 1, d);
+
+        // Not admitted yet
+        if (admission > monthEnd)
+            return false;
+    }
+
+    // Dropout Date
+    let dropout = monthEnd;
+
+    if (
+        student.status === "Dropout" &&
+        student.dropoutDate
+    ) {
+
+        const [d, m, y] =
+            student.dropoutDate.split("-");
+
+        dropout = new Date(y, m - 1, d);
+
+        // Left before this month
+        if (dropout < monthStart)
+            return false;
+    }
+
+    // Calculate actual overlap
+    const effectiveStart =
+        admission > monthStart
+            ? admission
+            : monthStart;
+
+    const effectiveEnd =
+        dropout < monthEnd
+            ? dropout
+            : monthEnd;
+
+    const enrolledDays =
+        Math.floor(
+            (effectiveEnd - effectiveStart)
+            / (1000 * 60 * 60 * 24)
+        ) + 1;
+
+    return enrolledDays >= 10;
+}
 router.get("/", async (req, res) => {
 
   try {
@@ -31,102 +113,104 @@ req.query.year;
 
     async function getBatchAttendance(courseName) {
 
+    let filter = {
+        course: courseName
+    };
 
-let filter = {
+    if (
+        selectedYear &&
+        selectedYear.toLowerCase() !== "all"
+    ) {
+        filter.year = selectedYear;
+    }
 
-  course: courseName
-};
+    const students = await Student.find(filter);
 
-if(
-  selectedYear &&
-selectedYear.toLowerCase() !== "all"
-){
+    const monthlyAverage = [];
+    const monthlyEligible = [];
 
-  filter.year =
-  selectedYear;
-}
-
-const students =
-await Student.find(filter);
-
-
-      const monthlyAverage = [];
-
-      for (const month of months) {
+    for (const month of months) {
 
         let totalPercentage = 0;
-
         let count = 0;
 
         students.forEach(student => {
 
-          const attendance =
-          student.attendance?.[month];
+            if (!isEligible(student, month))
+                return;
 
-          if (
+            const attendance =
+                student.attendance?.[month];
 
-            attendance &&
-            attendance.total > 0
-
-          ) {
+            if (
+                !attendance ||
+                attendance.total === 0
+            )
+                return;
 
             const percentage =
+                (
+                    attendance.present /
+                    attendance.total
+                ) * 100;
 
-            (
-              attendance.present /
-              attendance.total
-            ) * 100;
-
-            totalPercentage +=
-            percentage;
-
+            totalPercentage += percentage;
             count++;
-          }
+
         });
 
-        const average =
-
-          count > 0
-          ? totalPercentage / count
-          : 0;
-
         monthlyAverage.push(
-
-          Number(
-            average.toFixed(1)
-          )
+            count
+                ? Number((totalPercentage / count).toFixed(1))
+                : 0
         );
-      }
 
-      return monthlyAverage;
+        monthlyEligible.push(count);
     }
 
-    const cgpscAttendance =
+    return {
+        monthlyAverage,
+        monthlyEligible
+    };
 
-    await getBatchAttendance(
-      "CGPSC"
-    );
+}
 
-    const vyapamAttendance =
+  const cgpscResult =
+await getBatchAttendance("CGPSC");
 
-    await getBatchAttendance(
-      "VYAPAM"
-    );
+const vyapamResult =
+await getBatchAttendance("VYAPAM");
 
-    const combinedAttendance = [
-  ...cgpscAttendance,
-  ...vyapamAttendance
-];
+const cgpscAttendance =
+cgpscResult.monthlyAverage;
+
+const vyapamAttendance =
+vyapamResult.monthlyAverage;
+
+  let weightedTotal = 0;
+let totalEligible = 0;
+
+for (let i = 0; i < months.length; i++) {
+
+    weightedTotal +=
+        cgpscAttendance[i] *
+        cgpscResult.monthlyEligible[i];
+
+    totalEligible +=
+        cgpscResult.monthlyEligible[i];
+
+    weightedTotal +=
+        vyapamAttendance[i] *
+        vyapamResult.monthlyEligible[i];
+
+    totalEligible +=
+        vyapamResult.monthlyEligible[i];
+}
 
 const averageAttendance =
-combinedAttendance.length > 0
-? (
-    combinedAttendance.reduce(
-      (sum, val) => sum + val,
-      0
-    ) / combinedAttendance.length
-  ).toFixed(1)
-: 0;
+totalEligible
+    ? (weightedTotal / totalEligible).toFixed(1)
+    : 0;
 
 const testFilter = {};
 
