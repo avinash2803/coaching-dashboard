@@ -211,18 +211,7 @@ const averageAttendance =
 totalEligible
     ? (weightedTotal / totalEligible).toFixed(1)
     : 0;
-    await Analytics.findOneAndUpdate(
-    { year: selectedYear },
-    {
-        $set: {
-            averageAttendance: Number(averageAttendance)
-        }
-    },
-    {
-        upsert: true,
-        new: true
-    }
-);
+   
 
 const testFilter = {};
 
@@ -479,7 +468,50 @@ Math.round(totalDays * 4.5);
 const totalHours =
 totalSessions * 2;
 
+await Analytics.findOneAndUpdate(
+  { year: selectedYear },
+  {
+    $set: {
+      averageAttendance: Number(averageAttendance),
 
+      attendance: {
+        cgpsc: {
+          June: cgpscAttendance[0],
+          July: cgpscAttendance[1],
+          August: cgpscAttendance[2],
+          September: cgpscAttendance[3],
+          October: cgpscAttendance[4],
+          November: cgpscAttendance[5],
+          December: cgpscAttendance[6],
+          January: cgpscAttendance[7],
+          February: cgpscAttendance[8],
+          March: cgpscAttendance[9],
+          April: cgpscAttendance[10],
+          May: cgpscAttendance[11]
+        },
+
+        vyapam: {
+          June: vyapamAttendance[0],
+          July: vyapamAttendance[1],
+          August: vyapamAttendance[2],
+          September: vyapamAttendance[3],
+          October: vyapamAttendance[4],
+          November: vyapamAttendance[5],
+          December: vyapamAttendance[6],
+          January: vyapamAttendance[7],
+          February: vyapamAttendance[8],
+          March: vyapamAttendance[9],
+          April: vyapamAttendance[10],
+          May: vyapamAttendance[11]
+        }
+      }
+    }
+  },
+  {
+    upsert: true,
+    new: true
+  }
+);
 res.render("analytics", {
 
   totalDays,
