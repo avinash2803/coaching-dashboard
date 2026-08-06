@@ -1,8 +1,6 @@
-
 import mongoose from "mongoose";
 
-const analyticsSchema =
-new mongoose.Schema({
+const analyticsSchema = new mongoose.Schema({
 
   year: String,
 
@@ -14,9 +12,50 @@ new mongoose.Schema({
 
   employedStudents: Number,
 
-    qualifiedStudents: Number,
+  qualifiedStudents: Number,
 
-  hybridStudents: Number
+  hybridStudents: Number,
+
+  averageAttendance: Number,
+
+  attendance: {
+
+    cgpsc: {
+
+      June: Number,
+      July: Number,
+      August: Number,
+      September: Number,
+      October: Number,
+      November: Number,
+      December: Number,
+      January: Number,
+      February: Number,
+      March: Number,
+      April: Number,
+      May: Number
+
+    },
+
+    vyapam: {
+
+      June: Number,
+      July: Number,
+      August: Number,
+      September: Number,
+      October: Number,
+      November: Number,
+      December: Number,
+      January: Number,
+      February: Number,
+      March: Number,
+      April: Number,
+      May: Number
+
+    }
+
+  }
+
 });
 
 export default mongoose.model(
