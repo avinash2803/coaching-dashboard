@@ -654,3 +654,44 @@ background:#7cb342;
 color:white;
 
 }
+.chat-suggestions{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin:10px 0 18px;
+
+}
+
+.chat-chip{
+
+    border:none;
+
+    background:#f1f5ff;
+
+    color:#0d47a1;
+
+    padding:8px 14px;
+
+    border-radius:20px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.chat-chip:hover{
+
+    background:#0d47a1;
+
+    color:#fff;
+
+}

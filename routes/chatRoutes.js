@@ -355,30 +355,44 @@ Academic Year : ${year}`
 
     }
 
-    let reply = `🎯 Qualification Summary
+let reply = `🎯 Qualification Summary
+────────────────────
 
-👨‍🎓 Students Qualified : ${qualificationSummary.studentsQualified}
+👨‍🎓 Students Qualified (Unique)
+• ${qualificationSummary.studentsQualified}
 
-🏅 Qualification Achievements : ${qualificationSummary.qualificationAchievements}
+🏅 Qualification Achievements
+• ${qualificationSummary.qualificationAchievements}
 
-Exam-wise Qualification
+📚 Exam-wise Qualification
 
 `;
 
-    qualificationSummary.exams.forEach(exam => {
+qualificationSummary.exams.forEach(exam => {
 
-        reply += `• ${exam.name} : ${exam.total}\n`;
+    reply += `• ${exam.name} : ${exam.total}\n`;
 
-    });
+});
 
-    reply += `
+reply += `
+
+💬 Try asking
+
+• CTET
+• CGTET
+• CGPSC Pre
+• SSC GD
+• CG SI
+
 
 ℹ️ Some students have qualified multiple examinations.`;
 
-    return res.json({ reply });
+return res.json({
+    reply,
+    suggestions: qualificationSummary.exams.map(exam => exam.name)
+});
 
 }
-
 
 /* ===================================================
    TOTAL SELECTED
@@ -417,21 +431,49 @@ if (
     message.includes("achievements")
 ) {
 
-    const total =
-        await Achievement.countDocuments({
-            year
-        });
+    const uniqueAchievers = new Set();
+
+    achievementData.forEach(item => {
+        uniqueAchievers.add(item.studentId.toString());
+    });
+
+    const totalAchievements =
+        qualificationSummary.qualificationAchievements +
+        employmentSummary.employmentAchievements;
+
+    let reply = `🏆 Achievement Dashboard
+────────────────────
+
+👨‍🎓 Students Qualified (Unique)
+• ${qualificationSummary.studentsQualified}
+
+👨‍💼 Students Employed (Unique)
+• ${employmentSummary.studentsEmployed}
+
+🏅 Qualification Achievements
+• ${qualificationSummary.qualificationAchievements}
+
+💼 Employment Achievements
+• ${employmentSummary.employmentAchievements}
+
+📊 Overall
+
+🌟 Total Unique Achievers
+• ${uniqueAchievers.size}
+
+🎖️ Total Achievements
+• ${totalAchievements}
+
+📅 Academic Year
+• ${year}`;
 
     return res.json({
-
-        reply:
-`🏅 Total Achievements
-
-${total}
-
-Academic Year : ${year}`
-
-    });
+    reply,
+    suggestions: [
+        "Employment",
+        "Qualification"
+    ]
+});
 
 }
 
@@ -490,19 +532,31 @@ if (
 
     if (department) {
 
-        return res.json({
+    const students = await Achievement.find({
+        year,
+        type: "EMPLOYMENT",
+        category: department.name
+    }).populate("studentId", "name");
 
-            reply:
+    let reply = `💼 ${department.name}
+────────────────────
 
-`💼 ${department.name}
+`;
 
-Total Employment : ${department.total}
+    students.forEach((item, index) => {
 
-Academic Year : ${year}`
+        reply += `${index + 1}. ${item.studentId?.name}\n`;
 
-        });
+    });
 
-    }
+    reply += `
+
+🏅 Total Selected
+• ${students.length}`;
+
+    return res.json({ reply });
+
+}
 
   let reply = `💼 Employment Summary
 ────────────────────
@@ -525,9 +579,21 @@ employmentSummary.departments.forEach(dep => {
 
 reply += `
 
+💬 Try asking
+
+• CG Police
+• CG Homeguard
+• BSF
+• CRPF
+• Lab Attendant
+• Excise Constable
+
 ℹ️ Some students have secured multiple employment selections.`;
 
-return res.json({ reply });
+return res.json({
+    reply,
+    suggestions: employmentSummary.departments.map(dep => dep.name)
+});
 
 }
 

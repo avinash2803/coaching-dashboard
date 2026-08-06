@@ -266,11 +266,33 @@ const res = await fetch("/api/chat", {
 // Remove loading message
 document.getElementById("typing")?.remove();
 
-        messages.innerHTML += `
-    <div class="bot-message">
-        ${data.reply.replace(/\n/g, "<br>")}
-    </div>
+       messages.innerHTML += `
+<div class="bot-message">
+    ${data.reply.replace(/\n/g,"<br>")}
+</div>
 `;
+
+if(data.suggestions && data.suggestions.length){
+
+    let html = `<div class="chat-suggestions">`;
+
+    data.suggestions.forEach(item=>{
+
+        html += `
+            <button
+                class="chat-chip"
+                onclick="sendQuick('${item}')">
+                ${item}
+            </button>
+        `;
+
+    });
+
+    html += `</div>`;
+
+    messages.innerHTML += html;
+
+}
 
 chatBody.scrollTop = chatBody.scrollHeight;
 
