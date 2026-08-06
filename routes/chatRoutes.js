@@ -169,10 +169,20 @@ try {
        DATABASE
     ============================ */
 
-    const analytics =
-        await Analytics.findOne({
-            year
-        }) || {};
+   let selectedYear = year;
+
+if (!selectedYear) {
+
+    const latestAnalytics = await Analytics
+        .findOne({})
+        .sort({ year: -1 });
+
+    selectedYear = latestAnalytics?.year;
+}
+
+const analytics = await Analytics.findOne({
+    year: selectedYear
+});
         
 
     const dashboard =
@@ -327,16 +337,43 @@ if (
 📈 Overall Average Attendance
 • ${analytics.averageAttendance || "Not Available"}%
 
-👨‍🎓 Active Students
-• ${analytics.activeStudents || 0}
+🎓 CGPSC Average Attendance
+• ${
+analytics.attendance?.cgpsc
+? (
+Object.values(analytics.attendance.cgpsc)
+.reduce((a,b)=>a+b,0)/12
+).toFixed(1)
+: "Not Available"
+}%
+
+📝 VYAPAM Average Attendance
+• ${
+analytics.attendance?.vyapam
+? (
+Object.values(analytics.attendance.vyapam)
+.reduce((a,b)=>a+b,0)/12
+).toFixed(1)
+: "Not Available"
+}%
 
 📅 Academic Year
 • ${year}
 
-ℹ️ Attendance is calculated using students enrolled for at least 10 days during the respective month.`;
+👇 Select an option`;
+
+    const years = await Analytics
+        .find({})
+        .distinct("year");
+
+    const suggestions = [
+        "📅 Month-wise Attendance",
+        ...years.map(y => `Attendance ${y}`)
+    ];
 
     return res.json({
-        reply
+        reply,
+        suggestions
     });
 
 }
@@ -937,9 +974,47 @@ ${analytics.qualifiedStudents || 0}
 
 --------------------------------------------------
 
-AVERAGE ATTENDANCE
+ATTENDANCE SUMMARY
+
+Academic Year
+
+${selectedYear}
+
+--------------------------------------------------
+
+Overall Average Attendance
 
 ${analytics.averageAttendance || "Not Available"}%
+
+--------------------------------------------------
+
+CGPSC Average Attendance
+
+${analytics.attendance?.cgpsc
+? Object.values(analytics.attendance.cgpsc)
+    .reduce((a,b)=>a+b,0)/12
+: "Not Available"}%
+
+--------------------------------------------------
+
+VYAPAM Average Attendance
+
+${analytics.attendance?.vyapam
+? Object.values(analytics.attendance.vyapam)
+    .reduce((a,b)=>a+b,0)/12
+: "Not Available"}%
+
+--------------------------------------------------
+
+If the user asks for month-wise attendance, use this data.
+
+CGPSC
+
+${JSON.stringify(analytics.attendance?.cgpsc || {})}
+
+VYAPAM
+
+${JSON.stringify(analytics.attendance?.vyapam || {})}
 
 --------------------------------------------------
 
@@ -1015,15 +1090,36 @@ If information is unavailable simply reply:
 
     });
 
-    return res.json({
+    const reply =
+completion.choices[0]
+.message.content;
 
-        reply:
-        completion
-        .choices[0]
-        .message
-        .content
+let suggestions = [];
 
-    });
+if (
+    message.includes("attendance") ||
+    message.includes("present")
+) {
+
+    suggestions = [
+
+    "📅 Month-wise Attendance",
+
+    "Attendance 2025-26",
+
+    "Attendance 2026-27"
+
+];
+
+}
+
+return res.json({
+
+    reply,
+
+    suggestions
+
+});
 
 }
 
