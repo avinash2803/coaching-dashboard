@@ -334,6 +334,9 @@ if (
     let reply = `📊 Attendance Summary
 ────────────────────
 
+📅 Academic Year
+• ${selectedYear}
+
 📈 Overall Average Attendance
 • ${analytics.averageAttendance || "Not Available"}%
 
@@ -357,27 +360,90 @@ Object.values(analytics.attendance.vyapam)
 : "Not Available"
 }%
 
-📅 Academic Year
-• ${year}
+👇 Choose an option below`;
 
-👇 Select an option`;
-
-    const years = await Analytics
-        .find({})
-        .distinct("year");
-
-    const suggestions = [
-        "📅 Month-wise Attendance",
-        ...years.map(y => `Attendance ${y}`)
-    ];
+    const years = await Analytics.find().distinct("year");
 
     return res.json({
+
         reply,
-        suggestions
+
+        suggestions: [
+
+            "📅 Month-wise Attendance",
+
+            ...years
+            .filter(y => y !== selectedYear)
+            .sort()
+            .map(y => `Attendance ${y}`)
+
+        ]
+
     });
 
 }
+/* ===================================================
+   MONTH WISE ATTENDANCE
+=================================================== */
 
+if (
+    message.includes("month-wise") ||
+    message.includes("month wise")
+) {
+
+    const cgpsc =
+        analytics.attendance?.cgpsc || {};
+
+    const vyapam =
+        analytics.attendance?.vyapam || {};
+
+    const months = [
+
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May"
+
+    ];
+
+    let reply = `📅 Month-wise Attendance
+────────────────────
+
+Academic Year : ${selectedYear}
+
+`;
+
+    months.forEach(month => {
+
+        reply += `📌 ${month}
+
+CGPSC : ${cgpsc[month] ?? "N/A"}%
+
+VYAPAM : ${vyapam[month] ?? "N/A"}%
+
+`;
+
+    });
+
+    return res.json({
+
+        reply,
+
+        suggestions: [
+            `Attendance ${selectedYear}`
+        ]
+
+    });
+
+}
 
 /* ===================================================
    ACTIVE STUDENTS
@@ -1101,13 +1167,16 @@ if (
     message.includes("present")
 ) {
 
-    suggestions = [
+    const years = await Analytics.find().distinct("year");
 
-    "📅 Month-wise Attendance",
+suggestions = [
 
-    "Attendance 2025-26",
+"📅 Month-wise Attendance",
 
-    "Attendance 2026-27"
+...years
+.filter(y => y !== selectedYear)
+.sort()
+.map(y => `Attendance ${y}`)
 
 ];
 

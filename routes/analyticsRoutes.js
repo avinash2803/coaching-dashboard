@@ -99,7 +99,7 @@ today.getMonth() >= 5
 : `${today.getFullYear() - 1}-${String(today.getFullYear()).slice(-2)}`;
 
 const selectedYear =
-req.query.year || currentYear;
+req.query.year || "all";
 
 
     const months = [

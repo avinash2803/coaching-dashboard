@@ -524,29 +524,36 @@ Suggestion Buttons
 
 .bot-message button{
 
-    margin-top:12px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
 
-    margin-right:8px;
+    width:auto;
+    min-width:unset;
+    max-width:fit-content;
 
-    border:none;
+    margin:6px 6px 0 0;
 
+    padding:8px 14px;
+
+    border:1px solid #d7e3ff;
     border-radius:20px;
 
-    padding:8px 15px;
+    background:#f7faff;
+    color:#1d4ed8;
 
-    background:#8BC53F;
-
-    color:white;
+    font-size:13px;
+    font-weight:600;
 
     cursor:pointer;
 
-    transition:.2s;
-
+    transition:.25s;
 }
 
 .bot-message button:hover{
 
-    opacity:.9;
+    background:#1d4ed8;
+    color:white;
 
 }
 
