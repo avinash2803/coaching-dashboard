@@ -331,15 +331,53 @@ if (
     ].some(word => message.includes(word))
 ) {
 
-    const years = (await Analytics.find().distinct("year"))
-        .filter(Boolean)
-        .sort();
+    let reply = `📊 Attendance Summary
+────────────────────
+
+📅 Academic Year
+• ${selectedYear}
+
+📈 Overall Average Attendance
+• ${analytics.averageAttendance || "Not Available"}%
+
+🎓 CGPSC Average Attendance
+• ${
+analytics.attendance?.cgpsc
+? (
+Object.values(analytics.attendance.cgpsc)
+.reduce((a,b)=>a+b,0)/12
+).toFixed(1)
+: "Not Available"
+}%
+
+📝 VYAPAM Average Attendance
+• ${
+analytics.attendance?.vyapam
+? (
+Object.values(analytics.attendance.vyapam)
+.reduce((a,b)=>a+b,0)/12
+).toFixed(1)
+: "Not Available"
+}%
+
+👇 Choose an option below`;
+
+    const years = await Analytics.find().distinct("year");
 
     return res.json({
 
-        reply: "📅 Select Academic Year",
+        reply,
 
-        suggestions: years.map(y => `📅 ${y}`)
+        suggestions: [
+
+            "📅 Month-wise Attendance",
+
+            ...years
+            .filter(y => y !== selectedYear)
+            .sort()
+            .map(y => `Attendance ${y}`)
+
+        ]
 
     });
 
