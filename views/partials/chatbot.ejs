@@ -278,20 +278,9 @@ function addUserMessage(text){
 
 function addBotMessage(reply, suggestions = []) {
 
-    // Convert AI reply to plain text so backend HTML
-    // cannot create unwanted large cards/buttons
-    const safeReply = String(reply ?? "")
-        .replace(/<br\s*\/?>/gi, "\n")
-        .replace(/<[^>]*>/g, "");
-
     let html = `
         <div class="bot-message">
-            ${safeReply
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/\n/g, "<br>")
-            }
+            ${String(reply ?? "").replace(/\n/g, "<br>")}
     `;
 
     if (suggestions.length) {
@@ -305,20 +294,18 @@ function addBotMessage(reply, suggestions = []) {
             .forEach(item => {
 
                 const safeItem = String(item)
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#039;");
+                    .replace(/\\/g, "\\\\")
+                    .replace(/'/g, "\\'");
 
                 html += `
                     <button
                         type="button"
                         class="chat-chip"
                         onclick="sendQuick('${safeItem}')">
-                        ${safeItem}
+                        ${item}
                     </button>
                 `;
+
             });
 
         html += `
