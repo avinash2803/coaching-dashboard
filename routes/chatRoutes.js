@@ -324,13 +324,19 @@ return res.json({
 if (
     !message.includes("month-wise") &&
     !message.includes("month wise") &&
-    [
-        "attendance",
-        "present",
-        "attendance report",
-        "average attendance",
-        "attendance percentage"
-    ].some(word => message.includes(word))
+    (
+        [
+            "attendance",
+            "present",
+            "attendance report",
+            "average attendance",
+            "attendance percentage"
+        ].some(word => message.includes(word))
+        ||
+        /^\d{4}-\d{2}$/.test(message)
+        ||
+        /^\d{4}-\d{2}\s*$/.test(message)
+    )
 ) {
 
     let reply = `📊 Attendance Summary
@@ -340,45 +346,38 @@ if (
 • ${selectedYear}
 
 📈 Overall Average Attendance
-• ${analytics.averageAttendance || "Not Available"}%
+• ${analytics?.averageAttendance ?? "Not Available"}%
 
 🎓 CGPSC Average Attendance
 • ${
-analytics.attendance?.cgpsc
-? (
-Object.values(analytics.attendance.cgpsc)
-.reduce((a,b)=>a+b,0)/12
-).toFixed(1)
-: "Not Available"
+    analytics?.attendance?.cgpsc
+    ? (
+        Object.values(analytics.attendance.cgpsc)
+            .filter(v => typeof v === "number")
+            .reduce((a, b) => a + b, 0) / 12
+      ).toFixed(1)
+    : "Not Available"
 }%
 
 📝 VYAPAM Average Attendance
 • ${
-analytics.attendance?.vyapam
-? (
-Object.values(analytics.attendance.vyapam)
-.reduce((a,b)=>a+b,0)/12
-).toFixed(1)
-: "Not Available"
+    analytics?.attendance?.vyapam
+    ? (
+        Object.values(analytics.attendance.vyapam)
+            .filter(v => typeof v === "number")
+            .reduce((a, b) => a + b, 0) / 12
+      ).toFixed(1)
+    : "Not Available"
 }%
 
 👇 Choose an option below`;
-
-    const years = await Analytics.find().distinct("year");
 
     return res.json({
 
         reply,
 
         suggestions: [
-
-            "📅 Month-wise Attendance",
-
-            ...years
-            .filter(y => y !== selectedYear)
-            .sort()
-            .map(y => `Attendance ${y}`)
-
+            `📅 Month-wise Attendance ${selectedYear}`
         ]
 
     });
@@ -1162,7 +1161,7 @@ if (
 ) {
 
     suggestions = [
-        "📅 Month-wise Attendance"
+        `📅 Month-wise Attendance ${year}`
     ];
 
 }
