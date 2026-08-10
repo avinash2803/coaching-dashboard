@@ -322,6 +322,8 @@ return res.json({
 =================================================== */
 
 if (
+    !message.includes("month-wise") &&
+    !message.includes("month wise") &&
     [
         "attendance",
         "present",
