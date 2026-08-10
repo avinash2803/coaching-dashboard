@@ -331,53 +331,15 @@ if (
     ].some(word => message.includes(word))
 ) {
 
-    let reply = `📊 Attendance Summary
-────────────────────
-
-📅 Academic Year
-• ${selectedYear}
-
-📈 Overall Average Attendance
-• ${analytics.averageAttendance || "Not Available"}%
-
-🎓 CGPSC Average Attendance
-• ${
-analytics.attendance?.cgpsc
-? (
-Object.values(analytics.attendance.cgpsc)
-.reduce((a,b)=>a+b,0)/12
-).toFixed(1)
-: "Not Available"
-}%
-
-📝 VYAPAM Average Attendance
-• ${
-analytics.attendance?.vyapam
-? (
-Object.values(analytics.attendance.vyapam)
-.reduce((a,b)=>a+b,0)/12
-).toFixed(1)
-: "Not Available"
-}%
-
-👇 Choose an option below`;
-
-    const years = await Analytics.find().distinct("year");
+    const years = (await Analytics.find().distinct("year"))
+        .filter(Boolean)
+        .sort();
 
     return res.json({
 
-        reply,
+        reply: "📅 Select Academic Year",
 
-        suggestions: [
-
-            "📅 Month-wise Attendance",
-
-            ...years
-            .filter(y => y !== selectedYear)
-            .sort()
-            .map(y => `Attendance ${y}`)
-
-        ]
+        suggestions: years.map(y => `📅 ${y}`)
 
     });
 
@@ -391,14 +353,10 @@ if (
     message.includes("month wise")
 ) {
 
-    const cgpsc =
-        analytics.attendance?.cgpsc || {};
-
-    const vyapam =
-        analytics.attendance?.vyapam || {};
+    const cgpsc = analytics.attendance?.cgpsc || {};
+    const vyapam = analytics.attendance?.vyapam || {};
 
     const months = [
-
         "June",
         "July",
         "August",
@@ -411,11 +369,10 @@ if (
         "March",
         "April",
         "May"
-
     ];
 
-    let reply = `📅 Month-wise Attendance
-────────────────────
+    let reply =
+`📅 Month-wise Attendance
 
 Academic Year : ${selectedYear}
 
@@ -423,10 +380,9 @@ Academic Year : ${selectedYear}
 
     months.forEach(month => {
 
-        reply += `📌 ${month}
-
+        reply +=
+`${month}
 CGPSC : ${cgpsc[month] ?? "N/A"}%
-
 VYAPAM : ${vyapam[month] ?? "N/A"}%
 
 `;
@@ -437,9 +393,7 @@ VYAPAM : ${vyapam[month] ?? "N/A"}%
 
         reply,
 
-        suggestions: [
-            `Attendance ${selectedYear}`
-        ]
+        suggestions: []
 
     });
 
@@ -1167,18 +1121,9 @@ if (
     message.includes("present")
 ) {
 
-    const years = await Analytics.find().distinct("year");
-
-suggestions = [
-
-"📅 Month-wise Attendance",
-
-...years
-.filter(y => y !== selectedYear)
-.sort()
-.map(y => `Attendance ${y}`)
-
-];
+    suggestions = [
+        "📅 Month-wise Attendance"
+    ];
 
 }
 

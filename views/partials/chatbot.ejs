@@ -285,38 +285,6 @@ function addBotMessage(reply,suggestions=[]){
         ${reply.replace(/\n/g,"<br>")}
     `;
 
-    if(suggestions.length){
-
-        html+=`
-
-        <div class="chat-suggestions">
-
-        `;
-
-        suggestions.forEach(item=>{
-
-            html+=`
-
-            <button
-                class="chat-chip"
-                onclick="sendQuick('${item}')">
-
-                ${item}
-
-            </button>
-
-            `;
-
-        });
-
-        html+=`
-
-        </div>
-
-        `;
-
-    }
-
     html+=`
 
     </div>
