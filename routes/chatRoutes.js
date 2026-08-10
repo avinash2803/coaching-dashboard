@@ -138,58 +138,107 @@ try {
     )
     .trim()
     .toLowerCase();
+    /* ===================================================
+   ACADEMIC YEAR SELECTION
+=================================================== */
 
-    /* ============================
-       YEAR DETECTION
-    ============================ */
+if (message === "select academic year") {
 
-    const yearMatch =
-        message.match(/\d{4}-\d{2}/);
+    const years = (await Analytics.find().distinct("year"))
+        .filter(Boolean)
+        .sort();
 
-    let year;
+    return res.json({
 
-    if (yearMatch) {
+        reply: "📅 Please select your Academic Year",
 
-        year = yearMatch[0];
+        suggestions: years.map(
+            y => `📅 ${y}`
+        )
 
-    } else {
+    });
 
-        const latest =
-            await Analytics
-            .findOne({})
-            .sort({ year: -1 })
-            .select("year");
-
-        year =
-            latest?.year || "2025-26";
-
-    }
-
-    /* ============================
-       DATABASE
-    ============================ */
-
-   let selectedYear = year;
-
-if (!selectedYear) {
-
-    const latestAnalytics = await Analytics
-        .findOne({})
-        .sort({ year: -1 });
-
-    selectedYear = latestAnalytics?.year;
 }
 
-const analytics = await Analytics.findOne({
-    year: selectedYear
-});
+
+/* ============================
+   YEAR DETECTION
+============================ */
+
+const yearMatch =
+    message.match(/\d{4}-\d{2}/);
+
+
+/* ============================
+   ALL ACADEMIC YEARS MODE
+============================ */
+
+const allYears =
+    message.includes("all academic years") ||
+    /\ball\s*$/.test(message);
+
+
+/* ============================
+   NORMAL YEAR MODE
+============================ */
+
+let year;
+
+if (yearMatch) {
+
+    year = yearMatch[0];
+
+} else {
+
+    const latest =
+        await Analytics
+        .findOne({})
+        .sort({ year: -1 })
+        .select("year");
+
+    year =
+        latest?.year || "2025-26";
+
+}
+
+
+/* ============================
+   SELECTED YEAR
+============================ */
+
+const selectedYear = year;
+
+/* ============================
+   ANALYTICS
+============================ */
+
+/* ============================
+   ANALYTICS
+============================ */
+
+/*
+   Analytics remains year-specific.
+
+   This is intentional because attendance,
+   active students, dropout and other
+   year-specific metrics should not be
+   combined across academic years.
+*/
+
+const analytics =
+    await Analytics.findOne({
+        year: selectedYear
+    }) || {};
         
 
     const dashboard =
         await Dashboardstats.findOne({
-            year
+            year: selectedYear
         }) || {};
-        const achievementData = await Achievement.find({ year });
+        const achievementData =
+    allYears
+        ? await Achievement.find({})
+        : await Achievement.find({ year });
         const employmentSummary =
     buildEmploymentSummary(achievementData);
 
@@ -236,7 +285,10 @@ if (
     ].some(word => message.includes(word))
 ) {
 
-   const students = await Student.find({ year });
+   const students =
+    allYears
+        ? await Student.find({})
+        : await Student.find({ year });
 
 const totalStudents = students.length;
 
@@ -299,11 +351,11 @@ reply += `
 
 ⚠️ Student Status
 
-• Active : ${analytics.activeStudents || 0}
-• Dropout : ${analytics.dropoutStudents || 0}
+• Active : ${allYears ? "All Years" : (analytics.activeStudents || 0)}
+• Dropout : ${allYears ? "All Years" : (analytics.dropoutStudents || 0)}
 
 📅 Academic Year
-• ${year}`;
+• ${allYears ? "All Academic Years" : year}`;
 
 return res.json({
     reply,
@@ -320,7 +372,32 @@ return res.json({
 /* ===================================================
    ATTENDANCE
 =================================================== */
+/* ===================================================
+   ALL YEARS ATTENDANCE PROTECTION
+=================================================== */
 
+if (allYears) {
+
+    return res.json({
+
+        reply:
+`📊 Attendance is maintained separately by Academic Year.
+
+Please select a specific Academic Year:
+
+• 2025-26
+• 2026-27
+
+📅 All Academic Years is intended for cumulative information such as achievements, selections and employment.`,
+
+        suggestions: [
+            "Attendance 2025-26",
+            "Attendance 2026-27"
+        ]
+
+    });
+
+}
 if (
     !message.includes("month-wise") &&
     !message.includes("month wise") &&
@@ -386,7 +463,30 @@ if (
 /* ===================================================
    MONTH WISE ATTENDANCE
 =================================================== */
+/* ===================================================
+   ALL YEARS MONTH-WISE ATTENDANCE PROTECTION
+=================================================== */
 
+if (allYears) {
+
+    return res.json({
+
+        reply:
+`📅 Month-wise Attendance is available separately for each Academic Year.
+
+Please select:
+
+• 2025-26
+• 2026-27`,
+
+        suggestions: [
+            "Attendance 2025-26",
+            "Attendance 2026-27"
+        ]
+
+    });
+
+}
 if (
     message.includes("month-wise") ||
     message.includes("month wise")
@@ -523,10 +623,14 @@ if (
     if (exam) {
 
     const students = await Achievement.find({
-        year,
-        type: "QUALIFICATION",
-        category: exam.name
-    }).populate("studentId", "name");
+
+    ...(allYears ? {} : { year }),
+
+    type: "QUALIFICATION",
+
+    category: exam.name
+
+}).populate("studentId", "name");
 
     let reply = `🎯 ${exam.name} Qualified Students
 ────────────────────
@@ -595,20 +699,24 @@ if (
 ) {
 
     const total =
-        await Success.countDocuments({
+    allYears
+        ? await Success.countDocuments({})
+        : await Success.countDocuments({
             year
         });
 
-    return res.json({
+return res.json({
 
-        reply:
+    reply:
 `🏆 Total Selected Students
 
 ${total}
 
-Academic Year : ${year}`
+${allYears
+    ? "📅 Academic Year\n• All Academic Years"
+    : `📅 Academic Year\n• ${year}`}`
 
-    });
+});
 
 }
 
@@ -656,7 +764,7 @@ if (
 • ${totalAchievements}
 
 📅 Academic Year
-• ${year}`;
+• ${allYears ? "All Academic Years" : year}`;
 
     return res.json({
     reply,
@@ -723,11 +831,15 @@ if (
 
     if (department) {
 
-    const students = await Achievement.find({
-        year,
-        type: "EMPLOYMENT",
-        category: department.name
-    }).populate("studentId", "name");
+   const students = await Achievement.find({
+
+    ...(allYears ? {} : { year }),
+
+    type: "EMPLOYMENT",
+
+    category: department.name
+
+}).populate("studentId", "name");
 
     let reply = `💼 ${department.name}
 ────────────────────
@@ -981,12 +1093,16 @@ Bhoramdev Vidyapeeth Coaching Program (BCCP).
 
 Always answer politely.
 
-The current academic year is:
+The selected academic year is:
 
-${year}
+${allYears ? "All Academic Years" : year}
 
-If the user asks without mentioning a year,
-always answer using the current academic year.
+Use the selected academic year for the user's question.
+
+If the selected academic year is "All Academic Years",
+use cumulative information only where appropriate.
+
+Do not combine attendance percentages across academic years.
 
 If the user explicitly mentions an academic year,
 answer only for that year.

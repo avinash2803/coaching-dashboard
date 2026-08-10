@@ -85,11 +85,46 @@
 
             </p>
 
-            <div class="welcome-card">
+           <div class="welcome-card">
 
-                I can help you with
+    <div>
+        📅 Please select your Academic Year
+    </div>
 
-            </div>
+    <div
+        class="chat-suggestions"
+        id="academicYearOptions">
+
+        <button
+            type="button"
+            class="chat-chip"
+            onclick="selectAcademicYear('2025-26')">
+
+            📅 2025-26
+
+        </button>
+
+        <button
+            type="button"
+            class="chat-chip"
+            onclick="selectAcademicYear('2026-27')">
+
+            📅 2026-27
+
+        </button>
+
+        <button
+            type="button"
+            class="chat-chip"
+            onclick="selectAcademicYear('all')">
+
+            📚 All Academic Years
+
+        </button>
+
+    </div>
+
+</div>
 
             <!-- Quick Buttons -->
 
@@ -192,9 +227,99 @@ const chatBody = document.getElementById("chatBody");
 const messages = document.getElementById("messages");
 const message = document.getElementById("message");
 
+/* ===================================================
+   SELECTED ACADEMIC YEAR
+=================================================== */
+
+let selectedAcademicYear = null;
+/* ===================================================
+   SELECT ACADEMIC YEAR
+=================================================== */
+
+function selectAcademicYear(year) {
+
+    selectedAcademicYear = year;
+
+    const displayYear =
+        year === "all"
+            ? "All Academic Years"
+            : year;
+
+    addBotMessage(
+        `✅ Academic Year set to ${displayYear}.
+
+You can now ask me about Enrollment, Attendance, Achievements, Employment, Faculty, Syllabus, Notices, Library, etc.`
+    );
+
+    message.focus();
+}
+
 // Open
-launcher.onclick = () => {
+launcher.onclick = async () => {
+
     chatContainer.style.display = "flex";
+
+
+    /*
+       Show academic-year selection only
+       when the chatbot is opened for the
+       first time.
+    */
+
+    if (
+        !selectedAcademicYear &&
+        messages.children.length === 0
+    ) {
+
+        try {
+
+            showTyping();
+
+
+            const res = await fetch("/api/chat", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    message: "Select Academic Year"
+
+                })
+
+            });
+
+
+            const data = await res.json();
+
+
+            hideTyping();
+
+
+            addBotMessage(
+
+                data.reply,
+
+                data.suggestions || []
+
+            );
+
+
+        } catch (err) {
+
+            hideTyping();
+
+            addBotMessage(
+                "❌ Unable to load academic years."
+            );
+
+        }
+
+    }
+
 };
 
 // Close
@@ -209,6 +334,8 @@ resetChat.onclick = () => {
 
     message.value = "";
 
+    selectedAcademicYear = null;
+
     chatBody.scrollTop = 0;
 
 };
@@ -219,13 +346,57 @@ async function sendMessage() {
 
     if (!text) return;
 
+
+    /* ===================================================
+       CHECK IF USER SELECTED AN ACADEMIC YEAR
+    =================================================== */
+
+    const yearMatch =
+        text.match(/\d{4}-\d{2}/);
+
+    if (yearMatch) {
+
+        selectedAcademicYear =
+            yearMatch[0];
+
+    }
+
+
     addUserMessage(text);
 
     message.value = "";
 
+
     try {
 
         showTyping();
+
+
+        /*
+           Send selected academic year along with
+           every question.
+
+           Example:
+
+           User types:
+           Enrollment
+
+           Backend receives:
+           Enrollment 2025-26
+        */
+
+        let requestText = text;
+
+        if (
+            selectedAcademicYear &&
+            !yearMatch
+        ) {
+
+            requestText =
+                `${text} ${selectedAcademicYear}`;
+
+        }
+
 
         const res = await fetch("/api/chat", {
 
@@ -236,19 +407,28 @@ async function sendMessage() {
             },
 
             body: JSON.stringify({
-                message: text
+
+                message: requestText
+
             })
 
         });
 
+
         const data = await res.json();
+
 
         hideTyping();
 
+
         addBotMessage(
+
             data.reply,
+
             data.suggestions || []
+
         );
+
 
     } catch (err) {
 
@@ -355,10 +535,19 @@ function scrollBottom(){
     chatBody.scrollHeight;
 
 }
+function sendQuick(text) {
 
-function sendQuick(text){
+    if (!selectedAcademicYear) {
 
-    message.value=text;
+        addBotMessage(
+            "📅 Please select your Academic Year first."
+        );
+
+        return;
+
+    }
+
+    message.value = text;
 
     sendMessage();
 
