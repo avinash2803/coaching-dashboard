@@ -176,17 +176,30 @@ const achievements = Object.values(studentMap);
 
 // ================= DASHBOARD STATS =================
 
+// Get dashboard data for the selected year
 let stats = {};
 
 if (year === "all") {
 
-    stats = await Dashboardstats.findOne({ year: "2025-26" }) || {};
+    stats = await Dashboardstats.findOne({ year: "2025-26" }).lean() || {};
 
 } else {
 
-    stats = await Dashboardstats.findOne({ year }) || {};
+    stats = await Dashboardstats.findOne({ year }).lean() || {};
 
 }
+
+// Count students directly from Student collection
+const totalStudents =
+    year === "all"
+        ? await Student.countDocuments({})
+        : await Student.countDocuments({ year });
+
+// Make sure stats.students exists
+stats.students = stats.students || {};
+
+// Use actual Student collection count
+stats.students.total = totalStudents;
 
 // ================= AUTO EMPLOYMENT =================
 
