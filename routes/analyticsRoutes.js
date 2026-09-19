@@ -496,10 +496,54 @@ if(
 
 }else{
 
-  analyticsData =
-  await Analytics.findOne({
-    year: selectedYear
-  }) || {};
+  const yearStudents =
+    await Student.find({
+      year: selectedYear
+    });
+
+  const existingAnalytics =
+    await Analytics.findOne({
+      year: selectedYear
+    }) || {};
+
+  analyticsData = {
+
+    ...existingAnalytics.toObject(),
+
+    totalStudents:
+      yearStudents.length,
+
+    activeStudents:
+      yearStudents.filter(
+        student => student.status === "Active"
+      ).length,
+
+    dropoutStudents:
+      yearStudents.filter(
+        student => student.status === "Dropout"
+      ).length,
+
+    employedStudents:
+      yearStudents.filter(student =>
+        Array.isArray(student.achievements) &&
+        student.achievements.some(a =>
+          String(a).toLowerCase().includes("employ")
+        )
+      ).length,
+
+    qualifiedStudents:
+      yearStudents.filter(student =>
+        Array.isArray(student.achievements) &&
+        student.achievements.some(a =>
+          String(a).toLowerCase().includes("qualif")
+        )
+      ).length,
+
+    // Keep existing Hybrid Learning value unchanged
+    hybridStudents:
+      existingAnalytics.hybridStudents || 0
+
+  };
 }
 
 let totalDays = 0;
