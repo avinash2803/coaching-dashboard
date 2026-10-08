@@ -119,7 +119,6 @@ req.query.year || "all";
     ];
 
     async function getBatchAttendance(courseName) {
-
     let filter = {
         course: courseName
     };
@@ -135,18 +134,22 @@ req.query.year || "all";
 
     const monthlyAverage = [];
 
-    // Fixed sanctioned batch strength
-    const BATCH_CAPACITY = 125;
+    // Fixed sanctioned strength by academic year
+    const BATCH_CAPACITY = {
+        "2025-26": 100,
+        "2026-27": 125
+    };
 
-    // Used for overall batch calculation
     let totalPresentDays = 0;
-    let totalWorkingDays = 0;
+    let totalMaximumDays = 0;
 
     for (const month of months) {
 
         let monthlyPresentDays = 0;
-        let workingDays = 0;
-        let hasAttendanceData = false;
+        let monthlyMaximumDays = 0;
+
+        // Group students by academic year
+        const studentsByYear = {};
 
         students.forEach(student => {
 
@@ -160,67 +163,77 @@ req.query.year || "all";
                 return;
             }
 
-            hasAttendanceData = true;
+            const year = student.year;
 
-            // Working days for this month
-            if (!workingDays) {
-                workingDays = Number(attendance.total) || 0;
+            if (!studentsByYear[year]) {
+                studentsByYear[year] = {
+                    workingDays: Number(attendance.total) || 0,
+                    presentDays: 0
+                };
             }
 
-            // Add present days of every student
-            monthlyPresentDays +=
+            studentsByYear[year].presentDays +=
                 Number(attendance.present) || 0;
-
         });
 
+        // Calculate separately for each academic year
+        Object.entries(studentsByYear).forEach(
+            ([year, data]) => {
+
+                const capacity =
+                    BATCH_CAPACITY[year] || 125;
+
+                // Add actual present days
+                monthlyPresentDays +=
+                    data.presentDays;
+
+                // Maximum possible student-days
+                monthlyMaximumDays +=
+                    data.workingDays * capacity;
+            }
+        );
+
         // No attendance uploaded for this month
-        if (
-            !hasAttendanceData ||
-            workingDays <= 0
-        ) {
-
+        if (monthlyMaximumDays <= 0) {
             monthlyAverage.push(0);
-
             continue;
         }
-
-        // Monthly maximum possible student-days
-        const monthlyMaximum =
-            workingDays * BATCH_CAPACITY;
 
         // Monthly attendance percentage
         const monthlyPercentage =
             (
                 monthlyPresentDays /
-                monthlyMaximum
+                monthlyMaximumDays
             ) * 100;
 
         monthlyAverage.push(
             Number(monthlyPercentage.toFixed(1))
         );
 
-        // Add this month's totals for overall calculation
-        totalPresentDays += monthlyPresentDays;
-        totalWorkingDays += workingDays;
+        // Add to overall calculation
+        totalPresentDays +=
+            monthlyPresentDays;
+
+        totalMaximumDays +=
+            monthlyMaximumDays;
     }
 
     // Overall batch attendance
-    const totalMaximum =
-        totalWorkingDays * BATCH_CAPACITY;
-
     const totalAttendance =
-        totalMaximum > 0
-            ? (totalPresentDays / totalMaximum) * 100
+        totalMaximumDays > 0
+            ? (
+                totalPresentDays /
+                totalMaximumDays
+            ) * 100
             : 0;
 
     return {
         monthlyAverage,
         totalPresentDays,
-        totalWorkingDays,
+        totalMaximumDays,
         totalAttendance:
             Number(totalAttendance.toFixed(1))
     };
-
 }
 
   const cgpscResult =
@@ -240,19 +253,18 @@ vyapamResult.monthlyAverage;
 // Fixed capacity = 125 for each batch
 // =====================================================
 
+// =====================================================
+// OVERALL ATTENDANCE
+// Capacity depends on academic year
+// =====================================================
+
 const overallPresentDays =
     cgpscResult.totalPresentDays +
     vyapamResult.totalPresentDays;
 
-const overallWorkingDays =
-    cgpscResult.totalWorkingDays +
-    vyapamResult.totalWorkingDays;
-
-// Each batch has fixed capacity of 125.
-// Since CGPSC and VYAPAM are separate batches,
-// their working days are already accumulated separately.
 const overallMaximum =
-    overallWorkingDays * 125;
+    cgpscResult.totalMaximumDays +
+    vyapamResult.totalMaximumDays;
 
 const averageAttendance =
     overallMaximum > 0
