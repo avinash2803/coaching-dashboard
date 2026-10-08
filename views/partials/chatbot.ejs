@@ -255,70 +255,9 @@ You can now ask me about Enrollment, Attendance, Achievements, Employment, Facul
 }
 
 // Open
-launcher.onclick = async () => {
+launcher.onclick = () => {
 
     chatContainer.style.display = "flex";
-
-
-    /*
-       Show academic-year selection only
-       when the chatbot is opened for the
-       first time.
-    */
-
-    if (
-        !selectedAcademicYear &&
-        messages.children.length === 0
-    ) {
-
-        try {
-
-            showTyping();
-
-
-            const res = await fetch("/api/chat", {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    message: "Select Academic Year"
-
-                })
-
-            });
-
-
-            const data = await res.json();
-
-
-            hideTyping();
-
-
-            addBotMessage(
-
-                data.reply,
-
-                data.suggestions || []
-
-            );
-
-
-        } catch (err) {
-
-            hideTyping();
-
-            addBotMessage(
-                "❌ Unable to load academic years."
-            );
-
-        }
-
-    }
 
 };
 
