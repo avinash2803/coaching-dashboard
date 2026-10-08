@@ -134,50 +134,91 @@ req.query.year || "all";
     const students = await Student.find(filter);
 
     const monthlyAverage = [];
-    const monthlyEligible = [];
+
+    // Fixed sanctioned batch strength
+    const BATCH_CAPACITY = 125;
+
+    // Used for overall batch calculation
+    let totalPresentDays = 0;
+    let totalWorkingDays = 0;
 
     for (const month of months) {
 
-        let totalPercentage = 0;
-        let count = 0;
+        let monthlyPresentDays = 0;
+        let workingDays = 0;
+        let hasAttendanceData = false;
 
         students.forEach(student => {
-
-            if (!isEligible(student, month))
-                return;
 
             const attendance =
                 student.attendance?.[month];
 
             if (
                 !attendance ||
-                attendance.total === 0
-            )
+                Number(attendance.total) <= 0
+            ) {
                 return;
+            }
 
-            const percentage =
-                (
-                    attendance.present /
-                    attendance.total
-                ) * 100;
+            hasAttendanceData = true;
 
-            totalPercentage += percentage;
-            count++;
+            // Working days for this month
+            if (!workingDays) {
+                workingDays = Number(attendance.total) || 0;
+            }
+
+            // Add present days of every student
+            monthlyPresentDays +=
+                Number(attendance.present) || 0;
 
         });
 
+        // No attendance uploaded for this month
+        if (
+            !hasAttendanceData ||
+            workingDays <= 0
+        ) {
+
+            monthlyAverage.push(0);
+
+            continue;
+        }
+
+        // Monthly maximum possible student-days
+        const monthlyMaximum =
+            workingDays * BATCH_CAPACITY;
+
+        // Monthly attendance percentage
+        const monthlyPercentage =
+            (
+                monthlyPresentDays /
+                monthlyMaximum
+            ) * 100;
+
         monthlyAverage.push(
-            count
-                ? Number((totalPercentage / count).toFixed(1))
-                : 0
+            Number(monthlyPercentage.toFixed(1))
         );
 
-        monthlyEligible.push(count);
+        // Add this month's totals for overall calculation
+        totalPresentDays += monthlyPresentDays;
+        totalWorkingDays += workingDays;
     }
+
+    // Overall batch attendance
+    const totalMaximum =
+        totalWorkingDays * BATCH_CAPACITY;
+
+    const totalAttendance =
+        totalMaximum > 0
+            ? (totalPresentDays / totalMaximum) * 100
+            : 0;
 
     return {
         monthlyAverage,
-        monthlyEligible
+        totalPresentDays,
+        totalWorkingDays,
+        totalAttendance:
+            Number(totalAttendance.toFixed(1))
     };
 
 }
@@ -194,30 +235,35 @@ cgpscResult.monthlyAverage;
 const vyapamAttendance =
 vyapamResult.monthlyAverage;
 
-  let weightedTotal = 0;
-let totalEligible = 0;
+  // =====================================================
+// OVERALL ATTENDANCE
+// Fixed capacity = 125 for each batch
+// =====================================================
 
-for (let i = 0; i < months.length; i++) {
+const overallPresentDays =
+    cgpscResult.totalPresentDays +
+    vyapamResult.totalPresentDays;
 
-    weightedTotal +=
-        cgpscAttendance[i] *
-        cgpscResult.monthlyEligible[i];
+const overallWorkingDays =
+    cgpscResult.totalWorkingDays +
+    vyapamResult.totalWorkingDays;
 
-    totalEligible +=
-        cgpscResult.monthlyEligible[i];
-
-    weightedTotal +=
-        vyapamAttendance[i] *
-        vyapamResult.monthlyEligible[i];
-
-    totalEligible +=
-        vyapamResult.monthlyEligible[i];
-}
+// Each batch has fixed capacity of 125.
+// Since CGPSC and VYAPAM are separate batches,
+// their working days are already accumulated separately.
+const overallMaximum =
+    overallWorkingDays * 125;
 
 const averageAttendance =
-totalEligible
-    ? (weightedTotal / totalEligible).toFixed(1)
-    : 0;
+    overallMaximum > 0
+        ? Number(
+            (
+                overallPresentDays /
+                overallMaximum *
+                100
+            ).toFixed(1)
+        )
+        : 0;
    
 
 const testFilter = {};
