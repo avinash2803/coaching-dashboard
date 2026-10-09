@@ -1,0 +1,49 @@
+<%- include("partials/header") %>
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.staff-profile{max-width:1000px;margin:30px auto;padding:0 16px 40px;color:#243247}
+.staff-back{display:inline-block;margin-bottom:18px;color:#0759bd;text-decoration:none;font-weight:700}
+.staff-card{overflow:hidden;border:1px solid #e3eaf2;border-radius:18px;background:#fff;box-shadow:0 12px 34px #122a4c12}
+.staff-cover{height:150px;background:linear-gradient(135deg,#0759bd,#087e8b)}
+.staff-main{display:flex;align-items:flex-end;gap:22px;padding:0 28px 24px;margin-top:-55px}
+.staff-photo,.staff-initials{width:130px;height:130px;flex:0 0 130px;border:5px solid #fff;border-radius:18px;background:#eaf2fb;object-fit:cover;box-shadow:0 5px 18px #0002}
+.staff-initials{display:flex;align-items:center;justify-content:center;color:#0759bd;font-size:40px;font-weight:800}
+.staff-heading h1{margin:0 0 7px;font-size:clamp(25px,4vw,36px);overflow-wrap:anywhere}
+.staff-heading p{margin:0 0 12px;color:#5d6b7e}
+.staff-chip{display:inline-block;padding:5px 10px;border-radius:999px;background:#e8f7ed;color:#187443;font-size:12px;font-weight:800}
+.staff-sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:0 28px 28px}
+.staff-info{padding:17px;border:1px solid #e8edf4;border-radius:12px;background:#fbfcfe;min-width:0}
+.staff-info.full{grid-column:1/-1}
+.staff-info h2{font-size:15px;margin:0 0 9px;color:#536276;text-transform:uppercase;letter-spacing:.04em}
+.staff-info p{margin:0;line-height:1.7;white-space:pre-line;overflow-wrap:anywhere}
+.staff-empty{max-width:650px;margin:60px auto;padding:30px;border:1px solid #e3eaf2;border-radius:16px;text-align:center;background:#fff}
+@media(max-width:640px){.staff-main{align-items:center;flex-direction:column;text-align:center;padding:0 18px 22px;margin-top:-48px}.staff-photo,.staff-initials{width:112px;height:112px;flex-basis:112px}.staff-sections{grid-template-columns:1fr;padding:0 18px 20px}.staff-info.full{grid-column:auto}.staff-cover{height:115px}}
+</style>
+<%
+const person = (typeof staff !== "undefined" && staff) ? staff : null;
+const fullName = person ? (person.name || "Staff Member") : "";
+const initials = fullName.split(/\s+/).filter(Boolean).slice(0,2).map(s=>s[0].toUpperCase()).join("") || "S";
+%>
+<main class="staff-profile">
+<% if (!person) { %>
+  <section class="staff-empty"><h1>Staff profile not found</h1><p>This profile may have been removed or is no longer public.</p><a class="staff-back" href="/staff">← Staff Directory</a></section>
+<% } else { %>
+  <a class="staff-back" href="/staff">← Staff Directory</a>
+  <article class="staff-card">
+    <div class="staff-cover" aria-hidden="true"></div>
+    <section class="staff-main">
+      <% if(person.photoUrl){ %><img class="staff-photo" src="<%= person.photoUrl %>" alt="Photo of <%= fullName %>" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="staff-initials" style="display:none"><%= initials %></div><% } else { %><div class="staff-initials"><%= initials %></div><% } %>
+      <div class="staff-heading"><h1><%= fullName %></h1><p><%= person.designation || "Team Member" %><%= person.department ? " · " + person.department : "" %></p><span class="staff-chip"><%= person.status || "Active" %></span></div>
+    </section>
+    <section class="staff-sections">
+      <div class="staff-info"><h2>Experience</h2><p><%= Number(person.experienceYears || 0) %> years<%= person.relevantExperience ? "\n" + person.relevantExperience : "" %></p></div>
+      <% if(person.qualification){ %><div class="staff-info"><h2>Qualification</h2><p><%= person.qualification %></p></div><% } %>
+      <% if(person.expertise){ %><div class="staff-info"><h2>Subjects / Expertise</h2><p><%= person.expertise %></p></div><% } %>
+      <% if(person.about){ %><div class="staff-info full"><h2>About</h2><p><%= person.about %></p></div><% } %>
+      <% if(person.responsibilities){ %><div class="staff-info full"><h2>Role & Responsibilities</h2><p><%= person.responsibilities %></p></div><% } %>
+      <% if(person.joiningDate){ %><div class="staff-info"><h2>Joining Date</h2><p><%= new Date(person.joiningDate).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}) %></p></div><% } %>
+    </section>
+  </article>
+<% } %>
+</main>
+<%- include("partials/footer") %>

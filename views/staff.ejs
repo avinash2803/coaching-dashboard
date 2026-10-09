@@ -1,0 +1,19 @@
+<%- include("partials/header") %>
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.staff-directory{max-width:1200px;margin:30px auto;padding:0 16px 40px}.staff-directory h1{margin-bottom:8px}.staff-directory-intro{color:#64748b;margin-bottom:24px}.staff-directory-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}.staff-directory-card{overflow:hidden;border:1px solid #e3eaf2;border-radius:14px;background:#fff;box-shadow:0 8px 22px #172b4d0a}.staff-directory-card a{display:block;padding:20px;color:inherit;text-decoration:none}.staff-directory-photo{width:88px;height:88px;object-fit:cover;border-radius:16px;background:#e8f1fc;margin-bottom:14px}.staff-directory-initials{display:flex;align-items:center;justify-content:center;width:88px;height:88px;border-radius:16px;background:#e8f1fc;color:#0759bd;font-size:27px;font-weight:800;margin-bottom:14px}.staff-directory-card h2{font-size:18px;margin:0 0 6px}.staff-directory-card p{margin:0 0 8px;color:#64748b}.staff-directory-exp{font-size:13px;color:#475569}
+</style>
+<main class="staff-directory">
+<h1>Our Staff & Faculty</h1><p class="staff-directory-intro">Meet the team supporting Bhoramdev Vidyapeeth.</p>
+<% const list = Array.isArray(staffMembers) ? staffMembers : []; %>
+<% if(!list.length){ %><p>Staff profiles will be published here soon.</p><% } else { %>
+<div class="staff-directory-grid">
+<% list.forEach(person => { const name=person.name||"Staff Member"; const initials=name.split(/\s+/).filter(Boolean).slice(0,2).map(s=>s[0].toUpperCase()).join(""); %>
+<article class="staff-directory-card"><a href="/staff/profile/<%= person._id %>">
+<% if(person.photoUrl){ %><img class="staff-directory-photo" src="<%= person.photoUrl %>" alt=""><% } else { %><div class="staff-directory-initials"><%= initials %></div><% } %>
+<h2><%= name %></h2><p><%= person.designation||"Team Member" %></p><div class="staff-directory-exp"><%= Number(person.experienceYears||0) %> years experience</div>
+</a></article>
+<% }) %>
+</div><% } %>
+</main>
+<%- include("partials/footer") %>
