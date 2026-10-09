@@ -2,6 +2,7 @@ import express from "express";
 import Analytics
 from "../models/analytics.js";
 import Student from "../models/student.js";
+import { calculateAttendanceForYear } from "../utils/attendanceCalculator.js";
 
 const router = express.Router();
 
@@ -102,181 +103,15 @@ const selectedYear =
 req.query.year || "all";
 
 
-    const months = [
-        
-        "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-      "January",
-      "February",
-      "March",
-      "April",
-      "May"
-    ];
+    const attendanceSummary =
+        await calculateAttendanceForYear(selectedYear);
 
-    async function getBatchAttendance(courseName) {
-    let filter = {
-        course: courseName
-    };
+    const cgpscResult = attendanceSummary.batches.CGPSC;
+    const vyapamResult = attendanceSummary.batches.VYAPAM;
 
-    if (
-        selectedYear &&
-        selectedYear.toLowerCase() !== "all"
-    ) {
-        filter.year = selectedYear;
-    }
-
-    const students = await Student.find(filter);
-
-    const monthlyAverage = [];
-
-    // Fixed sanctioned strength by academic year
-    const BATCH_CAPACITY = {
-        "2025-26": 100,
-        "2026-27": 125
-    };
-
-    let totalPresentDays = 0;
-    let totalMaximumDays = 0;
-
-    for (const month of months) {
-
-        let monthlyPresentDays = 0;
-        let monthlyMaximumDays = 0;
-
-        // Group students by academic year
-        const studentsByYear = {};
-
-        students.forEach(student => {
-
-            const attendance =
-                student.attendance?.[month];
-
-            if (
-                !attendance ||
-                Number(attendance.total) <= 0
-            ) {
-                return;
-            }
-
-            const year = student.year;
-
-            if (!studentsByYear[year]) {
-                studentsByYear[year] = {
-                    workingDays: Number(attendance.total) || 0,
-                    presentDays: 0
-                };
-            }
-
-            studentsByYear[year].presentDays +=
-                Number(attendance.present) || 0;
-        });
-
-        // Calculate separately for each academic year
-        Object.entries(studentsByYear).forEach(
-            ([year, data]) => {
-
-                const capacity =
-                    BATCH_CAPACITY[year] || 125;
-
-                // Add actual present days
-                monthlyPresentDays +=
-                    data.presentDays;
-
-                // Maximum possible student-days
-                monthlyMaximumDays +=
-                    data.workingDays * capacity;
-            }
-        );
-
-        // No attendance uploaded for this month
-        if (monthlyMaximumDays <= 0) {
-            monthlyAverage.push(0);
-            continue;
-        }
-
-        // Monthly attendance percentage
-        const monthlyPercentage =
-            (
-                monthlyPresentDays /
-                monthlyMaximumDays
-            ) * 100;
-
-        monthlyAverage.push(
-            Number(monthlyPercentage.toFixed(1))
-        );
-
-        // Add to overall calculation
-        totalPresentDays +=
-            monthlyPresentDays;
-
-        totalMaximumDays +=
-            monthlyMaximumDays;
-    }
-
-    // Overall batch attendance
-    const totalAttendance =
-        totalMaximumDays > 0
-            ? (
-                totalPresentDays /
-                totalMaximumDays
-            ) * 100
-            : 0;
-
-    return {
-        monthlyAverage,
-        totalPresentDays,
-        totalMaximumDays,
-        totalAttendance:
-            Number(totalAttendance.toFixed(1))
-    };
-}
-
-  const cgpscResult =
-await getBatchAttendance("CGPSC");
-
-const vyapamResult =
-await getBatchAttendance("VYAPAM");
-
-const cgpscAttendance =
-cgpscResult.monthlyAverage;
-
-const vyapamAttendance =
-vyapamResult.monthlyAverage;
-
-  // =====================================================
-// OVERALL ATTENDANCE
-// Fixed capacity = 125 for each batch
-// =====================================================
-
-// =====================================================
-// OVERALL ATTENDANCE
-// Capacity depends on academic year
-// =====================================================
-
-const overallPresentDays =
-    cgpscResult.totalPresentDays +
-    vyapamResult.totalPresentDays;
-
-const overallMaximum =
-    cgpscResult.totalMaximumDays +
-    vyapamResult.totalMaximumDays;
-
-const averageAttendance =
-    overallMaximum > 0
-        ? Number(
-            (
-                overallPresentDays /
-                overallMaximum *
-                100
-            ).toFixed(1)
-        )
-        : 0;
-   
+    const cgpscAttendance = cgpscResult.monthlyAverage;
+    const vyapamAttendance = vyapamResult.monthlyAverage;
+    const averageAttendance = attendanceSummary.overallAverage ?? 0;
 
 const testFilter = {};
 
@@ -457,34 +292,8 @@ const result = await Analytics.findOneAndUpdate(
                 averageAttendance: Number(averageAttendance),
 
                 attendance: {
-                    cgpsc: {
-                        June: cgpscAttendance[0],
-                        July: cgpscAttendance[1],
-                        August: cgpscAttendance[2],
-                        September: cgpscAttendance[3],
-                        October: cgpscAttendance[4],
-                        November: cgpscAttendance[5],
-                        December: cgpscAttendance[6],
-                        January: cgpscAttendance[7],
-                        February: cgpscAttendance[8],
-                        March: cgpscAttendance[9],
-                        April: cgpscAttendance[10],
-                        May: cgpscAttendance[11]
-                    },
-                    vyapam: {
-                        June: vyapamAttendance[0],
-                        July: vyapamAttendance[1],
-                        August: vyapamAttendance[2],
-                        September: vyapamAttendance[3],
-                        October: vyapamAttendance[4],
-                        November: vyapamAttendance[5],
-                        December: vyapamAttendance[6],
-                        January: vyapamAttendance[7],
-                        February: vyapamAttendance[8],
-                        March: vyapamAttendance[9],
-                        April: vyapamAttendance[10],
-                        May: vyapamAttendance[11]
-                    }
+                    cgpsc: cgpscResult.monthlyAttendance,
+                    vyapam: vyapamResult.monthlyAttendance
                 }
             }
         },

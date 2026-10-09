@@ -11,6 +11,7 @@ import Notice from "../models/notice.js";
 import Achievement from "../models/achievement.js";
 import Analytics from "../models/analytics.js";
 import Dashboardstats from "../models/dashboardstats.js";
+import { calculateAttendanceForYear } from "../utils/attendanceCalculator.js";
 
 const router = express.Router();
 
@@ -208,6 +209,15 @@ if (yearMatch) {
 
 const selectedYear = year;
 
+// Shared attendance calculation used by Analytics and the chatbot.
+// Attendance is intentionally not combined in "All Academic Years" mode.
+const attendanceSummary = allYears
+    ? null
+    : await calculateAttendanceForYear(selectedYear);
+
+const formatAttendance = value =>
+    value == null ? "Not Available" : `${value}%`;
+
 /* ============================
    ANALYTICS
 ============================ */
@@ -398,144 +408,89 @@ Please select a specific Academic Year:
     });
 
 }
-if (
-    !message.includes("month-wise") &&
-    !message.includes("month wise") &&
-    (
-        [
-            "attendance",
-            "present",
-            "attendance report",
-            "average attendance",
-            "attendance percentage"
-        ].some(word => message.includes(word))
-        ||
-        /^\d{4}-\d{2}$/.test(message)
-        ||
-        /^\d{4}-\d{2}\s*$/.test(message)
-    )
-) {
+const isMonthWiseAttendance =
+    message.includes("month-wise") ||
+    message.includes("month wise");
 
-    let reply = `📊 Attendance Summary
+const isAttendanceQuestion =
+    [
+        "attendance",
+        "present",
+        "attendance report",
+        "average attendance",
+        "attendance percentage"
+    ].some(word => message.includes(word)) ||
+    /^\\d{4}-\\d{2}$/.test(message) ||
+    /^\\d{4}-\\d{2}\\s*$/.test(message);
+
+if (allYears && isAttendanceQuestion) {
+    return res.json({
+        reply: `📊 Attendance is maintained separately by Academic Year.
+
+Please select a specific Academic Year:
+
+• 2025-26
+• 2026-27
+
+📅 All Academic Years is intended for cumulative information such as achievements, selections and employment.`,
+        suggestions: [
+            "Attendance 2025-26",
+            "Attendance 2026-27"
+        ]
+    });
+}
+
+if (isAttendanceQuestion) {
+    const cgpsc = attendanceSummary.batches.CGPSC;
+    const vyapam = attendanceSummary.batches.VYAPAM;
+
+    if (isMonthWiseAttendance) {
+        let reply = `📅 Month-wise Attendance
+
+Academic Year : ${selectedYear}
+
+`;
+
+        for (const month of attendanceSummary.months) {
+            reply += `${month}
+CGPSC : ${cgpsc.monthlyAttendance[month] ?? "N/A"}%
+VYAPAM : ${vyapam.monthlyAttendance[month] ?? "N/A"}%
+
+`;
+        }
+
+        return res.json({ reply, suggestions: [] });
+    }
+
+    const overallAverage =
+        attendanceSummary.overallAverage ?? "Not Available";
+    const cgpscAverage = cgpsc.average ?? "Not Available";
+    const vyapamAverage = vyapam.average ?? "Not Available";
+
+    const formatPercent = value =>
+        value === "Not Available" ? value : `${value}%`;
+
+    const reply = `📊 Attendance Summary
 ────────────────────
 
 📅 Academic Year
 • ${selectedYear}
 
 📈 Overall Average Attendance
-• ${analytics?.averageAttendance ?? "Not Available"}%
+• ${formatPercent(overallAverage)}
 
 🎓 CGPSC Average Attendance
-• ${
-    analytics?.attendance?.cgpsc
-    ? (
-        Object.values(analytics.attendance.cgpsc)
-            .filter(v => typeof v === "number")
-            .reduce((a, b) => a + b, 0) / 12
-      ).toFixed(1)
-    : "Not Available"
-}%
+• ${formatPercent(cgpscAverage)}
 
 📝 VYAPAM Average Attendance
-• ${
-    analytics?.attendance?.vyapam
-    ? (
-        Object.values(analytics.attendance.vyapam)
-            .filter(v => typeof v === "number")
-            .reduce((a, b) => a + b, 0) / 12
-      ).toFixed(1)
-    : "Not Available"
-}%
+• ${formatPercent(vyapamAverage)}
 
 👇 Choose an option below`;
 
     return res.json({
-
         reply,
-
-        suggestions: [
-            `📅 Month-wise Attendance ${selectedYear}`
-        ]
-
+        suggestions: [`📅 Month-wise Attendance ${selectedYear}`]
     });
-
-}
-/* ===================================================
-   MONTH WISE ATTENDANCE
-=================================================== */
-/* ===================================================
-   ALL YEARS MONTH-WISE ATTENDANCE PROTECTION
-=================================================== */
-
-if (allYears) {
-
-    return res.json({
-
-        reply:
-`📅 Month-wise Attendance is available separately for each Academic Year.
-
-Please select:
-
-• 2025-26
-• 2026-27`,
-
-        suggestions: [
-            "Attendance 2025-26",
-            "Attendance 2026-27"
-        ]
-
-    });
-
-}
-if (
-    message.includes("month-wise") ||
-    message.includes("month wise")
-) {
-
-    const cgpsc = analytics.attendance?.cgpsc || {};
-    const vyapam = analytics.attendance?.vyapam || {};
-
-    const months = [
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-        "January",
-        "February",
-        "March",
-        "April",
-        "May"
-    ];
-
-    let reply =
-`📅 Month-wise Attendance
-
-Academic Year : ${selectedYear}
-
-`;
-
-    months.forEach(month => {
-
-        reply +=
-`${month}
-CGPSC : ${cgpsc[month] ?? "N/A"}%
-VYAPAM : ${vyapam[month] ?? "N/A"}%
-
-`;
-
-    });
-
-    return res.json({
-
-        reply,
-
-        suggestions: []
-
-    });
-
 }
 
 /* ===================================================
@@ -1159,25 +1114,19 @@ ${selectedYear}
 
 Overall Average Attendance
 
-${analytics.averageAttendance || "Not Available"}%
+${formatAttendance(attendanceSummary?.overallAverage)}
 
 --------------------------------------------------
 
 CGPSC Average Attendance
 
-${analytics.attendance?.cgpsc
-? Object.values(analytics.attendance.cgpsc)
-    .reduce((a,b)=>a+b,0)/12
-: "Not Available"}%
+${formatAttendance(attendanceSummary?.batches.CGPSC.average)}
 
 --------------------------------------------------
 
 VYAPAM Average Attendance
 
-${analytics.attendance?.vyapam
-? Object.values(analytics.attendance.vyapam)
-    .reduce((a,b)=>a+b,0)/12
-: "Not Available"}%
+${formatAttendance(attendanceSummary?.batches.VYAPAM.average)}
 
 --------------------------------------------------
 
@@ -1185,11 +1134,11 @@ If the user asks for month-wise attendance, use this data.
 
 CGPSC
 
-${JSON.stringify(analytics.attendance?.cgpsc || {})}
+${JSON.stringify(attendanceSummary?.batches.CGPSC.monthlyAttendance || {})}
 
 VYAPAM
 
-${JSON.stringify(analytics.attendance?.vyapam || {})}
+${JSON.stringify(attendanceSummary?.batches.VYAPAM.monthlyAttendance || {})}
 
 --------------------------------------------------
 
