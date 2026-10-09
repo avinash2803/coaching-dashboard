@@ -1001,3 +1001,46 @@ color:white;
     }
 }
 
+
+/* Desktop chatbot sizing */
+@media (min-width: 601px) {
+    #chatContainer.chat-container {
+        width: min(460px, calc(100vw - 32px));
+        height: min(720px, calc(100vh - 110px));
+        max-height: calc(100vh - 110px);
+        top: 95px;
+        right: 24px;
+        bottom: auto;
+        border-radius: 22px;
+    }
+
+    #chatContainer .chat-body {
+        padding: 12px 14px 20px;
+    }
+
+    #chatContainer .welcome-box {
+        padding-top: 4px;
+        padding-bottom: 10px;
+    }
+
+    #chatContainer .welcome-logo {
+        font-size: 38px;
+        margin-bottom: 9px;
+    }
+
+    #chatContainer .welcome-box h2 {
+        font-size: 28px;
+        line-height: 1.15;
+        margin-bottom: 6px;
+    }
+
+    #chatContainer .welcome-box > p {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    #chatContainer .welcome-card {
+        padding: 15px 12px;
+        margin-bottom: 12px;
+    }
+}
