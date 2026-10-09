@@ -1,3 +1,257 @@
+
+<style>
+/* BALCO Connect AI - responsive welcome and chat layout */
+#chatContainer.chat-container {
+    display: none;
+    flex-direction: column;
+    width: min(500px, calc(100vw - 24px));
+    height: min(720px, calc(100dvh - 24px));
+    max-height: calc(100dvh - 24px);
+    overflow: hidden;
+    border-radius: 24px;
+    box-sizing: border-box;
+}
+
+#chatContainer .chat-header {
+    flex: 0 0 auto;
+    min-height: 78px;
+    padding: 14px 18px;
+    box-sizing: border-box;
+}
+
+#chatContainer .chat-header-left {
+    min-width: 0;
+    gap: 12px;
+}
+
+#chatContainer .assistant-title {
+    line-height: 1.2;
+}
+
+#chatContainer .assistant-subtitle {
+    line-height: 1.35;
+}
+
+#chatContainer .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+#chatContainer #resetChat,
+#chatContainer #closeChat {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#chatContainer #resetChat:hover,
+#chatContainer #closeChat:hover {
+    background: rgba(255,255,255,.16);
+}
+
+#chatContainer .chat-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 22px 18px 28px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+#chatContainer .welcome-box {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+#chatContainer .welcome-logo {
+    font-size: clamp(36px, 7vw, 48px);
+    line-height: 1;
+    margin: 2px auto 16px;
+}
+
+#chatContainer .welcome-box h2 {
+    margin: 0 0 8px;
+    font-size: clamp(25px, 5vw, 34px);
+    line-height: 1.18;
+    letter-spacing: -.4px;
+}
+
+#chatContainer .welcome-box > p {
+    margin: 0 auto 18px;
+    max-width: 360px;
+    font-size: clamp(15px, 3.6vw, 20px);
+    line-height: 1.4;
+}
+
+#chatContainer .welcome-card {
+    width: 100%;
+    margin: 0 auto 14px;
+    padding: 18px 16px;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(25, 52, 95, .07);
+    box-sizing: border-box;
+}
+
+#chatContainer .welcome-card > div:first-child {
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+#chatContainer .chat-suggestions,
+#chatContainer .quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+#chatContainer .chat-chip,
+#chatContainer .quick-actions button {
+    min-height: 38px;
+    padding: 9px 13px;
+    border-radius: 999px;
+    line-height: 1.2;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+}
+
+#chatContainer .chat-chip:hover,
+#chatContainer .quick-actions button:hover {
+    transform: translateY(-1px);
+}
+
+#chatContainer .chat-chip.is-selected {
+    color: #fff;
+    background: #0b5ed7;
+    border-color: #0b5ed7;
+    box-shadow: 0 4px 12px rgba(11, 94, 215, .2);
+}
+
+#chatContainer .quick-actions {
+    margin: 0 auto 8px;
+}
+
+#chatContainer #messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+}
+
+#chatContainer .chat-footer {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(20, 35, 60, .09);
+    background: #fff;
+    box-sizing: border-box;
+}
+
+#chatContainer #message {
+    flex: 1 1 auto;
+    width: 0;
+    min-width: 0;
+    height: 48px;
+    padding: 0 17px;
+    border-radius: 999px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+#chatContainer #sendBtn {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+#chatContainer .user-message,
+#chatContainer .bot-message {
+    max-width: 92%;
+    overflow-wrap: anywhere;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    #chatContainer.chat-container {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100dvh;
+        max-height: 100dvh;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    #chatContainer .chat-header {
+        min-height: 76px;
+        padding: 12px 16px;
+    }
+
+    #chatContainer .chat-body {
+        padding: 16px 14px 24px;
+    }
+
+    #chatContainer .welcome-logo {
+        margin-bottom: 12px;
+    }
+
+    #chatContainer .welcome-box h2 {
+        font-size: clamp(25px, 6vw, 31px);
+        margin-bottom: 6px;
+    }
+
+    #chatContainer .welcome-box > p {
+        font-size: 16px;
+        margin-bottom: 14px;
+    }
+
+    #chatContainer .welcome-card {
+        padding: 16px 12px;
+        border-radius: 20px;
+    }
+
+    #chatContainer .chat-footer {
+        padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #chatContainer .chat-body {
+        scroll-behavior: auto;
+    }
+
+    #chatContainer .chat-chip,
+    #chatContainer .quick-actions button {
+        transition: none;
+    }
+}
+</style>
+
 <div id="chat-launcher">
 
     <div class="launcher-circle">
@@ -97,7 +351,8 @@
 
         <button
             type="button"
-            class="chat-chip"
+            class="chat-chip academic-year-chip"
+            aria-pressed="false"
             onclick="selectAcademicYear('2025-26')">
 
             📅 2025-26
@@ -106,7 +361,8 @@
 
         <button
             type="button"
-            class="chat-chip"
+            class="chat-chip academic-year-chip"
+            aria-pressed="false"
             onclick="selectAcademicYear('2026-27')">
 
             📅 2026-27
@@ -115,7 +371,8 @@
 
         <button
             type="button"
-            class="chat-chip"
+            class="chat-chip academic-year-chip"
+            aria-pressed="false"
             onclick="selectAcademicYear('all')">
 
             📚 All Academic Years
@@ -240,6 +497,12 @@ function selectAcademicYear(year) {
 
     selectedAcademicYear = year;
 
+    document.querySelectorAll("#academicYearOptions .academic-year-chip").forEach((button) => {
+        const isSelected = button.getAttribute("onclick")?.includes(`'${year}'`);
+        button.classList.toggle("is-selected", Boolean(isSelected));
+        button.setAttribute("aria-pressed", String(Boolean(isSelected)));
+    });
+
     const displayYear =
         year === "all"
             ? "All Academic Years"
@@ -274,6 +537,11 @@ resetChat.onclick = () => {
     message.value = "";
 
     selectedAcademicYear = null;
+
+    document.querySelectorAll("#academicYearOptions .academic-year-chip").forEach((button) => {
+        button.classList.remove("is-selected");
+        button.setAttribute("aria-pressed", "false");
+    });
 
     chatBody.scrollTop = 0;
 
@@ -380,19 +648,12 @@ async function sendMessage() {
     }
 
 }
-function addUserMessage(text){
-
-    messages.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="user-message">
-            ${text}
-        </div>
-        `
-    );
-
+function addUserMessage(text) {
+    const bubble = document.createElement("div");
+    bubble.className = "user-message";
+    bubble.textContent = text;
+    messages.appendChild(bubble);
     scrollBottom();
-
 }
 
 function addBotMessage(reply, suggestions = []) {
@@ -441,23 +702,14 @@ function addBotMessage(reply, suggestions = []) {
     scrollBottom();
 }
 
-function showTyping(){
-
-    messages.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div
-            class="bot-message"
-            id="typing">
-
-            🤖 Thinking...
-
-        </div>
-        `
-    );
-
+function showTyping() {
+    hideTyping();
+    const typing = document.createElement("div");
+    typing.className = "bot-message";
+    typing.id = "typing";
+    typing.textContent = "🤖 Thinking...";
+    messages.appendChild(typing);
     scrollBottom();
-
 }
 
 function hideTyping(){
