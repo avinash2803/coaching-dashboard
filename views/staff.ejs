@@ -5,7 +5,7 @@
 </style>
 <main class="staff-directory">
 <h1>Our Staff & Faculty</h1><p class="staff-directory-intro">Meet the team supporting Bhoramdev Vidyapeeth.</p>
-<% const list = Array.isArray(staffMembers) ? staffMembers : []; %>
+<% const list = (typeof staffMembers !== "undefined" && Array.isArray(staffMembers)) ? staffMembers : []; %>
 <% if(!list.length){ %><p>Staff profiles will be published here soon.</p><% } else { %>
 <div class="staff-directory-grid">
 <% list.forEach(person => { const name=person.name||"Staff Member"; const initials=name.split(/\s+/).filter(Boolean).slice(0,2).map(s=>s[0].toUpperCase()).join(""); %>
