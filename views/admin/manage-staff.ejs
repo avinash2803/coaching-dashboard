@@ -22,8 +22,8 @@
 <%
 const list = (typeof staffMembers !== "undefined" && Array.isArray(staffMembers)) ? staffMembers : [];
 const staffRecord = (typeof member !== "undefined" && member) ? member : {};
-const isForm = formMode === true;
-const editing = isEdit === true;
+const isForm = typeof formMode !== "undefined" && formMode === true;
+const editing = typeof isEdit !== "undefined" && isEdit === true;
 const escDate = value => value ? new Date(value).toISOString().slice(0,10) : "";
 const statusValue = staffRecord.status || "Active";
 %>
