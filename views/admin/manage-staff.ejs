@@ -1,0 +1,183 @@
+<%- include("../partials/header") %>
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.staff-admin{max-width:1250px;margin:24px auto;padding:0 16px 40px;color:#243247}
+.staff-admin-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.staff-admin h1{margin:0 0 6px;font-size:28px}.staff-muted{color:#64748b;margin:0}
+.staff-btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:9px;padding:10px 14px;background:#087f8c;color:white;text-decoration:none;font-weight:700;cursor:pointer}
+.staff-btn.secondary{background:#eaf1f8;color:#28425f}.staff-btn.danger{background:#fff0ef;color:#b42318;padding:8px 10px}
+.staff-panel{background:#fff;border:1px solid #e3eaf2;border-radius:14px;padding:20px;box-shadow:0 8px 24px #172b4d0a}
+.staff-alert{padding:12px 14px;background:#fff4e5;color:#8a4b08;border-radius:9px;margin-bottom:16px}
+.staff-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.staff-field{display:flex;flex-direction:column;gap:6px}.staff-field.full{grid-column:1/-1}
+.staff-field label{font-size:13px;font-weight:700;color:#41516a}.staff-field input,.staff-field select,.staff-field textarea{width:100%;box-sizing:border-box;border:1px solid #d7e0ea;border-radius:8px;padding:10px 11px;font:inherit;background:#fff;color:#243247}
+.staff-field textarea{min-height:100px;resize:vertical}.staff-field small{color:#718096}
+.staff-form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.staff-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.staff-toolbar input,.staff-toolbar select{padding:10px;border:1px solid #d7e0ea;border-radius:8px;font:inherit}.staff-toolbar input{flex:1;min-width:220px}
+.staff-table-wrap{overflow:auto;border:1px solid #e3eaf2;border-radius:12px;background:#fff}.staff-table{width:100%;min-width:920px;border-collapse:collapse}.staff-table th,.staff-table td{padding:12px 14px;border-bottom:1px solid #edf1f6;text-align:left;vertical-align:middle}.staff-table th{background:#f6f9fc;color:#536276;font-size:12px;text-transform:uppercase;letter-spacing:.04em}.staff-table tr:last-child td{border-bottom:0}
+.staff-person{display:flex;align-items:center;gap:10px;min-width:180px}.staff-avatar{width:42px;height:42px;flex:0 0 42px;object-fit:cover;border-radius:12px;background:#e8f1fc;display:flex;align-items:center;justify-content:center;color:#0759bd;font-weight:800}.staff-status{display:inline-block;padding:5px 9px;border-radius:99px;background:#e8f7ed;color:#187443;font-size:12px;font-weight:700}.staff-status.inactive{background:#fff4df;color:#8a5700}.staff-status.left{background:#f1eafe;color:#6941a5}.staff-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.staff-actions form{margin:0}.staff-actions .staff-btn{font-size:12px;padding:7px 9px}.staff-empty{text-align:center;padding:30px;color:#64748b}
+@media(max-width:650px){.staff-grid{grid-template-columns:1fr}.staff-field.full{grid-column:auto}.staff-admin h1{font-size:23px}.staff-panel{padding:14px}}
+</style>
+
+<%
+const list = (typeof staffMembers !== "undefined" && Array.isArray(staffMembers)) ? staffMembers : [];
+const staffRecord = (typeof member !== "undefined" && member) ? member : {};
+const isForm = formMode === true;
+const editing = isEdit === true;
+const escDate = value => value ? new Date(value).toISOString().slice(0,10) : "";
+const statusValue = staffRecord.status || "Active";
+%>
+<main class="staff-admin">
+  <% if (error) { %><div class="staff-alert"><%= error %></div><% } %>
+  <% if (isForm) { %>
+    <div class="staff-admin-head">
+      <div><h1><%= editing ? "Edit Staff Profile" : "Add New Staff" %></h1><p class="staff-muted">Maintain professional details for the staff directory.</p></div>
+      <a class="staff-btn secondary" href="/admin/manage-staff">← Back to Staff List</a>
+    </div>
+    <form class="staff-panel" method="POST" action="<%= formAction %>" enctype="multipart/form-data">
+      <div class="staff-grid">
+        <div class="staff-field">
+          <label for="name">Full name *</label>
+          <input id="name" name="name" required maxlength="150" value="<%= staffRecord.name || '' %>">
+        </div>
+        <div class="staff-field">
+          <label for="designation">Designation / Role *</label>
+          <input id="designation" name="designation" required maxlength="150" value="<%= staffRecord.designation || '' %>" placeholder="e.g. Faculty, Program Manager">
+        </div>
+        <div class="staff-field">
+          <label for="department">Department / Project</label>
+          <input id="department" name="department" maxlength="150" value="<%= staffRecord.department || '' %>" placeholder="e.g. Coaching – Kawardha">
+        </div>
+        <div class="staff-field">
+          <label for="experienceYears">Total experience (years)</label>
+          <input id="experienceYears" name="experienceYears" type="number" min="0" max="80" step="0.5" value="<%= staffRecord.experienceYears ?? 0 %>">
+        </div>
+        <div class="staff-field">
+          <label for="relevantExperience">Relevant experience</label>
+          <input id="relevantExperience" name="relevantExperience" maxlength="1500" value="<%= staffRecord.relevantExperience || '' %>" placeholder="e.g. 4 years in teaching">
+        </div>
+        <div class="staff-field">
+          <label for="qualification">Qualification</label>
+          <input id="qualification" name="qualification" maxlength="500" value="<%= staffRecord.qualification || '' %>">
+        </div>
+        <div class="staff-field">
+          <label for="email">Work email</label>
+          <input id="email" name="email" type="email" maxlength="180" value="<%= staffRecord.email || '' %>">
+        </div>
+        <div class="staff-field">
+          <label for="phone">Contact number (optional)</label>
+          <input id="phone" name="phone" maxlength="40" value="<%= staffRecord.phone || '' %>">
+        </div>
+        <div class="staff-field">
+          <label for="joiningDate">Joining date</label>
+          <input id="joiningDate" name="joiningDate" type="date" value="<%= escDate(staffRecord.joiningDate) %>">
+        </div>
+        <div class="staff-field">
+          <label for="status">Employment status</label>
+          <select id="status" name="status">
+            <option value="Active" <%= statusValue === "Active" ? "selected" : "" %>>Active</option>
+            <option value="Inactive" <%= statusValue === "Inactive" ? "selected" : "" %>>Inactive</option>
+            <option value="Left" <%= statusValue === "Left" ? "selected" : "" %>>Left organisation</option>
+          </select>
+        </div>
+        <div class="staff-field">
+          <label for="photo">Profile picture (JPG, PNG, WEBP or GIF; max 5 MB)</label>
+          <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+          <% if (staffRecord.photoUrl) { %><small>Current photo: <a href="<%= staffRecord.photoUrl %>" target="_blank" rel="noopener">View image</a>. Upload a new image to replace it.</small><% } %>
+        </div>
+        <div class="staff-field">
+          <label for="expertise">Subjects / expertise</label>
+          <input id="expertise" name="expertise" maxlength="1000" value="<%= staffRecord.expertise || '' %>" placeholder="e.g. Polity, Mathematics, Mentoring">
+        </div>
+        <div class="staff-field full">
+          <label for="about">About / professional introduction</label>
+          <textarea id="about" name="about" maxlength="3000" placeholder="Write a short professional introduction..."><%= staffRecord.about || '' %></textarea>
+        </div>
+        <div class="staff-field full">
+          <label for="responsibilities">Role & responsibilities</label>
+          <textarea id="responsibilities" name="responsibilities" maxlength="3000" placeholder="Describe key duties, subjects handled, teams or projects managed..."><%= staffRecord.responsibilities || '' %></textarea>
+        </div>
+        <div class="staff-field">
+          <label for="leavingDate">Leaving date (if applicable)</label>
+          <input id="leavingDate" name="leavingDate" type="date" value="<%= escDate(staffRecord.leavingDate) %>">
+        </div>
+        <div class="staff-field">
+          <label for="leavingReason">Leaving reason (optional)</label>
+          <input id="leavingReason" name="leavingReason" maxlength="1500" value="<%= staffRecord.leavingReason || '' %>" placeholder="Internal record only">
+        </div>
+      </div>
+      <div class="staff-form-actions">
+        <button class="staff-btn" type="submit"><%= editing ? "Save Changes" : "Create Staff Profile" %></button>
+        <a class="staff-btn secondary" href="/admin/manage-staff">Cancel</a>
+      </div>
+    </form>
+  <% } else { %>
+    <div class="staff-admin-head">
+      <div><h1>Manage Staff</h1><p class="staff-muted">Add and update staff profiles; preserve records when staff leave.</p></div>
+      <a class="staff-btn" href="/admin/staff/new">+ Add New Staff</a>
+    </div>
+    <% if (typeof message !== "undefined" && message) { %><div class="staff-alert" style="background:#eaf8ef;color:#17663a"><%= message %></div><% } %>
+    <div class="staff-toolbar">
+      <input id="staffSearch" type="search" placeholder="Search name, role, project or email...">
+      <select id="staffStatusFilter"><option value="all">All statuses</option><option>Active</option><option>Inactive</option><option>Left</option></select>
+    </div>
+    <div class="staff-table-wrap">
+      <table class="staff-table">
+        <thead><tr><th>Staff member</th><th>Role</th><th>Project / department</th><th>Experience</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="staffTableBody">
+        <% if (!list.length) { %><tr><td class="staff-empty" colspan="6">No staff records yet. Select “Add New Staff” to create one.</td></tr><% } %>
+        <% list.forEach(item => {
+          const fullName = item.name || "Staff Member";
+          const initials = fullName.split(/\s+/).filter(Boolean).slice(0,2).map(s=>s[0].toUpperCase()).join("");
+          const stat = item.status || "Active";
+        %>
+          <tr class="staff-row" data-status="<%= stat %>" data-search="<%= [fullName,item.designation,item.department,item.email,item.phone].filter(Boolean).join(' ').toLowerCase() %>">
+            <td><div class="staff-person">
+              <% if(item.photoUrl){ %><img class="staff-avatar" src="<%= item.photoUrl %>" alt=""><% } else { %><span class="staff-avatar"><%= initials %></span><% } %>
+              <div><strong><%= fullName %></strong><% if(item.email){ %><div class="staff-muted" style="font-size:12px"><%= item.email %></div><% } %></div>
+            </div></td>
+            <td><%= item.designation || "—" %></td>
+            <td><%= item.department || "—" %></td>
+            <td><%= Number(item.experienceYears || 0) %> years</td>
+            <td><span class="staff-status <%= stat === 'Active' ? '' : (stat === 'Left' ? 'left' : 'inactive') %>"><%= stat %></span></td>
+            <td><div class="staff-actions">
+              <a class="staff-btn secondary" href="/staff/profile/<%= item._id %>">View</a>
+              <a class="staff-btn secondary" href="/admin/staff/<%= item._id %>/edit">Edit</a>
+              <% if(stat === "Active"){ %>
+                <form method="POST" action="/admin/staff/<%= item._id %>/toggle-status" onsubmit="return confirm('Deactivate this staff profile? The record will be retained.');"><button class="staff-btn secondary" type="submit">Deactivate</button></form>
+                <form method="POST" action="/admin/staff/<%= item._id %>/mark-left" onsubmit="return confirm('Mark this staff member as having left the organisation?');"><button class="staff-btn secondary" type="submit">Mark Left</button></form>
+              <% } else { %>
+                <form method="POST" action="/admin/staff/<%= item._id %>/toggle-status" onsubmit="return confirm('Reactivate this staff profile?');"><button class="staff-btn secondary" type="submit">Reactivate</button></form>
+              <% } %>
+              <form method="POST" action="/admin/staff/<%= item._id %>/delete" onsubmit="return confirm('Permanently delete this record? This cannot be undone.');"><button class="staff-btn danger" type="submit">Delete</button></form>
+            </div></td>
+          </tr>
+        <% }); %>
+        <tr id="staffNoResults" hidden><td class="staff-empty" colspan="6">No matching staff records.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</main>
+<script>
+(() => {
+  const search = document.getElementById("staffSearch");
+  const status = document.getElementById("staffStatusFilter");
+  const rows = [...document.querySelectorAll(".staff-row")];
+  const empty = document.getElementById("staffNoResults");
+  if (!search || !status) return;
+  function filter() {
+    let count = 0;
+    rows.forEach(row => {
+      const ok = row.dataset.search.includes(search.value.trim().toLowerCase()) &&
+        (status.value === "all" || row.dataset.status === status.value);
+      row.hidden = !ok;
+      if (ok) count++;
+    });
+    if (empty) empty.hidden = count > 0 || rows.length === 0;
+  }
+  search.addEventListener("input", filter);
+  status.addEventListener("change", filter);
+})();
+</script>
+<%- include("../partials/footer") %>
