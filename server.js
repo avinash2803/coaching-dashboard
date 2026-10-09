@@ -32,7 +32,7 @@ import dashboardRoutes from "./routes/dashboardstats.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
 import manageAnalytics from "./routes/manageAnalytics.js";
 import chatRoutes from "./routes/chatRoutes.js";
-
+import staffRoutes from "./routes/staffRoutes.js";
 
 
 const app = express();
@@ -61,7 +61,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/Years", express.static(path.join(__dirname, "Years")));
-
 
 app.use((req,res,next)=>{
   res.locals.user = req.session.user;
@@ -120,6 +119,7 @@ app.use("/api/upload", uploadRoutes);  // ✅ MUST be BEFORE app.listen
 app.use("/api/students", studentsRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/", authRoutes);
+app.use("/", staffRoutes);
 app.use("/api/excel", excelUpload);
 app.use("/", successRoutes);
 app.use("/admin", syllabusRoutes);
@@ -176,10 +176,6 @@ return res.redirect("/login")
 res.render("student")
 
 })
-
-app.get("/staff", (req, res) => {
-  res.render("staff");
-});
 
 
 app.get("/achievements", (req, res) => {
@@ -245,12 +241,6 @@ app.get("/chat-test", (req, res) => {
     res.render("chattest");
 });
 
-/* Start Server */
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
 
 app.get("/check-syllabus", async (req, res) => {
   const data = await mongoose.connection
@@ -259,4 +249,11 @@ app.get("/check-syllabus", async (req, res) => {
     .toArray();
 
   res.json(data);
+});
+
+/* Start Server */
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
