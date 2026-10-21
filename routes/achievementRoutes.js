@@ -56,7 +56,11 @@ function buildQualificationSummary(achievements) {
 
         if (item.type !== "QUALIFICATION") return;
 
-        uniqueStudents.add(item.studentId._id.toString());
+        if (!item.studentId?._id) {
+    console.log("Missing student reference in achievement:", item._id, "year:", item.year);
+    return;
+}
+uniqueStudents.add(item.studentId._id.toString());
 
         const category = item.category.trim();
 
