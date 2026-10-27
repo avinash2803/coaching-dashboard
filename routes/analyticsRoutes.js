@@ -3,7 +3,7 @@ import Analytics
 from "../models/analytics.js";
 import Student from "../models/student.js";
 import { calculateAttendanceForYear } from "../utils/attendanceCalculator.js";
-
+import Achievement from "../models/achievement.js";
 const router = express.Router();
 
 function isEligible(student, month) {
@@ -305,7 +305,26 @@ const result = await Analytics.findOneAndUpdate(
 console.log("Mongo Result =", result);
 console.log("===== UPDATE END =====");
 }
+const achievementFilter =
+  selectedYear && selectedYear.toLowerCase() !== "all"
+    ? { year: selectedYear }
+    : {};
 
+const achievementRecords = await Achievement.find(
+  achievementFilter
+).select("studentId type").lean();
+
+const employedStudents = new Set(
+  achievementRecords
+    .filter(a => a.type === "EMPLOYMENT" && a.studentId)
+    .map(a => a.studentId.toString())
+).size;
+
+const qualifiedStudents = new Set(
+  achievementRecords
+    .filter(a => a.type === "QUALIFICATION" && a.studentId)
+    .map(a => a.studentId.toString())
+).size;
 let analyticsData = {};
 
 if(
@@ -390,21 +409,9 @@ if(
         student => student.status === "Dropout"
       ).length,
 
-    employedStudents:
-      yearStudents.filter(student =>
-        Array.isArray(student.achievements) &&
-        student.achievements.some(a =>
-          String(a).toLowerCase().includes("employ")
-        )
-      ).length,
+    employedStudents,
 
-    qualifiedStudents:
-      yearStudents.filter(student =>
-        Array.isArray(student.achievements) &&
-        student.achievements.some(a =>
-          String(a).toLowerCase().includes("qualif")
-        )
-      ).length,
+    qualifiedStudents,
 
     // Keep existing Hybrid Learning value unchanged
     hybridStudents:
