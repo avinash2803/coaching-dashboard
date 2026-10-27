@@ -9,6 +9,7 @@ const router = express.Router();
 function isEligible(student, month) {
 
     const monthMap = {
+        May: 4,
         June: 5,
         July: 6,
         August: 7,
@@ -20,7 +21,7 @@ function isEligible(student, month) {
         February: 1,
         March: 2,
         April: 3,
-        May: 4
+        
     };
     if(!student.year) return false;
 
@@ -306,110 +307,83 @@ console.log("Mongo Result =", result);
 console.log("===== UPDATE END =====");
 }
 
+
 let analyticsData = {};
 
-if(
+if (
   !selectedYear ||
   selectedYear.toLowerCase() === "all"
-){
+) {
+  // ALL YEARS: combine student records across academic years
+  const allStudents = await Student.find({}).lean();
 
-  const allAnalytics =
-  await Analytics.find();
-
- analyticsData = {
-
-  totalStudents:
-    allAnalytics.reduce(
-      (sum, item) =>
-      sum + (item.totalStudents || 0),
-      0
-    ),
-
-  activeStudents:
-    allAnalytics.reduce(
-      (sum, item) =>
-      sum + (item.activeStudents || 0),
-      0
-    ),
-
-  dropoutStudents:
-    allAnalytics.reduce(
-      (sum, item) =>
-      sum + (item.dropoutStudents || 0),
-      0
-    ),
-
-  employedStudents:
-    allAnalytics.reduce(
-      (sum, item) =>
-      sum + (item.employedStudents || 0),
-      0
-    ),
-
-  qualifiedStudents:
-    allAnalytics.reduce(
-      (sum, item) =>
-      sum + (item.qualifiedStudents || 0),
-      0
-    ),
-
-  hybridStudents:
-    allAnalytics.reduce(
-      (sum, item) =>
-      sum + (item.hybridStudents || 0),
-      0
-    )
-};
-
-}else{
-
-  const yearStudents =
-    await Student.find({
-      year: selectedYear
-    });
-
-  const existingAnalytics =
-    await Analytics.findOne({
-      year: selectedYear
-    }) || {};
+  const allAnalytics = await Analytics.find({}).lean();
 
   analyticsData = {
+    totalStudents: allStudents.length,
 
-    ...existingAnalytics.toObject(),
+    activeStudents: allStudents.filter(
+      student => student.status === "Active"
+    ).length,
 
-    totalStudents:
-      yearStudents.length,
+    dropoutStudents: allStudents.filter(
+      student => student.status === "Dropout"
+    ).length,
 
-    activeStudents:
-      yearStudents.filter(
-        student => student.status === "Active"
-      ).length,
-
-    dropoutStudents:
-      yearStudents.filter(
-        student => student.status === "Dropout"
-      ).length,
-
-    employedStudents:
-      yearStudents.filter(student =>
+    employedStudents: allStudents.filter(
+      student =>
         Array.isArray(student.achievements) &&
-        student.achievements.some(a =>
-          String(a).toLowerCase().includes("employ")
-        )
-      ).length,
+        student.achievements.includes("Employed")
+    ).length,
 
-    qualifiedStudents:
-      yearStudents.filter(student =>
+    qualifiedStudents: allStudents.filter(
+      student =>
         Array.isArray(student.achievements) &&
-        student.achievements.some(a =>
-          String(a).toLowerCase().includes("qualif")
-        )
-      ).length,
+        student.achievements.includes("Qualified")
+    ).length,
 
-    // Keep existing Hybrid Learning value unchanged
-    hybridStudents:
-      existingAnalytics.hybridStudents || 0
+    hybridStudents: allAnalytics.reduce(
+      (sum, item) => sum + (item.hybridStudents || 0),
+      0
+    )
+  };
 
+} else {
+  // INDIVIDUAL YEAR: show only the selected academic year
+  const yearStudents = await Student.find({
+    year: selectedYear
+  }).lean();
+
+  const existingAnalytics = await Analytics.findOne({
+    year: selectedYear
+  }).lean();
+
+  analyticsData = {
+    ...(existingAnalytics || {}),
+
+    totalStudents: yearStudents.length,
+
+    activeStudents: yearStudents.filter(
+      student => student.status === "Active"
+    ).length,
+
+    dropoutStudents: yearStudents.filter(
+      student => student.status === "Dropout"
+    ).length,
+
+    employedStudents: yearStudents.filter(
+      student =>
+        Array.isArray(student.achievements) &&
+        student.achievements.includes("Employed")
+    ).length,
+
+    qualifiedStudents: yearStudents.filter(
+      student =>
+        Array.isArray(student.achievements) &&
+        student.achievements.includes("Qualified")
+    ).length,
+
+    hybridStudents: existingAnalytics?.hybridStudents || 0
   };
 }
 
